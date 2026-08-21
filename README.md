@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RC Architecture
 
-## Getting Started
+Next.js 16 site with an embedded Sanity Studio and starter content model for an architecture practice.
 
-First, run the development server:
+## Getting started
+
+1. Create or choose a project at [sanity.io/manage](https://www.sanity.io/manage).
+2. Copy the environment template and add your project ID:
+
+```bash
+cp .env.example .env.local
+```
+
+3. Add `http://localhost:3000` to the project's CORS origins (with credentials) in Sanity Manage.
+4. Start the app:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The website runs at [http://localhost:3000](http://localhost:3000) and the CMS at [http://localhost:3000/studio](http://localhost:3000/studio).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Content model
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Site settings** — a singleton for identity and contact information
+- **Projects** — architecture projects, images, status, location, and rich text
+- **Pages** — flexible standard pages with rich text and SEO fields
 
-## Learn More
+Sanity integration lives in `sanity/`. Queries are centralized in `sanity/lib/queries.ts`; image URLs use `sanity/lib/image.ts`.
 
-To learn more about Next.js, take a look at the following resources:
+## Commands
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run dev       # app and embedded Studio
+npm run lint      # ESLint
+npm run build     # production build
+npx sanity deploy # optional standalone Studio deployment
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Only variables prefixed with `NEXT_PUBLIC_` are used in the browser. Never expose a Sanity write token that way; keep server-side tokens unprefixed.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

@@ -1,69 +1,51 @@
-import Image from "next/image";
+import type { SanityImageSource } from "@sanity/image-url";
+import { Hero } from "@/components/home/Hero";
+import { AboutSection } from "@/components/home/AboutSection";
+import { ServicesSection } from "@/components/home/ServicesSection";
+import { ProjectsSection } from "@/components/home/ProjectsSection";
+import { SpaceLabsSection } from "@/components/home/SpaceLabsSection";
+import { ContactSection } from "@/components/home/ContactSection";
+import { NewsletterSection } from "@/components/home/NewsletterSection";
+import { Footer } from "@/components/home/Footer";
+import { fallbackHomeContent, type HomeContent } from "@/content/home";
+import { isSanityConfigured } from "@/sanity/env";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
+import { homePageQuery } from "@/sanity/lib/queries";
 
-export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+type CmsHome = Partial<Omit<HomeContent, "brandName" | "heroImageUrl">> & { heroImage?: SanityImageSource };
+type CmsResponse = { settings?: { title?: string } | null; home?: CmsHome | null } | null;
+
+function omitNullish<T extends object>(value: T | null | undefined): Partial<T> {
+  if (!value) return {};
+  return Object.fromEntries(
+    Object.entries(value).filter(([, fieldValue]) => fieldValue !== null && fieldValue !== undefined),
+  ) as Partial<T>;
+}
+
+function resolveContent(data: CmsResponse): HomeContent {
+  const home = data?.home;
+  return {
+    ...fallbackHomeContent,
+    ...omitNullish(home),
+    brandName: data?.settings?.title || fallbackHomeContent.brandName,
+    heroImageUrl: home?.heroImage ? urlFor(home.heroImage).width(2400).height(1500).quality(88).url() : fallbackHomeContent.heroImageUrl,
+    heroImageAlt: home?.heroImageAlt || fallbackHomeContent.heroImageAlt,
+    navigation: home?.navigation?.length ? home.navigation : fallbackHomeContent.navigation,
+    cta: home?.cta?.label && home.cta.href ? home.cta : fallbackHomeContent.cta,
+    stats: home?.stats?.length ? home.stats : fallbackHomeContent.stats,
+    about: { ...fallbackHomeContent.about, ...omitNullish(home?.about), cta: { ...fallbackHomeContent.about.cta, ...omitNullish(home?.about?.cta) }, ideologies: home?.about?.ideologies?.length ? home.about.ideologies : fallbackHomeContent.about.ideologies },
+    services: { ...fallbackHomeContent.services, ...omitNullish(home?.services), cta: { ...fallbackHomeContent.services.cta, ...omitNullish(home?.services?.cta) }, items: home?.services?.items?.length ? home.services.items : fallbackHomeContent.services.items },
+    projects: { ...fallbackHomeContent.projects, ...omitNullish(home?.projects), cta: { ...fallbackHomeContent.projects.cta, ...omitNullish(home?.projects?.cta) }, items: home?.projects?.items?.length ? home.projects.items : fallbackHomeContent.projects.items },
+    labs: { ...fallbackHomeContent.labs, ...omitNullish(home?.labs), cta: { ...fallbackHomeContent.labs.cta, ...omitNullish(home?.labs?.cta) }, articles: home?.labs?.articles?.length ? home.labs.articles : fallbackHomeContent.labs.articles },
+    contact: { ...fallbackHomeContent.contact, ...omitNullish(home?.contact), cta: { ...fallbackHomeContent.contact.cta, ...omitNullish(home?.contact?.cta) } },
+    newsletter: { ...fallbackHomeContent.newsletter, ...omitNullish(home?.newsletter) },
+    footer: { ...fallbackHomeContent.footer, ...omitNullish(home?.footer), navigation: home?.footer?.navigation?.length ? home.footer.navigation : fallbackHomeContent.footer.navigation },
+  };
+}
+
+export default async function Home() {
+  const data = isSanityConfigured ? await client.fetch(homePageQuery, {}, { next: { revalidate: 60 } }) : null;
+  const content = resolveContent(data as CmsResponse);
+  return <main><Hero content={content} /><AboutSection content={content.about} /><ServicesSection content={content.services} /><ProjectsSection content={content.projects} /><SpaceLabsSection content={content.labs} /><ContactSection content={content.contact} /><NewsletterSection content={content.newsletter} /><Footer content={content.footer} /></main>;
 }
