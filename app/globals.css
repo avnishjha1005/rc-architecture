@@ -31,7 +31,7 @@ button,input{font:inherit}
 .header-cta{background:var(--red);text-transform:uppercase;border-radius:999px;justify-content:center;justify-self:end;align-items:center;gap:16px;width:211px;height:42px;padding:10px 26px;font-size:16px;font-weight:650;transition:transform .2s;display:flex}
 .header-cta:hover{transform:translateY(-2px)}
 .mobile-nav{display:none}
-.hero__content{position:absolute;inset:31% 20px auto}
+.hero__content{position:absolute;inset:32% 20px auto}
 .hero h1{letter-spacing:-.082em;margin:0;font-weight:390;line-height:.76}
 .hero__topline{white-space:nowrap;margin-left:65%;font-size:clamp(106px,11.5vw,166px);display:block; line-height: 0.8; letter-spacing: -12px;}
 .hero__bottomline{white-space:nowrap;align-items:flex-start;font-size:clamp(110px,12.1vw,176px);display:flex}
