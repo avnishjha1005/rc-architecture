@@ -15,7 +15,7 @@ export function ProjectsSection({ content }: { content: HomeContent["projects"] 
             <span className="project-card__year">{project.year}</span>
             <Link className="project-card__image" href={project.href}><Image src={project.imageUrl} alt={project.imageAlt} fill sizes="(max-width: 760px) 100vw, 40vw" /></Link>
             <p className="project-card__category">({project.category})</p>
-            <div className="project-card__title"><h3>{project.title}</h3><Link href={project.href} aria-label={`View ${project.title}`}>↗</Link></div>
+            <div className="project-card__title"><h3>{project.title}</h3><Link href={project.href} aria-label={`View ${project.title}`}><Image className="project-card__arrow" src="/ArrowDiagonal.svg" alt="" width={12} height={12} /></Link></div>
           </Reveal>
         ))}
       </div>

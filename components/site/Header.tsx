@@ -1,9 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { NavigationItem } from "@/content/home";
 import { Logo } from "./Logo";
 
 type HeaderProps = { brandName: string; navigation: NavigationItem[]; cta: NavigationItem };
-const Arrow = () => <span aria-hidden="true">→</span>;
+const Arrow = () => <Image className="cta-arrow" src="/Arrow.svg" alt="" width={16} height={14} />;
 
 export function Header({ brandName, navigation, cta }: HeaderProps) {
   return (

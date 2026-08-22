@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { HomeContent } from "@/content/home";
 import { CtaLink } from "@/components/ui/CtaLink";
 import { Reveal } from "@/components/ui/Reveal";
+import { headingLines } from "@/components/ui/headingLines";
 
 export function ContactSection({ content }: { content: HomeContent["contact"] }) {
   return (
@@ -10,8 +11,8 @@ export function ContactSection({ content }: { content: HomeContent["contact"] })
       <div className="contact-section__shade" />
       <Reveal className="contact-section__content section-shell">
         <p className="eyebrow">({content.eyebrow})</p>
-        <h2>{content.title.split("\n").map((line) => <span key={line}>{line}</span>)}</h2>
-        <div className="contact-section__copy"><b aria-hidden="true">✱</b><p>{content.description} {content.description}</p></div>
+        <h2>{headingLines(content.title, 3).map((line) => <span key={line}>{line}</span>)}</h2>
+        <div className="contact-section__copy"><Image className="contact-section__star" src="/StarIcon.png" alt="" width={21} height={21} /><p>{content.description} {content.description}</p></div>
         <CtaLink link={content.cta} red />
       </Reveal>
     </section>
