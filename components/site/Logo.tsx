@@ -4,7 +4,7 @@ import Image from "next/image";
 export function Logo({ name }: { name: string }) {
   return (
     <Link className="brand" href="/" aria-label={`${name} home`}>
-      <Image src="/RCALogo.svg" width={200} height={54} alt="" priority />
+      <Image src="/RC LOGO TRANSPARENT 1.png" width={2804} height={408} alt="" priority />
     </Link>
   );
 }

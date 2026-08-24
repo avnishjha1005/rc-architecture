@@ -10,8 +10,11 @@ export function SpaceLabsSection({ content }: { content: HomeContent["labs"] }) 
       <Reveal className="labs-intro section-shell">
         <p className="eyebrow">({content.eyebrow})</p>
         <div className="labs-intro__body">
-          <div className="space-lab-logo" aria-label="Space lab"><span>s</span><span>p</span><span>a</span><span>c</span><span>e</span><span className="space-lab-logo__lab">lab</span><sup>™</sup></div>
-          <p>{content.intro}</p><CtaLink link={content.cta} red />
+          <div className="labs-intro__top">
+            <Image className="space-lab-logo" src="/spacelab-logo.svg" alt="Space Lab" width={510} height={142} />
+            <p>{content.intro}</p>
+          </div>
+          <CtaLink link={content.cta} red />
         </div>
       </Reveal>
       <div className="article-grid section-shell">
