@@ -20,7 +20,7 @@ export type HomeContent = {
 };
 
 const navigation: LinkItem[] = [
-  { label: "Projects", href: "#projects" }, { label: "Space Labs & Space Making", href: "#space-labs" },
+  { label: "Projects", href: "/projects" }, { label: "Space Labs & Space Making", href: "#space-labs" },
   { label: "About", href: "#about" }, { label: "Services", href: "#services" },
   { label: "Clients", href: "#clients" }, { label: "Contact", href: "#contact" },
 ];
@@ -52,7 +52,7 @@ export const fallbackHomeContent: HomeContent = {
   projects: {
     eyebrow: "Featured projects", title: "Our Latest\nProjects.", intro: "Explore our services and see how we bring creativity and expertise to every project.", cta: { label: "View all projects", href: "#projects" },
     items: [
-      { title: "GE Digital", category: "Interior", year: "2016", href: "#", imageUrl: "/images/home/project-ge-digital.jpg", imageAlt: "GE Digital collaboration area" },
+      { title: "GE Digital", category: "Interior", year: "2016", href: "/projects/ge-digital", imageUrl: "/images/home/project-ge-digital.jpg", imageAlt: "GE Digital collaboration area" },
       { title: "Avalahalli", category: "Architecture", year: "2020", href: "#", imageUrl: "/images/home/project-avalahalli.jpg", imageAlt: "Avalahalli warm timber interior" },
       { title: "Hilton Conrad", category: "Interior", year: "2013", href: "#", imageUrl: "/images/home/project-hilton.jpg", imageAlt: "Hilton Conrad guest room" },
       { title: "Bale County", category: "Architecture", year: "2023", href: "#", imageUrl: "/images/home/project-bale-county.jpg", imageAlt: "Bale County pool house" },

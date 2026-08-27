@@ -6,15 +6,15 @@ import { useState } from "react";
 import type { NavigationItem } from "@/content/home";
 import { Logo } from "./Logo";
 
-type HeaderProps = { brandName: string; navigation: NavigationItem[]; cta: NavigationItem };
+type HeaderProps = { brandName: string; navigation: NavigationItem[]; cta: NavigationItem; theme?: "light" | "dark" };
 const Arrow = () => <Image className="cta-arrow" src="/Arrow.svg" alt="" width={16} height={14} />;
 
-export function Header({ brandName, navigation, cta }: HeaderProps) {
+export function Header({ brandName, navigation, cta, theme = "dark" }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="site-header">
-      <Logo name={brandName} />
+    <header className={`site-header site-header--${theme}`}>
+      <Logo name={brandName} tone={theme} />
       <nav className="desktop-nav" aria-label="Primary navigation">
         {navigation.map((item) => <Link key={`${item.label}-${item.href}`} href={item.href}>{item.label}</Link>)}
       </nav>

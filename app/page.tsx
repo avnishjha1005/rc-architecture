@@ -47,5 +47,5 @@ function resolveContent(data: CmsResponse): HomeContent {
 export default async function Home() {
   const data = isSanityConfigured ? await client.fetch(homePageQuery, {}, { next: { revalidate: 60 } }) : null;
   const content = resolveContent(data as CmsResponse);
-  return <main><Hero content={content} /><AboutSection content={content.about} /><ServicesSection content={content.services} /><ProjectsSection content={content.projects} /><SpaceLabsSection content={content.labs} /><ContactSection content={content.contact} /><NewsletterSection content={content.newsletter} /><Footer content={content.footer} /></main>;
+  return <main className="home-page"><Hero content={content} /><AboutSection content={content.about} /><ServicesSection content={content.services} /><ProjectsSection content={content.projects} /><SpaceLabsSection content={content.labs} /><ContactSection content={content.contact} /><NewsletterSection content={content.newsletter} /><Footer content={content.footer} /></main>;
 }

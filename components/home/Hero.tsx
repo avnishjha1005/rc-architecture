@@ -12,7 +12,12 @@ export function Hero({ content }: { content: HomeContent }) {
       <div className="hero__content">
         <h1 id="hero-heading">
           <span className="hero__topline">{content.headlineTop}</span>
-          <span className="hero__bottomline"><span>{content.headlineAccent}</span>{content.headlineEnd}<sup>™</sup></span>
+          <span className="hero__bottomline">
+            <span className="hero__wordmark">
+              <Image src="/log_traced.svg" alt={content.headlineAccent} width={466} height={126} priority />
+            </span>
+            {content.headlineEnd}<sup>™</sup>
+          </span>
         </h1>
         <p className="hero__intro">{content.intro}</p>
       </div>
