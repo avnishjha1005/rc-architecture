@@ -6,6 +6,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import type { NavigationItem } from "@/content/home";
 import { PillAction } from "@/components/ui/PillAction";
 import { Logo } from "./Logo";
+import styles from "./Header.module.css";
 
 type HeaderProps = { brandName: string; navigation: NavigationItem[]; cta: NavigationItem; theme?: "light" | "dark" };
 
@@ -59,17 +60,17 @@ export function Header({ brandName, navigation, cta, theme = "dark" }: HeaderPro
   }
 
   return (
-    <header className={`site-header site-header--${theme}`}>
+    <header className={`${styles.header} ${styles[theme]}`}>
       <Logo name={brandName} tone={theme} />
-      <nav className="desktop-nav" aria-label="Primary navigation">
+      <nav className={styles.desktopNav} aria-label="Primary navigation">
         {navigation.map((item) => <Link key={`${item.label}-${item.href}`} href={item.href} aria-current={current(item.href)}>{item.label}</Link>)}
       </nav>
-      <PillAction className="header-cta" href={cta.href}>{cta.label}</PillAction>
-      <div className={`mobile-nav${menuOpen ? " is-open" : ""}`} ref={menuRef}>
-        <button ref={triggerRef} type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls={menuId} onClick={() => setMenuOpen((open) => !open)}><span /><span /><span /></button>
-        <nav id={menuId} aria-label="Mobile navigation">
+      <PillAction className={styles.cta} href={cta.href}>{cta.label}</PillAction>
+      <div className={`${styles.mobile} ${menuOpen ? styles.open : ""}`} ref={menuRef}>
+        <button className={styles.trigger} ref={triggerRef} type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls={menuId} onClick={() => setMenuOpen((open) => !open)}><span /><span /><span /></button>
+        <nav className={styles.mobileNav} id={menuId} aria-label="Mobile navigation">
           {navigation.map((item) => <Link key={`${item.label}-${item.href}`} href={item.href} aria-current={current(item.href)} onClick={() => setMenuOpen(false)}>{item.label}</Link>)}
-          <PillAction className="mobile-nav__cta" href={cta.href} onClick={() => setMenuOpen(false)}>{cta.label}</PillAction>
+          <PillAction className={styles.mobileCta} href={cta.href} onClick={() => setMenuOpen(false)}>{cta.label}</PillAction>
         </nav>
       </div>
     </header>

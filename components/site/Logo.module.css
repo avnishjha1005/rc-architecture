@@ -1,0 +1,29 @@
+.brand {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: max-content;
+}
+
+.image {
+  animation: logo-adapt .32s ease both;
+  display: block;
+  height: 42px;
+  object-fit: contain;
+  object-position: left center;
+  transition: filter .32s ease, opacity .32s ease, transform .32s ease;
+  width: 205px;
+}
+
+.brand:hover .image { transform: translateY(-1px); }
+
+@media (max-width: 1100px) {
+  .image {
+    height: 36px;
+    width: 160px;
+  }
+}
+
+@keyframes logo-adapt {
+  from { opacity: .25; transform: translateY(-3px); }
+  to { opacity: 1; transform: none; }
+}

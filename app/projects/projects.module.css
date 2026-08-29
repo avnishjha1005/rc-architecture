@@ -1,7 +1,5 @@
 .page{background:#fafafa;color:#202020;font-family:var(--font-hanken-grotesk),Arial,sans-serif}
 .featured{background:#fff;min-height:900px;padding:112px 20px 40px;position:relative;overflow:hidden}
-.featured :global(.site-header){position:absolute}
-.featured :global(.brand img){width:155px}
 .featuredIntro{align-items:end;display:flex;justify-content:space-between;margin-top:80px;padding-bottom:50px;border-bottom:1px solid #e4e4e4}
 .featuredIntro h1{font-size:clamp(5.5rem,10vw,9.5rem);font-weight:400;letter-spacing:-.075em;line-height:.75;margin:0;white-space:pre-line}
 .featuredIntro>div{width:220px;margin:0 0 6px}
@@ -54,12 +52,6 @@
 
 @media(max-width:760px){
   .featured{min-height:auto;padding:88px 20px 145px}
-  .featured :global(.site-header){padding:16px 8px}
-  .featured :global(.brand){margin-left:-8px}
-  .featured :global(.brand img){width:125px}
-  .featured :global(.mobile-nav){display:block!important;height:32px!important;opacity:1!important;position:absolute!important;right:8px!important;top:14px!important;visibility:visible!important;width:32px!important;z-index:20!important}
-  .featured :global(.mobile-nav)>button{background:#ff3022!important;border:0!important;border-radius:50%!important;display:grid!important;gap:3px!important;height:32px!important;padding:0!important;place-content:center!important;width:32px!important}
-  .featured :global(.mobile-nav)>button span{background:#fff!important;display:block!important;height:1px!important;width:13px!important}
   .featuredIntro{align-items:start;display:block;margin-top:25px;padding-bottom:28px}
   .featuredIntro h1{font-size:3rem;line-height:.82}
   .featuredIntro>div{margin:25px 0 0;width:190px}
