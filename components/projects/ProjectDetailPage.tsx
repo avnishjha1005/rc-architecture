@@ -1,29 +1,30 @@
 import Image from "next/image";
-import Link from "next/link";
 import { ContactSection } from "@/components/home/ContactSection";
-import { Footer } from "@/components/home/Footer";
+import { Footer } from "@/components/site/Footer";
 import { NewsletterSection } from "@/components/home/NewsletterSection";
+import { NextProjects } from "@/components/projects/NextProjects";
+import { ProjectGallery } from "@/components/projects/ProjectGallery";
 import { Header } from "@/components/site/Header";
 import { Reveal } from "@/components/ui/Reveal";
 import { fallbackHomeContent } from "@/content/home";
 import type { ProjectDetail } from "@/content/projectDetails";
-import { portfolioProjects, projectNavigation } from "@/content/projects";
+import type { PortfolioProject } from "@/content/projects";
+import { siteFooter, type SiteData } from "@/content/site";
 import styles from "@/app/projects/[slug]/project-detail.module.css";
 
-export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
-  const related = portfolioProjects.slice(1, 4);
+export function ProjectDetailPage({ project, related, site }: { project: ProjectDetail; related: PortfolioProject[]; site: SiteData }) {
   const contact = {
     ...fallbackHomeContent.contact,
     title: "Get in touch\nwith us for projects.",
     imageUrl: "/images/home/project-ge-digital.jpg",
     imageAlt: "GE Digital workplace corridor",
   };
-  const footer = { ...fallbackHomeContent.footer, navigation: projectNavigation };
+  const footer = siteFooter(site);
 
   return (
     <main className={styles.page} id="top">
       <section className={styles.hero}>
-        <Header brandName="RC Architecture" navigation={projectNavigation} cta={{ label: "Get in touch", href: "#contact" }} theme="light" />
+        <Header brandName={site.brandName} navigation={site.navigation} cta={site.cta} theme="light" />
         <div className={styles.heroTitle}>
           <p>({project.eyebrow})</p>
           <h1>{project.title}</h1>
@@ -37,7 +38,7 @@ export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
         <Reveal className={styles.intro}>
           <div>
             <h2>{project.summary}</h2>
-            <p>Inspired by urban spaces and grouped activities, we design workplace experiences that spark creativity, enable learning, and drive performance.</p>
+            <p>{project.introduction}</p>
           </div>
           <dl>{project.facts.map((fact) => <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}</dl>
         </Reveal>
@@ -49,31 +50,16 @@ export function ProjectDetailPage({ project }: { project: ProjectDetail }) {
           </Reveal>
         ))}
 
-        <Reveal className={styles.gallery}>
-          <div className={styles.galleryRail}>{project.gallery.map((image, index) => <div key={image.imageUrl + index}><Image src={image.imageUrl} alt={image.imageAlt} fill sizes="70vw" /></div>)}</div>
-          <div className={styles.progress}><span /></div>
-        </Reveal>
+        {project.gallery.length > 0 && (
+          <Reveal><ProjectGallery images={project.gallery} title={project.title} /></Reveal>
+        )}
       </article>
 
-      <section className={styles.nextProjects}>
-        <div className={styles.nextHeading}>
-          <p>(Featured projects)</p>
-          <div><h2>Next Projects.</h2><Link href="/projects">Back to all projects <span>→</span></Link></div>
-        </div>
-        <div className={styles.relatedGrid}>
-          {related.map((item) => (
-            <article key={item.id}>
-              <Link className={styles.relatedImage} href="/projects"><Image src={item.imageUrl} alt={item.imageAlt} fill sizes="(max-width:760px) 100vw, 31vw" /></Link>
-              <p>({item.category}) <span>{item.year}</span></p>
-              <div><h3>{item.title}</h3><Link href="/projects" aria-label={`View ${item.title}`}>↗</Link></div>
-            </article>
-          ))}
-        </div>
-      </section>
+      <NextProjects projects={related} />
 
       <ContactSection content={contact} />
       <NewsletterSection content={fallbackHomeContent.newsletter} />
-      <Footer content={footer} />
+      <Footer content={footer} sectionId="contact" />
     </main>
   );
 }

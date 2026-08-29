@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { WebVitals } from "@/components/site/WebVitals";
 
 const hankenGrotesk = localFont({
   variable: "--font-hanken-grotesk",
@@ -37,7 +38,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${hankenGrotesk.variable} ${chivoMono.variable} h-full antialiased`}
     >
-      <body>{children}</body>
+      <body><WebVitals />{children}</body>
     </html>
   );
 }

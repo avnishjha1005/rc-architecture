@@ -1,13 +1,24 @@
 import type { ProjectItem } from "@/content/home";
 
 export type PortfolioProject = ProjectItem & {
-  id: number;
+  id: number | string;
+  slug: string;
+  featuredTitle?: string;
   location: string;
   type: "Architecture" | "Interior Design";
 };
 
+export function slugifyProjectTitle(title: string) {
+  return title
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
 const projectSeeds = [
-  { title: "Soho Lakehouse", category: "Commercial", location: "Auckland, New Zealand", year: "2019–2020", type: "Architecture" as const, imageUrl: "/images/home/project-bale-county.jpg", imageAlt: "Contemporary lakehouse surrounded by native landscaping" },
+  { title: "Lakehouse", featuredTitle: "Soho Lakehouse", category: "Commercial", location: "Auckland, New Zealand", year: "2019–2020", type: "Architecture" as const, imageUrl: "/images/home/project-bale-county.jpg", imageAlt: "Contemporary lakehouse surrounded by native landscaping" },
   { title: "Sandstone Residence", category: "Civic & Cultural", location: "California, USA", year: "2021–2022", type: "Architecture" as const, imageUrl: "/images/home/service-architecture.jpg", imageAlt: "Warm contemporary sandstone residence" },
   { title: "Desert Oasis", category: "Educational", location: "Utah, USA", year: "2022–2023", type: "Architecture" as const, imageUrl: "/images/home/project-avalahalli.jpg", imageAlt: "Low modern house opening onto a garden" },
   { title: "Midnight Haven", category: "Residential", location: "Lofoten Islands, Norway", year: "2004–2006", type: "Interior Design" as const, imageUrl: "/images/home/project-hilton.jpg", imageAlt: "Minimal white house with tropical planting" },
@@ -27,20 +38,19 @@ export const portfolioProjects: PortfolioProject[] = Array.from({ length: 24 }, 
     "/images/home/service-interiors.jpg",
   ];
 
+  const title = cycle === 0 ? seed.title : `${seed.title} ${String(cycle + 1).padStart(2, "0")}`;
+  const slug = slugifyProjectTitle(title);
+
   return {
     ...seed,
     id: index + 1,
-    title: cycle === 0 ? seed.title : `${seed.title} ${String(cycle + 1).padStart(2, "0")}`,
+    slug,
+    title,
     imageUrl: alternateImages[(index + cycle) % alternateImages.length],
-    href: "#contact",
+    href: `/projects/${slug}`,
   };
 });
 
-export const projectNavigation = [
-  { label: "Projects", href: "/projects" },
-  { label: "Space Labs & Space Making", href: "/#space-labs" },
-  { label: "About", href: "/#about" },
-  { label: "Services", href: "/#services" },
-  { label: "Clients", href: "/#clients" },
-  { label: "Contact", href: "#contact" },
-];
+export function selectRelatedProjects(slug: string, projects: PortfolioProject[], limit = 6) {
+  return projects.filter((project) => project.slug !== slug).slice(0, limit);
+}

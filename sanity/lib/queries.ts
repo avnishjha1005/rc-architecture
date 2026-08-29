@@ -1,5 +1,20 @@
 import { defineQuery } from "next-sanity";
 
+export const siteSettingsQuery = defineQuery(`
+  *[_id == "siteSettings"][0]{
+    "brandName": title,
+    email,
+    phone,
+    address,
+    hours,
+    navigation[]{label, href},
+    cta{label, href},
+    offices[]{city, address, phone},
+    socialLinks[]{label, "href": url, shortLabel},
+    footer{eyebrow, title, blurb, addressLabel, hoursLabel, legal}
+  }
+`);
+
 export const homePageQuery = defineQuery(`{
   "settings": *[_type == "siteSettings"][0]{
     title
@@ -26,3 +41,62 @@ export const homePageQuery = defineQuery(`{
     footer{eyebrow, title, email, blurb, addressLabel, address, phone, hoursLabel, hours, legal, navigation[]{label, href}}
   }
 }`)
+
+const projectCardProjection = `{
+  _id,
+  title,
+  featuredTitle,
+  "slug": slug.current,
+  "type": discipline,
+  category,
+  location,
+  "yearDisplay": coalesce(yearRange, string(year)),
+  "imageUrl": coverImage.asset->url,
+  "imageAlt": coverImage.alt
+}`;
+
+export const projectsPageQuery = defineQuery(`{
+  "settings": *[_type == "siteSettings"][0]{title},
+  "page": coalesce(
+    *[_id == "projectsPage"][0],
+    *[_type == "projectsPage"] | order(_updatedAt desc)[0]
+  ){
+    navigation[]{label, href},
+    cta{label, href},
+    featuredHeading,
+    featuredIntro,
+    featuredYearRange,
+    "featuredProjects": featuredProjects[]->${projectCardProjection},
+    archiveEyebrow,
+    archiveHeading,
+    archiveIntro,
+    "archiveProjects": archiveProjects[]->${projectCardProjection},
+    loadMoreLabel,
+    seo
+  },
+  "featuredFlagged": *[_type == "project" && featured == true]
+    | order(year desc, title asc)[0...5]${projectCardProjection},
+  "allProjects": *[_type == "project"]
+    | order(year desc, title asc)${projectCardProjection}
+}`);
+
+export const projectBySlugQuery = defineQuery(`
+  *[_type == "project" && slug.current == $slug][0]{
+    _id,
+    title,
+    featuredTitle,
+    "slug": slug.current,
+    discipline,
+    category,
+    location,
+    "yearDisplay": coalesce(yearRange, string(year)),
+    excerpt,
+    "heroImageUrl": coverImage.asset->url,
+    "heroImageAlt": coverImage.alt,
+    "gallery": gallery[]{
+      "imageUrl": asset->url,
+      "imageAlt": alt
+    },
+    "relatedProjects": relatedProjects[]->${projectCardProjection}
+  }
+`);

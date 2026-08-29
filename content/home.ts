@@ -1,3 +1,5 @@
+import { defaultSiteData, siteFooter } from "@/content/site";
+
 export type LinkItem = { label: string; href: string };
 export type NavigationItem = LinkItem;
 export type Stat = { value: string; label: string };
@@ -19,14 +21,10 @@ export type HomeContent = {
   footer: { eyebrow: string; title: string; email: string; blurb: string; addressLabel: string; address: string; phone: string; hoursLabel: string; hours: string; legal: string; navigation: LinkItem[] };
 };
 
-const navigation: LinkItem[] = [
-  { label: "Projects", href: "/projects" }, { label: "Space Labs & Space Making", href: "#space-labs" },
-  { label: "About", href: "#about" }, { label: "Services", href: "#services" },
-  { label: "Clients", href: "#clients" }, { label: "Contact", href: "#contact" },
-];
+const navigation: LinkItem[] = defaultSiteData.navigation;
 
 export const fallbackHomeContent: HomeContent = {
-  brandName: "RC Architecture", navigation, cta: { label: "Get in touch", href: "#contact" },
+  brandName: defaultSiteData.brandName, navigation, cta: defaultSiteData.cta,
   heroImageUrl: "/rc-studio-hero.png", heroImageAlt: "A warm contemporary architecture studio with timber screens and glass meeting rooms",
   headlineTop: "Let’s Go", headlineAccent: "space", headlineEnd: "making",
   intro: "We’re a Bangalore-based design studio crafting high-impact spaces with purpose. We balance bold creativity with a conscious use of time, money, and materials.",
@@ -53,9 +51,9 @@ export const fallbackHomeContent: HomeContent = {
     eyebrow: "Featured projects", title: "Our Latest\nProjects.", intro: "Explore our services and see how we bring creativity and expertise to every project.", cta: { label: "View all projects", href: "#projects" },
     items: [
       { title: "GE Digital", category: "Interior", year: "2016", href: "/projects/ge-digital", imageUrl: "/images/home/project-ge-digital.jpg", imageAlt: "GE Digital collaboration area" },
-      { title: "Avalahalli", category: "Architecture", year: "2020", href: "#", imageUrl: "/images/home/project-avalahalli.jpg", imageAlt: "Avalahalli warm timber interior" },
-      { title: "Hilton Conrad", category: "Interior", year: "2013", href: "#", imageUrl: "/images/home/project-hilton.jpg", imageAlt: "Hilton Conrad guest room" },
-      { title: "Bale County", category: "Architecture", year: "2023", href: "#", imageUrl: "/images/home/project-bale-county.jpg", imageAlt: "Bale County pool house" },
+      { title: "Avalahalli", category: "Architecture", year: "2020", href: "/projects", imageUrl: "/images/home/project-avalahalli.jpg", imageAlt: "Avalahalli warm timber interior" },
+      { title: "Hilton Conrad", category: "Interior", year: "2013", href: "/projects", imageUrl: "/images/home/project-hilton.jpg", imageAlt: "Hilton Conrad guest room" },
+      { title: "Bale County", category: "Architecture", year: "2023", href: "/projects", imageUrl: "/images/home/project-bale-county.jpg", imageAlt: "Bale County pool house" },
     ],
   },
   labs: {
@@ -67,13 +65,7 @@ export const fallbackHomeContent: HomeContent = {
       { category: "Design & Build", title: "From Concept To Construction: What Goes Into Designing A Modern Building", href: "#", imageUrl: "/images/home/lab-design-build.jpg", imageAlt: "Blue presentation graphic" },
     ],
   },
-  contact: { eyebrow: "Contact us", title: "Get in touch\nwith us for projects.", description: "We design spaces for people. No matter the scale of the projects, our down-to-earth approach stays the same.", cta: { label: "Contact us", href: "mailto:info@rapidcorpindia.com" }, imageUrl: "/images/home/service-interiors.jpg", imageAlt: "RC Architecture office corridor" },
+  contact: { eyebrow: "Contact us", title: "Get in touch\nwith us for projects.", description: "We design spaces for people. No matter the scale of the projects, our down-to-earth approach stays the same.", cta: { label: "Contact us", href: "/contact#contact-form" }, imageUrl: "/images/home/service-interiors.jpg", imageAlt: "RC Architecture office corridor" },
   newsletter: { eyebrow: "Newsletter", title: "Subscribe to\nour newsletter.", description: "We design spaces for people. No matter the scale of the projects, our down-to-earth approach stays the same.", placeholder: "Enter your email address...", buttonLabel: "Subscribe", imageUrl: "/images/home/newsletter-drawing.png" },
-  footer: {
-    eyebrow: "Contact us", title: "Materialise\nyour vision.", email: "info@rapidcorpindia.com",
-    blurb: "As a relationship-focused organisation, RC Architecture looks forward to a journey of creation and mutual success.",
-    addressLabel: "Address", address: "16, Serpentine St, Richmond Town, Bengaluru, Karnataka 560025", phone: "Tel: +91 80 4937 8800",
-    hoursLabel: "Opening Hours", hours: "8.30am to 6.00pm.\nMonday to Friday.\nWeekends by appointment.",
-    legal: "RC Architecture Pvt Ltd\nACN 676 445 195   ABN 41 676 445 195\n© 2025. RC Architecture. All rights reserved.", navigation,
-  },
+  footer: siteFooter(defaultSiteData),
 };

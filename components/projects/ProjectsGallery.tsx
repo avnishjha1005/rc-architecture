@@ -1,26 +1,30 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { PortfolioProject } from "@/content/projects";
+import { PillAction } from "@/components/ui/PillAction";
 import { ProjectCard } from "./ProjectCard";
+import { ProjectCategory } from "./ProjectMeta";
 import styles from "@/app/projects/projects.module.css";
 
 type View = "image" | "list";
 type Filter = "All Projects" | "Architecture" | "Interior Design";
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 6;
 
-export function ProjectsGallery({ projects }: { projects: PortfolioProject[] }) {
+export function ProjectsGallery({ projects, loadMoreLabel = "Load more" }: { projects: PortfolioProject[]; loadMoreLabel?: string }) {
   const [view, setView] = useState<View>("image");
   const [filter, setFilter] = useState<Filter>("All Projects");
-  const [visible, setVisible] = useState(PAGE_SIZE);
+  const [page, setPage] = useState(1);
   const [hovered, setHovered] = useState<PortfolioProject | null>(null);
   const filtered = useMemo(() => filter === "All Projects" ? projects : projects.filter((project) => project.type === filter), [filter, projects]);
-  const shown = view === "image" ? filtered.slice(0, visible) : filtered;
+  const visibleProjects = filtered.slice(0, page * PAGE_SIZE);
+  const hasMore = visibleProjects.length < filtered.length;
 
   function changeFilter(nextFilter: Filter) {
     setFilter(nextFilter);
-    setVisible(PAGE_SIZE);
+    setPage(1);
     setHovered(null);
   }
 
@@ -29,7 +33,7 @@ export function ProjectsGallery({ projects }: { projects: PortfolioProject[] }) 
       <div className={styles.controls}>
         <div className={styles.filters} aria-label="Filter projects">
           {(["All Projects", "Architecture", "Interior Design"] as Filter[]).map((item) => (
-            <button className={filter === item ? styles.activeFilter : ""} type="button" key={item} onClick={() => changeFilter(item)}>{item}</button>
+            <button className={filter === item ? styles.activeFilter : ""} type="button" aria-pressed={filter === item} key={item} onClick={() => changeFilter(item)}>{item}</button>
           ))}
         </div>
         <div className={styles.viewToggle}>
@@ -47,24 +51,26 @@ export function ProjectsGallery({ projects }: { projects: PortfolioProject[] }) 
       </div>
 
       {view === "image" ? (
-        <div className={styles.imageGrid}>{shown.map((project) => <ProjectCard project={project} key={project.id} />)}</div>
+        <div className={styles.imageGrid}>
+          {visibleProjects.map((project) => <ProjectCard project={project} key={project.id} />)}
+        </div>
       ) : (
         <div className={styles.listWrap} onMouseLeave={() => setHovered(null)}>
           <div className={`${styles.hoverReveal} ${hovered ? styles.hoverRevealVisible : ""}`} aria-hidden="true">
             {hovered && <Image key={hovered.id} src={hovered.imageUrl} alt="" fill sizes="32vw" />}
           </div>
           <div className={styles.projectList}>
-            {shown.map((project) => (
-              <a className={styles.listRow} href={project.href} key={project.id} onMouseEnter={() => setHovered(project)} onFocus={() => setHovered(project)} onBlur={() => setHovered(null)}>
-                <span>{project.title}</span><small>({project.category})</small><span>{project.location}</span><span>{project.year}</span>
-              </a>
+            {filtered.map((project) => (
+              <Link className={styles.listRow} href={project.href} key={project.id} onMouseEnter={() => setHovered(project)} onFocus={() => setHovered(project)} onBlur={() => setHovered(null)}>
+                <span>{project.title}</span><ProjectCategory category={project.category} /><span>{project.location}</span><span>{project.year}</span>
+              </Link>
             ))}
           </div>
         </div>
       )}
 
-      {view === "image" && visible < filtered.length && (
-        <button className={styles.loadMore} type="button" onClick={() => setVisible((count) => count + PAGE_SIZE)}>Load more <span>↑</span></button>
+      {view === "image" && hasMore && (
+        <PillAction className={styles.loadMore} arrow={false} onClick={() => setPage((current) => current + 1)}>{loadMoreLabel} <span aria-hidden="true">↓</span></PillAction>
       )}
     </section>
   );

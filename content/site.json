@@ -1,0 +1,32 @@
+{
+  "brandName": "RC Architecture",
+  "navigation": [
+    { "label": "Projects", "href": "/projects" },
+    { "label": "Space Labs & Space Making", "href": "/#space-labs" },
+    { "label": "About", "href": "/about" },
+    { "label": "Services", "href": "/#services" },
+    { "label": "Clients", "href": "/about#clients" },
+    { "label": "Contact", "href": "/contact" }
+  ],
+  "cta": { "label": "Get in touch", "href": "/contact#contact-form" },
+  "email": "info@rapidcorpindia.com",
+  "phone": "+91 80 4937 8800",
+  "address": "16, Serpentine St, Richmond Town, Bengaluru, Karnataka 560025",
+  "hours": "8.30am to 6.00pm.\nMonday to Friday.\nWeekends by appointment.",
+  "offices": [
+    { "city": "Chennai", "address": "Flat No. A, Ground Floor, New No. 29 (Old No.57), 2nd Avenue, Opposite Youth Hostel, Indiranagar, Adyar, Chennai - 600020", "phone": "+91 44 6211 7682" },
+    { "city": "Mumbai", "address": "Sarovar Darshan Tower, C Wing/202, Dr. Annie Besant Road, Opp. TMC Office, Nitin Company, Panchpakhadi, Thane (W) - 400602", "phone": "+91 91910 52361" },
+    { "city": "New Delhi", "address": "T 13 A, 4am Bagh, Near Shamsi Talab, Andheria Morh, Mehrauli, New Delhi - 110030, India", "phone": "+91 91910 52361" },
+    { "city": "Coimbatore", "address": "#101, OFF Street, PN Palayam, Coimbatore - 641037, India", "phone": "+91 91910 52361" },
+    { "city": "Mangalore", "address": "B1, Premier Christina, Kalpana Road, Mangalore - 575002, India", "phone": "+91 824 4141410" }
+  ],
+  "socialLinks": [],
+  "footer": {
+    "eyebrow": "Contact us",
+    "title": "Materialise\nyour vision.",
+    "blurb": "As a relationship-focused organisation, RC Architecture looks forward to a journey of creation and mutual success.",
+    "addressLabel": "Address",
+    "hoursLabel": "Opening Hours",
+    "legal": "RC Architecture Pvt Ltd\n© 2026. RC Architecture. All rights reserved."
+  }
+}

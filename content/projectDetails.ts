@@ -1,3 +1,5 @@
+import { portfolioProjects } from "@/content/projects";
+
 export type ProjectStorySection = {
   title: string;
   body: string;
@@ -11,6 +13,7 @@ export type ProjectDetail = {
   title: string;
   eyebrow: string;
   summary: string;
+  introduction: string;
   heroImageUrl: string;
   heroImageAlt: string;
   facts: { label: string; value: string }[];
@@ -24,6 +27,7 @@ export const projectDetails: ProjectDetail[] = [
     title: "GE Digital",
     eyebrow: "Featured project",
     summary: "Inspired by the dynamism of urban environments",
+    introduction: "Inspired by urban spaces and grouped activities, we design workplace experiences that spark creativity, enable learning, and drive performance.",
     heroImageUrl: "/images/home/project-ge-digital.jpg",
     heroImageAlt: "GE Digital workplace with yellow collaboration pods",
     facts: [
@@ -64,5 +68,27 @@ export const projectDetails: ProjectDetail[] = [
 ];
 
 export function getProjectDetail(slug: string) {
-  return projectDetails.find((project) => project.slug === slug);
+  const authoredProject = projectDetails.find((project) => project.slug === slug);
+  if (authoredProject) return authoredProject;
+
+  const project = portfolioProjects.find((item) => item.slug === slug);
+  if (!project) return undefined;
+
+  return {
+    slug: project.slug,
+    title: project.featuredTitle ?? project.title,
+    eyebrow: project.category,
+    summary: `${project.type} shaped by its setting`,
+    introduction: `Located in ${project.location}, ${project.title} reflects our considered approach to ${project.type.toLowerCase()}, balancing character, function, and a strong sense of place.`,
+    heroImageUrl: project.imageUrl,
+    heroImageAlt: project.imageAlt,
+    facts: [
+      { label: "Project Name", value: project.featuredTitle ?? project.title },
+      { label: "Project Location", value: project.location },
+      { label: "Project Type", value: project.type },
+      { label: "Project Period", value: project.year },
+    ],
+    sections: [],
+    gallery: [],
+  } satisfies ProjectDetail;
 }
