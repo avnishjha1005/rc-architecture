@@ -10,6 +10,8 @@ import { getSiteData } from "@/sanity/lib/site";
 import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
 import { aboutPageQuery } from "@/sanity/lib/queries";
+import { IntroImageCarousel } from "./IntroImageCarousel";
+import { PhilosophyPrinciples } from "./PhilosophyPrinciples";
 import styles from "./about.module.css";
 
 export const metadata: Metadata = {
@@ -49,6 +51,11 @@ export default async function AboutPage() {
     getSiteData(),
   ]);
   const introImages = page?.introImages?.filter((image) => image.imageUrl) || [];
+  const introCarouselImages = [
+    { imageUrl: introImages[0]?.imageUrl || "/images/about/studio-garden.png", imageAlt: introImages[0]?.imageAlt || "Garden residence designed by RC Architecture" },
+    { imageUrl: introImages[1]?.imageUrl || "/images/about/studio-ocean.png", imageAlt: introImages[1]?.imageAlt || "A calm concrete home overlooking the water" },
+    { imageUrl: introImages[2]?.imageUrl || "/images/about/studio-kitchen.png", imageAlt: introImages[2]?.imageAlt || "Warm contemporary kitchen and living space" },
+  ];
   const statItems = page?.stats?.length ? page.stats.flatMap((item) => item.label && item.value ? [[item.label, item.value]] : []) : [["Projects we finished", "126+"], ["Our Clients", "80+"], ["Our Partners", "24+"]];
   const principleItems = page?.principles?.length ? page.principles.flatMap((item) => item.title ? [[item.title, item.description || ""]] : []) : principles;
   const peopleItems = page?.people?.length ? page.people.flatMap((person) => person.name && person.imageUrl ? [{ name: person.name, role: person.role || "", image: person.imageUrl, imageAlt: person.imageAlt || person.name }] : []) : people.map((person) => ({ ...person, imageAlt: person.name }));
@@ -74,6 +81,7 @@ export default async function AboutPage() {
         <div className={styles.introCopy}>
           {(page?.introParagraphs?.length ? page.introParagraphs : ["We don’t follow trends or rush timelines. Every project begins with listening — to how you live, what matters most, and where clarity is missing. It’s not about surface-level change, but understanding the way a space needs to work, feel, and evolve over time. From those conversations, we shape environments with structure, rhythm, and intention.", "From those conversations, we shape environments with structure, rhythm, and intention — built for the people who use them, and made to hold up well beyond the finished photo. With experience across design, building, and project management."]).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         </div>
+        <IntroImageCarousel images={introCarouselImages} />
       </section>
 
       <section className={styles.stats} aria-label="Studio statistics">
@@ -84,10 +92,7 @@ export default async function AboutPage() {
         <Eyebrow className={styles.label}>{page?.philosophyEyebrow || "Our ideology"}</Eyebrow>
         <div className={styles.philosophyContent}>
           <Reveal><h2>{(page?.philosophyHeading || "Our Philosophy\n& Ideologies.").split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h2><p className={styles.subcopy}>{page?.philosophyIntro || "A collective of architects, designers, and specialists growing bold ideas through collaboration and future thinking."}</p></Reveal>
-          <div className={styles.philosophyGrid}>
-            <div className={styles.philosophyMark} aria-hidden="true"><span>rc</span></div>
-            <div className={styles.principles}>{principleItems.map(([title, copy], index) => <article key={title}><small>[{String(index + 1).padStart(2, "0")}]</small><div><h3>{title}</h3><p>{copy}</p></div></article>)}</div>
-          </div>
+          <PhilosophyPrinciples items={principleItems} />
         </div>
       </section>
 
@@ -120,7 +125,7 @@ export default async function AboutPage() {
         <div className={styles.careersBody}>
           <CareersBanner email={site.email} />
           <div className={styles.valuesIntro}><h3>{(page?.valuesHeading || "Our Team Values\nDiscipline & Principles").split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h3><p>{page?.valuesIntro || "We are excited to get started on new possibilities. We sketch, brainstorm, visualize and hurrah! We believe in a light-hearted workplace that results in some serious excellence."}</p></div>
-          <div className={styles.values}>{valueItems.map(({ title, icon, description }) => <article key={title}><span>{icon}</span><h3>{title}</h3><p>{description}</p></article>)}</div>
+          <div className={styles.values}>{valueItems.map(({ title, description }) => <article key={title}><span className={styles.valueIcon} aria-hidden="true"><i /></span><h3>{title}</h3><p>{description}</p></article>)}</div>
         </div>
       </section>
 
