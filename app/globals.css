@@ -300,17 +300,4 @@ button,input{font:inherit}
   .home-page .newsletter-card button{width:clamp(180px,13.194cqw,337.78px);height:clamp(42px,2.917cqw,74.67px);font-size:clamp(.6875rem,.833cqw,1.333rem)}
   .home-page .newsletter-card>img{width:min(69.097cqw,1768.89px);height:clamp(260px,24.028cqw,615.11px);left:clamp(55px,9.722cqw,248.89px)}
 
-  .home-page .footer{min-height:0;padding:clamp(140px,14.583cqw,373.33px) 0 clamp(60px,5.556cqw,142.22px)}
-  .home-page .footer__grid{column-gap:clamp(80px,9.722cqw,248.89px);row-gap:clamp(48px,4.167cqw,106.67px)}
-  .home-page .footer__lead h2{margin-top:clamp(38px,3.472cqw,88.89px);font-size:clamp(3.75rem,5.208cqw,8.333rem)}
-  .home-page .footer__email{font-size:clamp(1.75rem,2.431cqw,3.889rem)}
-  .home-page .footer__blurb{max-width:clamp(280px,22.917cqw,586.67px);margin-top:clamp(42px,3.819cqw,97.78px);font-size:clamp(.75rem,1.042cqw,1.667rem)}
-  .home-page .footer__nav{max-width:clamp(470px,40.139cqw,1027.56px);margin-top:clamp(28px,2.431cqw,62.22px)}
-  .home-page .footer__nav a{grid-template-columns:clamp(42px,3.333cqw,85.33px) 1fr;min-height:clamp(62px,5.069cqw,129.78px)}
-  .home-page .footer__nav small{font-size:clamp(.625rem,.764cqw,1.222rem)}
-  .home-page .footer__nav span{font-size:clamp(1.375rem,1.944cqw,3.111rem)}
-  .home-page .footer__details{gap:clamp(50px,5.556cqw,142.22px);margin-top:clamp(28px,2.431cqw,62.22px);font-size:clamp(.625rem,.833cqw,1.333rem)}
-  .home-page .footer__details small{margin-bottom:clamp(18px,1.736cqw,44.44px)}
-  .home-page .footer__legal{margin-top:clamp(80px,7.639cqw,195.56px)}
-  .home-page .footer__logo{width:min(calc(100% - 2 * var(--home-gutter)),2488.88px);margin-top:clamp(130px,14.236cqw,364.44px)}
 }
