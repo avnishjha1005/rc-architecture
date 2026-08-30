@@ -30,8 +30,6 @@ type CmsProject = {
 };
 
 type CmsProjectsPage = {
-  navigation?: { label: string; href: string }[];
-  cta?: { label?: string; href?: string };
   featuredHeading?: string;
   featuredIntro?: string;
   featuredYearRange?: string;
@@ -44,7 +42,6 @@ type CmsProjectsPage = {
 };
 
 type CmsResponse = {
-  settings?: { title?: string } | null;
   page?: CmsProjectsPage | null;
   featuredFlagged?: CmsProject[];
   allProjects?: CmsProject[];

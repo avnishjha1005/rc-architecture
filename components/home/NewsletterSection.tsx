@@ -1,11 +1,11 @@
 import Image from "next/image";
-import type { HomeContent } from "@/content/home";
+import type { NewsletterSectionData } from "@/content/site";
 import { Reveal } from "@/components/ui/Reveal";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { headingLines } from "@/components/ui/headingLines";
 import { NewsletterForm } from "./NewsletterForm";
 
-export function NewsletterSection({ content }: { content: HomeContent["newsletter"] }) {
+export function NewsletterSection({ content }: { content: NewsletterSectionData }) {
   return (
     <section className="newsletter-section light-section" id="newsletter">
       <Reveal className="newsletter-card section-shell">

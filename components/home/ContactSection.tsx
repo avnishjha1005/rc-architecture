@@ -1,11 +1,11 @@
 import Image from "next/image";
-import type { HomeContent } from "@/content/home";
+import type { ContactSectionData } from "@/content/site";
 import { CtaLink } from "@/components/ui/CtaLink";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 import { headingLines } from "@/components/ui/headingLines";
 
-export function ContactSection({ content }: { content: HomeContent["contact"] }) {
+export function ContactSection({ content }: { content: ContactSectionData }) {
   return (
     <section className="contact-section" id="contact">
       <Image src={content.imageUrl} alt={content.imageAlt} fill sizes="100vw" />

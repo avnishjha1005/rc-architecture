@@ -6,19 +6,12 @@ import { NextProjects } from "@/components/projects/NextProjects";
 import { ProjectGallery } from "@/components/projects/ProjectGallery";
 import { Header } from "@/components/site/Header";
 import { Reveal } from "@/components/ui/Reveal";
-import { fallbackHomeContent } from "@/content/home";
 import type { ProjectDetail } from "@/content/projectDetails";
 import type { PortfolioProject } from "@/content/projects";
 import { siteFooter, type SiteData } from "@/content/site";
 import styles from "@/app/projects/[slug]/project-detail.module.css";
 
 export function ProjectDetailPage({ project, related, site }: { project: ProjectDetail; related: PortfolioProject[]; site: SiteData }) {
-  const contact = {
-    ...fallbackHomeContent.contact,
-    title: "Get in touch\nwith us for projects.",
-    imageUrl: "/images/home/project-ge-digital.jpg",
-    imageAlt: "GE Digital workplace corridor",
-  };
   const footer = siteFooter(site);
 
   return (
@@ -57,8 +50,8 @@ export function ProjectDetailPage({ project, related, site }: { project: Project
 
       <NextProjects projects={related} />
 
-      <ContactSection content={contact} />
-      <NewsletterSection content={fallbackHomeContent.newsletter} />
+      <ContactSection content={site.contact} />
+      <NewsletterSection content={site.newsletter} />
       <Footer content={footer} sectionId="contact" />
     </main>
   );

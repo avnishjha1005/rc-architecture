@@ -6,14 +6,11 @@ export const homePage = defineType({
   type: "document",
   groups: [
     { name: "hero", title: "Hero", default: true },
-    { name: "navigation", title: "Navigation" },
     { name: "proof", title: "Practice highlights" },
     { name: "about", title: "About" },
     { name: "services", title: "Services" },
     { name: "projects", title: "Projects" },
     { name: "labs", title: "Space Labs" },
-    { name: "contact", title: "Contact & Newsletter" },
-    { name: "footer", title: "Footer" },
   ],
   fields: [
     defineField({
@@ -25,25 +22,6 @@ export const homePage = defineType({
     defineField({ name: "headlineAccent", title: "Headline — red word", type: "string", group: "hero", initialValue: "space", validation: (rule) => rule.required().max(16) }),
     defineField({ name: "headlineEnd", title: "Headline — final word", type: "string", group: "hero", initialValue: "making", validation: (rule) => rule.required().max(16) }),
     defineField({ name: "intro", title: "Introduction", type: "text", rows: 4, group: "hero", validation: (rule) => rule.required().max(280) }),
-    defineField({
-      name: "navigation", title: "Navigation links", type: "array", group: "navigation",
-      of: [defineArrayMember({
-        name: "navigationLink", type: "object",
-        fields: [
-          defineField({ name: "label", type: "string", validation: (rule) => rule.required() }),
-          defineField({ name: "href", title: "Link", type: "string", description: "Use /page or #section.", validation: (rule) => rule.required() }),
-        ],
-        preview: { select: { title: "label", subtitle: "href" } },
-      })],
-      validation: (rule) => rule.max(7),
-    }),
-    defineField({
-      name: "cta", title: "Primary button", type: "object", group: "navigation",
-      fields: [
-        defineField({ name: "label", type: "string", validation: (rule) => rule.required() }),
-        defineField({ name: "href", title: "Link", type: "string", validation: (rule) => rule.required() }),
-      ],
-    }),
     defineField({
       name: "stats", title: "Practice highlights", type: "array", group: "proof", description: "Short proof points displayed along the bottom of the hero.",
       of: [defineArrayMember({
@@ -107,23 +85,6 @@ export const homePage = defineType({
           defineField({ name: "title", type: "string" }), defineField({ name: "category", type: "string" }), defineField({ name: "href", title: "Link", type: "string" }),
           defineField({ name: "image", type: "image", options: { hotspot: true }, fields: [defineField({ name: "alt", type: "string" })] }),
         ], preview: { select: { title: "title", subtitle: "category", media: "image" } } })] }),
-      ],
-    }),
-    defineField({
-      name: "contact", title: "Contact banner", type: "object", group: "contact",
-      fields: [defineField({ name: "eyebrow", type: "string" }), defineField({ name: "title", type: "text", rows: 2 }), defineField({ name: "description", type: "text", rows: 3 }), defineField({ name: "cta", title: "Button", type: "object", fields: [defineField({ name: "label", type: "string" }), defineField({ name: "href", title: "Link", type: "string" })] }), defineField({ name: "image", type: "image", options: { hotspot: true }, fields: [defineField({ name: "alt", type: "string" })] })],
-    }),
-    defineField({
-      name: "newsletter", title: "Newsletter", type: "object", group: "contact",
-      fields: [defineField({ name: "eyebrow", type: "string" }), defineField({ name: "title", type: "text", rows: 2 }), defineField({ name: "description", type: "text", rows: 3 }), defineField({ name: "placeholder", type: "string" }), defineField({ name: "buttonLabel", type: "string" }), defineField({ name: "image", title: "Background drawing", type: "image" })],
-    }),
-    defineField({
-      name: "footer", title: "Footer", type: "object", group: "footer",
-      fields: [
-        defineField({ name: "eyebrow", type: "string" }), defineField({ name: "title", type: "text", rows: 2 }), defineField({ name: "email", type: "email" }), defineField({ name: "blurb", type: "text", rows: 3 }),
-        defineField({ name: "addressLabel", type: "string" }), defineField({ name: "address", type: "text", rows: 3 }), defineField({ name: "phone", type: "string" }),
-        defineField({ name: "hoursLabel", type: "string" }), defineField({ name: "hours", type: "text", rows: 3 }), defineField({ name: "legal", type: "text", rows: 4 }),
-        defineField({ name: "navigation", type: "array", of: [defineArrayMember({ type: "object", fields: [defineField({ name: "label", type: "string" }), defineField({ name: "href", title: "Link", type: "string" })], preview: { select: { title: "label", subtitle: "href" } } })] }),
       ],
     }),
   ],

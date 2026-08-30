@@ -5,59 +5,11 @@ export const projectsPage = defineType({
   title: "Projects page",
   type: "document",
   groups: [
-    { name: "header", title: "Header" },
     { name: "featured", title: "Featured work", default: true },
     { name: "archive", title: "Project archive" },
     { name: "seo", title: "SEO" },
   ],
   fields: [
-    defineField({
-      name: "navigation",
-      title: "Navigation links",
-      type: "array",
-      group: "header",
-      of: [
-        defineArrayMember({
-          name: "navigationLink",
-          type: "object",
-          fields: [
-            defineField({
-              name: "label",
-              type: "string",
-              validation: (rule) => rule.required(),
-            }),
-            defineField({
-              name: "href",
-              title: "Link",
-              type: "string",
-              description: "Use /page or #section.",
-              validation: (rule) => rule.required(),
-            }),
-          ],
-          preview: { select: { title: "label", subtitle: "href" } },
-        }),
-      ],
-      validation: (rule) => rule.max(7),
-    }),
-    defineField({
-      name: "cta",
-      title: "Primary button",
-      type: "object",
-      group: "header",
-      fields: [
-        defineField({
-          name: "label",
-          type: "string",
-          validation: (rule) => rule.required(),
-        }),
-        defineField({
-          name: "href",
-          title: "Link",
-          type: "string",
-          validation: (rule) => rule.required(),
-        }),
-      ],
-    }),
     defineField({
       name: "featuredHeading",
       title: "Heading",

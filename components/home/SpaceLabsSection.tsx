@@ -1,9 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { HomeContent } from "@/content/home";
 import { CtaLink } from "@/components/ui/CtaLink";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
+import { SpaceLabsGrid } from "./SpaceLabsGrid";
 
 export function SpaceLabsSection({ content }: { content: HomeContent["labs"] }) {
   return (
@@ -18,16 +18,7 @@ export function SpaceLabsSection({ content }: { content: HomeContent["labs"] }) 
           <CtaLink link={content.cta} red />
         </div>
       </Reveal>
-      <div className="article-grid section-shell">
-        {content.articles.map((article, index) => (
-          <Reveal className="article-card" key={article.title} delay={index * 60}>
-            {article.href === "#"
-              ? <div className="article-card__image"><Image src={article.imageUrl} alt={article.imageAlt} fill sizes="(max-width: 760px) 100vw, 25vw" /></div>
-              : <Link className="article-card__image" href={article.href}><Image src={article.imageUrl} alt={article.imageAlt} fill sizes="(max-width: 760px) 100vw, 25vw" /></Link>}
-            <p>({article.category})</p><h3>{article.title}</h3>
-          </Reveal>
-        ))}
-      </div>
+      <SpaceLabsGrid articles={content.articles} />
     </section>
   );
 }

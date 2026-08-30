@@ -17,6 +17,11 @@ test("global contact data is usable", () => {
   assert.match(site.phone, /^\+?[\d\s()-]+$/);
   assert.ok(site.address.length > 20);
   assert.ok(site.offices.length > 0);
+  assert.ok(site.contact.title.includes("Get in touch"));
+  assert.match(site.contact.cta.href, /^\//);
+  assert.ok(site.contact.imageUrl.startsWith("/"));
+  assert.ok(site.newsletter.title.length > 0);
+  assert.ok(site.newsletter.imageUrl.startsWith("/"));
 });
 
 test("social links cannot be placeholders", () => {

@@ -1,4 +1,4 @@
-import { defaultSiteData, siteFooter } from "@/content/site";
+import { defaultSiteData, siteFooter, type ContactSectionData, type NewsletterSectionData, type SiteFooterContent } from "@/content/site";
 
 export type LinkItem = { label: string; href: string };
 export type NavigationItem = LinkItem;
@@ -16,9 +16,9 @@ export type HomeContent = {
   services: { eyebrow: string; title: string; intro: string; cta: LinkItem; items: Service[] };
   projects: { eyebrow: string; title: string; intro: string; cta: LinkItem; items: ProjectItem[] };
   labs: { eyebrow: string; intro: string; cta: LinkItem; articles: ArticleItem[] };
-  contact: { eyebrow: string; title: string; description: string; cta: LinkItem; imageUrl: string; imageAlt: string };
-  newsletter: { eyebrow: string; title: string; description: string; placeholder: string; buttonLabel: string; imageUrl: string };
-  footer: { eyebrow: string; title: string; email: string; blurb: string; addressLabel: string; address: string; phone: string; hoursLabel: string; hours: string; legal: string; navigation: LinkItem[] };
+  contact: ContactSectionData;
+  newsletter: NewsletterSectionData;
+  footer: SiteFooterContent;
 };
 
 const navigation: LinkItem[] = defaultSiteData.navigation;
@@ -65,7 +65,7 @@ export const fallbackHomeContent: HomeContent = {
       { category: "Design & Build", title: "From Concept To Construction: What Goes Into Designing A Modern Building", href: "#", imageUrl: "/images/home/lab-design-build.jpg", imageAlt: "Blue presentation graphic" },
     ],
   },
-  contact: { eyebrow: "Contact us", title: "Get in touch\nwith us for projects.", description: "We design spaces for people. No matter the scale of the projects, our down-to-earth approach stays the same.", cta: { label: "Contact us", href: "/contact#contact-form" }, imageUrl: "/images/home/service-interiors.jpg", imageAlt: "RC Architecture office corridor" },
-  newsletter: { eyebrow: "Newsletter", title: "Subscribe to\nour newsletter.", description: "We design spaces for people. No matter the scale of the projects, our down-to-earth approach stays the same.", placeholder: "Enter your email address...", buttonLabel: "Subscribe", imageUrl: "/images/home/newsletter-drawing.png" },
+  contact: defaultSiteData.contact,
+  newsletter: defaultSiteData.newsletter,
   footer: siteFooter(defaultSiteData),
 };

@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { HomeContent } from "@/content/home";
+import type { SiteFooterContent } from "@/content/site";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { headingLines } from "@/components/ui/headingLines";
 import { toDirectionsHref, toTelephoneHref } from "@/content/site";
 
 type FooterProps = {
-  content: HomeContent["footer"];
+  content: SiteFooterContent;
   sectionId?: string;
 };
 

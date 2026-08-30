@@ -16,7 +16,7 @@ import { homePageQuery } from "@/sanity/lib/queries";
 import { getSiteData } from "@/sanity/lib/site";
 
 type CmsHome = Partial<Omit<HomeContent, "brandName" | "heroImageUrl">> & { heroImage?: SanityImageSource };
-type CmsResponse = { settings?: { title?: string } | null; home?: CmsHome | null } | null;
+type CmsResponse = { home?: CmsHome | null } | null;
 
 function omitNullish<T extends object>(value: T | null | undefined): Partial<T> {
   if (!value) return {};
@@ -40,8 +40,8 @@ function resolveContent(data: CmsResponse, site: SiteData): HomeContent {
     services: { ...fallbackHomeContent.services, ...omitNullish(home?.services), cta: { ...fallbackHomeContent.services.cta, ...omitNullish(home?.services?.cta) }, items: home?.services?.items?.length ? home.services.items : fallbackHomeContent.services.items },
     projects: { ...fallbackHomeContent.projects, ...omitNullish(home?.projects), cta: { ...fallbackHomeContent.projects.cta, ...omitNullish(home?.projects?.cta) }, items: home?.projects?.items?.length ? home.projects.items : fallbackHomeContent.projects.items },
     labs: { ...fallbackHomeContent.labs, ...omitNullish(home?.labs), cta: { ...fallbackHomeContent.labs.cta, ...omitNullish(home?.labs?.cta) }, articles: home?.labs?.articles?.length ? home.labs.articles : fallbackHomeContent.labs.articles },
-    contact: { ...fallbackHomeContent.contact, ...omitNullish(home?.contact), cta: { ...fallbackHomeContent.contact.cta, ...omitNullish(home?.contact?.cta) } },
-    newsletter: { ...fallbackHomeContent.newsletter, ...omitNullish(home?.newsletter) },
+    contact: site.contact,
+    newsletter: site.newsletter,
     footer: siteFooter(site),
   };
 }

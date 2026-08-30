@@ -2,10 +2,10 @@
   "brandName": "RC Architecture",
   "navigation": [
     { "label": "Projects", "href": "/projects" },
-    { "label": "Space Labs & Space Making", "href": "/#space-labs" },
+    { "label": "Space Labs & Space Making", "href": "/blogs" },
     { "label": "About", "href": "/about" },
-    { "label": "Services", "href": "/#services" },
-    { "label": "Clients", "href": "/about#clients" },
+    { "label": "Services", "href": "/services" },
+    { "label": "Clients", "href": "/clients" },
     { "label": "Contact", "href": "/contact" }
   ],
   "cta": { "label": "Get in touch", "href": "/contact#contact-form" },
@@ -21,6 +21,22 @@
     { "city": "Mangalore", "address": "B1, Premier Christina, Kalpana Road, Mangalore - 575002, India", "phone": "+91 824 4141410" }
   ],
   "socialLinks": [],
+  "contact": {
+    "eyebrow": "Contact us",
+    "title": "Get in touch\nwith us for projects.",
+    "description": "We design spaces for people. No matter the scale of the projects, our down-to-earth approach stays the same.",
+    "cta": { "label": "Contact us", "href": "/contact#contact-form" },
+    "imageUrl": "/images/home/service-interiors.jpg",
+    "imageAlt": "RC Architecture office corridor"
+  },
+  "newsletter": {
+    "eyebrow": "Newsletter",
+    "title": "Subscribe to\nour newsletter.",
+    "description": "We design spaces for people. No matter the scale of the projects, our down-to-earth approach stays the same.",
+    "placeholder": "Enter your email address...",
+    "buttonLabel": "Subscribe",
+    "imageUrl": "/images/home/newsletter-drawing.png"
+  },
   "footer": {
     "eyebrow": "Contact us",
     "title": "Materialise\nyour vision.",

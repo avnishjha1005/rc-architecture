@@ -3,6 +3,22 @@ import rawSiteData from "./site.json";
 export type SiteLink = { label: string; href: string };
 export type Office = { city: string; address: string; phone: string };
 export type SocialLink = { label: string; href: string; shortLabel: string };
+export type ContactSectionData = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  cta: SiteLink;
+  imageUrl: string;
+  imageAlt: string;
+};
+export type NewsletterSectionData = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  placeholder: string;
+  buttonLabel: string;
+  imageUrl: string;
+};
 
 export type SiteData = {
   brandName: string;
@@ -14,6 +30,8 @@ export type SiteData = {
   hours: string;
   offices: Office[];
   socialLinks: SocialLink[];
+  contact: ContactSectionData;
+  newsletter: NewsletterSectionData;
   footer: {
     eyebrow: string;
     title: string;
@@ -44,3 +62,5 @@ export function siteFooter(site: SiteData) {
     navigation: site.navigation,
   };
 }
+
+export type SiteFooterContent = ReturnType<typeof siteFooter>;

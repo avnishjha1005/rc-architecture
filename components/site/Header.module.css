@@ -25,7 +25,6 @@
 
 .desktopNav a { transition: opacity .2s; }
 .desktopNav a:hover { opacity: .6; }
-.desktopNav a[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 5px; }
 
 .cta {
   background: var(--red);
