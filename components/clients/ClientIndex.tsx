@@ -6,18 +6,14 @@ import styles from "@/app/clients/clients.module.css";
 
 const MOBILE_BATCH = 48;
 
-export function ClientIndex({ clients, title = "Index", searchPlaceholder = "Search clients", loadMoreLabel = "Load more" }: { clients: Client[]; title?: string; searchPlaceholder?: string; loadMoreLabel?: string }) {
-  const [query, setQuery] = useState("");
+export function ClientIndex({ clients, title = "Index", loadMoreLabel = "Load more" }: { clients: Client[]; title?: string; loadMoreLabel?: string }) {
   const [category, setCategory] = useState("All");
   const [visible, setVisible] = useState(MOBILE_BATCH);
 
-  const filtered = useMemo(() => {
-    const needle = query.trim().toLocaleLowerCase();
-    return clients.filter((client) =>
-      (category === "All" || client.category === category) &&
-      (!needle || client.name.toLocaleLowerCase().includes(needle)),
-    );
-  }, [category, clients, query]);
+  const filtered = useMemo(
+    () => clients.filter((client) => category === "All" || client.category === category),
+    [category, clients],
+  );
 
   const categories = useMemo(
     () => ["All", ...Array.from(new Set(clients.map((client) => client.category)))],
@@ -43,10 +39,6 @@ export function ClientIndex({ clients, title = "Index", searchPlaceholder = "Sea
         <h2>{title}</h2>
         <div className={styles.controls}>
           <label>
-            <span className="sr-only">Search clients</span>
-            <input value={query} onChange={(event) => { setQuery(event.target.value); setVisible(MOBILE_BATCH); }} placeholder={searchPlaceholder} type="search" />
-          </label>
-          <label>
             <span className="sr-only">Filter by category</span>
             <select value={category} onChange={(event) => { setCategory(event.target.value); setVisible(MOBILE_BATCH); }}>
               {categories.map((option) => <option value={option} key={option}>{option === "All" ? "Categories" : option}</option>)}
@@ -65,7 +57,7 @@ export function ClientIndex({ clients, title = "Index", searchPlaceholder = "Sea
             </div>
           ))}
         </div>
-      ) : <p className={styles.empty}>No clients match “{query}”.</p>}
+      ) : <p className={styles.empty}>No clients have been added to this category.</p>}
       {visible < filtered.length && <button className={styles.loadMore} type="button" onClick={() => setVisible((count) => count + MOBILE_BATCH)}>{loadMoreLabel} <span aria-hidden="true">↑</span></button>}
     </div>
   );

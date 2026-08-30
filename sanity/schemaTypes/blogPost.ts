@@ -6,6 +6,12 @@ export const blogPost = defineType({
   fields: [
     defineField({ name: "title", type: "string", group: "content", validation: (r) => r.required() }),
     defineField({ name: "slug", type: "slug", group: "content", options: { source: "title", maxLength: 96 }, validation: (r) => r.required() }),
+    defineField({
+      name: "blogCategory", title: "Blog category", type: "string", group: "content", initialValue: "spaceLabs",
+      description: "Controls whether this post appears under Space Labs or Space Making on the blog page.",
+      options: { list: [{ title: "Space Labs", value: "spaceLabs" }, { title: "Space Making", value: "spaceMaking" }], layout: "radio" },
+      validation: (r) => r.required(),
+    }),
     defineField({ name: "category", type: "string", group: "content", validation: (r) => r.required() }),
     defineField({ name: "publishedAt", type: "datetime", group: "content", validation: (r) => r.required() }),
     defineField({ name: "excerpt", type: "text", rows: 3, group: "content", validation: (r) => r.max(220) }),
@@ -21,6 +27,5 @@ export const blogPost = defineType({
     defineField({ name: "seo", type: "object", group: "seo", fields: [defineField({ name: "title", type: "string", validation: (r) => r.max(70) }), defineField({ name: "description", type: "text", rows: 3, validation: (r) => r.max(160) }), defineField({ name: "image", type: "image", options: { hotspot: true } })] }),
   ],
   orderings: [{ title: "Published, newest", name: "publishedDesc", by: [{ field: "publishedAt", direction: "desc" }] }],
-  preview: { select: { title: "title", category: "category", date: "publishedAt", media: "coverImage" }, prepare: ({ title, category, date, media }) => ({ title, subtitle: [category, date ? new Date(date).toLocaleDateString() : ""].filter(Boolean).join(" · "), media }) },
+  preview: { select: { title: "title", blogCategory: "blogCategory", category: "category", date: "publishedAt", media: "coverImage" }, prepare: ({ title, blogCategory, category, date, media }) => ({ title, subtitle: [blogCategory === "spaceMaking" ? "Space Making" : "Space Labs", category, date ? new Date(date).toLocaleDateString() : ""].filter(Boolean).join(" · "), media }) },
 });
-

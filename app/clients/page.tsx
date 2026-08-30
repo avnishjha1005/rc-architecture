@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 export default async function ClientsPage() {
   const sanityClient = await getSanityClient();
   const [data, site] = await Promise.all([
-    isSanityConfigured ? sanityClient.fetch<{ page?: { countLabel?: string; heroTitle?: string; heroImageUrl?: string; heroImageAlt?: string; indexTitle?: string; searchPlaceholder?: string; loadMoreLabel?: string }; clients?: typeof clients } | null>(clientsPageQuery, {}, { next: { revalidate: 60 } }).catch(() => null) : null,
+    isSanityConfigured ? sanityClient.fetch<{ page?: { countLabel?: string; heroTitle?: string; heroImageUrl?: string; heroImageAlt?: string; indexTitle?: string; loadMoreLabel?: string }; clients?: typeof clients } | null>(clientsPageQuery, {}, { next: { revalidate: 60 } }).catch(() => null) : null,
     getSiteData(),
   ]);
   const page = data?.page;
@@ -35,7 +35,7 @@ export default async function ClientsPage() {
         <div className={styles.heroImage}><Image src={page?.heroImageUrl || "/images/home/service-architecture.jpg"} alt={page?.heroImageAlt || "Contemporary RC Architecture building"} fill priority sizes="(max-width: 900px) 100vw, 36vw" /></div>
         <a className={styles.scrollCue} href="#client-index" aria-label="Scroll to the client index"><span aria-hidden="true">↓</span></a>
       </section>
-      <section className={styles.index} id="client-index"><ClientIndex clients={clientList} title={page?.indexTitle} searchPlaceholder={page?.searchPlaceholder} loadMoreLabel={page?.loadMoreLabel} /></section>
+      <section className={styles.index} id="client-index"><ClientIndex clients={clientList} title={page?.indexTitle} loadMoreLabel={page?.loadMoreLabel} /></section>
       <ContactSection content={site.contact} />
       <NewsletterSection content={site.newsletter} />
       <Footer content={siteFooter(site)} />

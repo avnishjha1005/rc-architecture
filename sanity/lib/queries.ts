@@ -123,7 +123,7 @@ export const servicesPageQuery = defineQuery(`
 export const clientsPageQuery = defineQuery(`{
   "page": coalesce(*[_id == "clientsPage"][0], *[_type == "clientsPage"] | order(_updatedAt desc)[0]){
     countLabel, heroTitle, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt,
-    indexTitle, searchPlaceholder, loadMoreLabel, seo
+    indexTitle, loadMoreLabel, seo
   },
   "clients": *[_type == "client"] | order(coalesce(order, 999999) asc, name asc){name, category, year}
 }`);
@@ -138,7 +138,7 @@ export const contactPageQuery = defineQuery(`
 `);
 
 const blogPostProjection = `{
-  _id, title, "slug": slug.current, category, publishedAt, excerpt,
+  _id, title, "slug": slug.current, category, "blogCategory": coalesce(blogCategory, "spaceLabs"), publishedAt, excerpt,
   "imageUrl": coverImage.asset->url, "imageAlt": coverImage.alt,
   "sections": sections[]{title, "body": paragraphs, bullets, "imageUrl": image.asset->url, "imageAlt": image.alt, quote}
 }`;

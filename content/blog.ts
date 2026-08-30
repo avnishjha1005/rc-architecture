@@ -11,6 +11,7 @@ export type BlogPost = {
   slug: string;
   title: string;
   category: string;
+  blogCategory: "spaceLabs" | "spaceMaking";
   date: string;
   imageUrl: string;
   imageAlt: string;
@@ -61,6 +62,7 @@ export const blogPosts: BlogPost[] = seeds.map(([slug, title, category, imageUrl
   slug,
   title,
   category,
+  blogCategory: index < 5 ? "spaceLabs" : "spaceMaking",
   imageUrl,
   imageAlt,
   date: index === 0 ? "April 14, 2025" : `${String((index * 3) % 27 + 1).padStart(2, "0")} June, 2025`,
@@ -71,4 +73,3 @@ export const blogPosts: BlogPost[] = seeds.map(([slug, title, category, imageUrl
 export function getBlogPost(slug: string) {
   return blogPosts.find((post) => post.slug === slug);
 }
-
