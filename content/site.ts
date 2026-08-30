@@ -52,6 +52,29 @@ export function toDirectionsHref(address: string) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
 }
 
+export function toGoogleMapsEmbedHref(mapUrl: string | undefined, fallbackAddress: string) {
+  if (mapUrl) {
+    try {
+      const url = new URL(mapUrl);
+
+      if (url.pathname.startsWith("/maps/embed")) return url.toString();
+
+      const query = url.searchParams.get("q") || url.searchParams.get("query");
+      const place = url.pathname.match(/\/maps\/place\/([^/]+)/)?.[1];
+      const coordinates = url.pathname.match(/\/maps\/@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/);
+      const location = query
+        || (place ? decodeURIComponent(place.replace(/\+/g, " ")) : undefined)
+        || (coordinates ? `${coordinates[1]},${coordinates[2]}` : undefined);
+
+      if (location) return `https://www.google.com/maps?q=${encodeURIComponent(location)}&output=embed`;
+    } catch {
+      // Invalid CMS values fall back to the configured office address below.
+    }
+  }
+
+  return `https://www.google.com/maps?q=${encodeURIComponent(fallbackAddress)}&output=embed`;
+}
+
 export function siteFooter(site: SiteData) {
   return {
     ...site.footer,

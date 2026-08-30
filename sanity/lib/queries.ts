@@ -132,7 +132,7 @@ export const contactPageQuery = defineQuery(`
   coalesce(*[_id == "contactPage"][0], *[_type == "contactPage"] | order(_updatedAt desc)[0]){
     heroTitle, heroIntro, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt,
     infoEyebrow, infoHeading, infoIntro, phoneLabel, emailLabel, mainOfficeLabel,
-    "mapImageUrl": mapImage.asset->url, "mapImageAlt": mapImage.alt,
+    mapUrl,
     satelliteOfficesHeading, socialLabel, careersEyebrow, seo
   }
 `);

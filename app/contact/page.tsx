@@ -4,7 +4,7 @@ import { CareersBanner } from "@/components/site/CareersBanner";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { Eyebrow } from "@/components/ui/Eyebrow";
-import { siteFooter, toDirectionsHref, toTelephoneHref } from "@/content/site";
+import { siteFooter, toDirectionsHref, toGoogleMapsEmbedHref, toTelephoneHref } from "@/content/site";
 import { getSiteData } from "@/sanity/lib/site";
 import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
@@ -23,6 +23,9 @@ export default async function ContactPage() {
     isSanityConfigured ? sanityClient.fetch<Record<string, string | undefined> | null>(contactPageQuery, {}, { next: { revalidate: 60 } }).catch(() => null) : null,
     getSiteData(),
   ]);
+  const mapLink = page?.mapUrl || toDirectionsHref(site.address);
+  const mapEmbedUrl = toGoogleMapsEmbedHref(page?.mapUrl, site.address);
+
   return (
     <main className={styles.page}>
       <section className={styles.hero}>
@@ -45,9 +48,17 @@ export default async function ContactPage() {
           <div className={styles.primaryDetails}>
             <div><small>{page?.phoneLabel || "Phone number"}</small><p><a href={toTelephoneHref(site.phone)}>{site.phone}</a></p></div>
             <div><small>{page?.emailLabel || "Email"}</small><p><a href={`mailto:${site.email}`}>{site.email}</a></p></div>
-            <div className={styles.mainOffice}><small>{page?.mainOfficeLabel || "Main office (Bengaluru)"}</small><p><a href={toDirectionsHref(site.address)} target="_blank" rel="noreferrer">{site.address}</a></p></div>
+            <div className={styles.mainOffice}><small>{page?.mainOfficeLabel || "Main office (Bengaluru)"}</small><p><a href={mapLink} target="_blank" rel="noreferrer">{site.address}</a></p></div>
           </div>
-          <a className={styles.map} href={toDirectionsHref(site.address)} target="_blank" rel="noreferrer" aria-label="Open directions to the Bengaluru office"><Image src={page?.mapImageUrl || "/images/contact/bengaluru-map.jpg"} alt={page?.mapImageAlt || "Map showing RC Architecture in Richmond Town, Bengaluru"} fill sizes="(max-width: 900px) 100vw, 65vw" /></a>
+          <div className={styles.map}>
+            <iframe
+              src={mapEmbedUrl}
+              title="Map showing the RC Architecture main office"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
           <h3>{page?.satelliteOfficesHeading || "Satellite offices"}</h3>
           <div className={styles.offices}>{site.offices.map((office) => <article key={office.city}><span>{office.city}</span><div><p>{office.address}</p><p>T.: <a href={toTelephoneHref(office.phone)}>{office.phone}</a></p></div></article>)}</div>
           {site.socialLinks.length > 0 && <div className={styles.socials}><small>{page?.socialLabel || "Follow us"}</small><div>{site.socialLinks.map((social) => <a href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} key={social.label}>{social.shortLabel}</a>)}</div></div>}
