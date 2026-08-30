@@ -6,7 +6,7 @@ import styles from "@/app/clients/clients.module.css";
 
 const MOBILE_BATCH = 48;
 
-export function ClientIndex({ clients }: { clients: Client[] }) {
+export function ClientIndex({ clients, title = "Index", searchPlaceholder = "Search clients", loadMoreLabel = "Load more" }: { clients: Client[]; title?: string; searchPlaceholder?: string; loadMoreLabel?: string }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
   const [visible, setVisible] = useState(MOBILE_BATCH);
@@ -40,11 +40,11 @@ export function ClientIndex({ clients }: { clients: Client[] }) {
   return (
     <div className={styles.indexInner}>
       <div className={styles.indexTopline}>
-        <h2>Index</h2>
+        <h2>{title}</h2>
         <div className={styles.controls}>
           <label>
             <span className="sr-only">Search clients</span>
-            <input value={query} onChange={(event) => { setQuery(event.target.value); setVisible(MOBILE_BATCH); }} placeholder="Search clients" type="search" />
+            <input value={query} onChange={(event) => { setQuery(event.target.value); setVisible(MOBILE_BATCH); }} placeholder={searchPlaceholder} type="search" />
           </label>
           <label>
             <span className="sr-only">Filter by category</span>
@@ -66,8 +66,7 @@ export function ClientIndex({ clients }: { clients: Client[] }) {
           ))}
         </div>
       ) : <p className={styles.empty}>No clients match “{query}”.</p>}
-      {visible < filtered.length && <button className={styles.loadMore} type="button" onClick={() => setVisible((count) => count + MOBILE_BATCH)}>Load more <span aria-hidden="true">↑</span></button>}
+      {visible < filtered.length && <button className={styles.loadMore} type="button" onClick={() => setVisible((count) => count + MOBILE_BATCH)}>{loadMoreLabel} <span aria-hidden="true">↑</span></button>}
     </div>
   );
 }
-

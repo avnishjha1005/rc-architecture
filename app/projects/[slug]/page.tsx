@@ -22,6 +22,11 @@ type CmsProjectDetail = {
   location?: string;
   yearDisplay?: string;
   excerpt?: string;
+  detailEyebrow?: string;
+  summary?: string;
+  introduction?: string;
+  facts?: { label?: string; value?: string }[];
+  storySections?: { title?: string; body?: string; layout?: string; imageUrl?: string; imageAlt?: string }[];
   heroImageUrl?: string;
   heroImageAlt?: string;
   gallery?: { imageUrl?: string; imageAlt?: string }[];
@@ -67,18 +72,18 @@ async function resolveProject(slug: string): Promise<{ project: ProjectDetail; r
   const project: ProjectDetail = {
     slug: cmsProject.slug,
     title,
-    eyebrow: cmsProject.category || discipline,
-    summary: cmsProject.excerpt || `${discipline} shaped by its setting`,
-    introduction: cmsProject.excerpt || `${title} reflects our considered approach to ${discipline.toLowerCase()}, balancing character, function, and a strong sense of place.`,
+    eyebrow: cmsProject.detailEyebrow || cmsProject.category || discipline,
+    summary: cmsProject.summary || cmsProject.excerpt || `${discipline} shaped by its setting`,
+    introduction: cmsProject.introduction || cmsProject.excerpt || `${title} reflects our considered approach to ${discipline.toLowerCase()}, balancing character, function, and a strong sense of place.`,
     heroImageUrl: cmsProject.heroImageUrl,
     heroImageAlt: cmsProject.heroImageAlt || title,
-    facts: [
+    facts: cmsProject.facts?.some((fact) => fact.label && fact.value) ? cmsProject.facts.flatMap((fact) => fact.label && fact.value ? [{ label: fact.label, value: fact.value }] : []) : [
       { label: "Project Name", value: title },
       { label: "Project Location", value: cmsProject.location || "Forthcoming" },
       { label: "Project Type", value: discipline },
       { label: "Project Period", value: cmsProject.yearDisplay || "Forthcoming" },
     ],
-    sections: [],
+    sections: (cmsProject.storySections || []).flatMap((section) => section.title && section.imageUrl ? [{ title: section.title, body: section.body || "", imageUrl: section.imageUrl, imageAlt: section.imageAlt || section.title, layout: section.layout === "image-right" || section.layout === "wide" ? section.layout : "image-left" as const }] : []),
     gallery: (cmsProject.gallery ?? []).flatMap((image) =>
       image.imageUrl ? [{ imageUrl: image.imageUrl, imageAlt: image.imageAlt || title }] : [],
     ),

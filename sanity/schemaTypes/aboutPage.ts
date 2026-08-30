@@ -1,0 +1,42 @@
+import { defineArrayMember, defineField, defineType } from "sanity";
+
+export const aboutPage = defineType({
+  name: "aboutPage", title: "About page", type: "document",
+  groups: [
+    { name: "hero", title: "Hero", default: true }, { name: "intro", title: "Introduction" },
+    { name: "philosophy", title: "Philosophy" }, { name: "clients", title: "Clients" },
+    { name: "people", title: "People" }, { name: "awards", title: "Awards" },
+    { name: "careers", title: "Careers" }, { name: "seo", title: "SEO" },
+  ],
+  fields: [
+    defineField({ name: "heroTitle", type: "text", rows: 2, group: "hero", initialValue: "About\nRC Architecture", validation: (r) => r.required() }),
+    defineField({ name: "heroImage", type: "image", group: "hero", options: { hotspot: true }, fields: [defineField({ name: "alt", type: "string", validation: (r) => r.required() })], validation: (r) => r.required() }),
+    defineField({ name: "introEyebrow", type: "string", group: "intro", initialValue: "Who we are" }),
+    defineField({ name: "introHeading", type: "text", rows: 4, group: "intro", validation: (r) => r.required() }),
+    defineField({ name: "introParagraphs", type: "array", group: "intro", of: [{ type: "text", rows: 4 }], validation: (r) => r.min(1) }),
+    defineField({ name: "introImages", type: "array", group: "intro", validation: (r) => r.max(3), of: [defineArrayMember({ type: "image", options: { hotspot: true }, fields: [defineField({ name: "alt", type: "string", validation: (r) => r.required() })] })] }),
+    defineField({ name: "stats", type: "array", group: "intro", validation: (r) => r.max(3), of: [defineArrayMember({ type: "object", fields: [defineField({ name: "label", type: "string", validation: (r) => r.required() }), defineField({ name: "value", type: "string", validation: (r) => r.required() })], preview: { select: { title: "value", subtitle: "label" } } })] }),
+    defineField({ name: "philosophyEyebrow", type: "string", group: "philosophy", initialValue: "Our ideology" }),
+    defineField({ name: "philosophyHeading", type: "text", rows: 2, group: "philosophy" }),
+    defineField({ name: "philosophyIntro", type: "text", rows: 3, group: "philosophy" }),
+    defineField({ name: "principles", type: "array", group: "philosophy", of: [defineArrayMember({ type: "object", fields: [defineField({ name: "title", type: "string", validation: (r) => r.required() }), defineField({ name: "description", type: "text", rows: 4 })], preview: { select: { title: "title" } } })] }),
+    defineField({ name: "clientsEyebrow", type: "string", group: "clients", initialValue: "Our clients" }),
+    defineField({ name: "clientsHeading", type: "string", group: "clients" }),
+    defineField({ name: "clientsIntro", type: "text", rows: 3, group: "clients" }),
+    defineField({ name: "clientNames", type: "array", group: "clients", of: [{ type: "string" }] }),
+    defineField({ name: "peopleEyebrow", type: "string", group: "people", initialValue: "People" }),
+    defineField({ name: "peopleHeading", type: "text", rows: 2, group: "people" }),
+    defineField({ name: "people", type: "array", group: "people", of: [defineArrayMember({ type: "object", fields: [defineField({ name: "name", type: "string", validation: (r) => r.required() }), defineField({ name: "role", type: "string" }), defineField({ name: "image", type: "image", options: { hotspot: true }, fields: [defineField({ name: "alt", type: "string" })] })], preview: { select: { title: "name", subtitle: "role", media: "image" } } })] }),
+    defineField({ name: "awardsEyebrow", type: "string", group: "awards", initialValue: "Awards" }),
+    defineField({ name: "awardsHeading", type: "text", rows: 2, group: "awards" }),
+    defineField({ name: "awardsIntro", type: "text", rows: 3, group: "awards" }),
+    defineField({ name: "awards", type: "array", group: "awards", of: [defineArrayMember({ type: "object", fields: [defineField({ name: "project", type: "string", validation: (r) => r.required() }), defineField({ name: "award", type: "string", validation: (r) => r.required() }), defineField({ name: "year", type: "string" })], preview: { select: { title: "award", subtitle: "project" } } })] }),
+    defineField({ name: "careersEyebrow", type: "string", group: "careers", initialValue: "Careers" }),
+    defineField({ name: "valuesHeading", type: "text", rows: 2, group: "careers" }),
+    defineField({ name: "valuesIntro", type: "text", rows: 4, group: "careers" }),
+    defineField({ name: "values", type: "array", group: "careers", validation: (r) => r.max(3), of: [defineArrayMember({ type: "object", fields: [defineField({ name: "icon", type: "string" }), defineField({ name: "title", type: "string", validation: (r) => r.required() }), defineField({ name: "description", type: "text", rows: 3 })], preview: { select: { title: "title" } } })] }),
+    defineField({ name: "seo", type: "object", group: "seo", fields: [defineField({ name: "title", type: "string", validation: (r) => r.max(70) }), defineField({ name: "description", type: "text", rows: 3, validation: (r) => r.max(160) }), defineField({ name: "image", type: "image", options: { hotspot: true } })] }),
+  ],
+  preview: { prepare: () => ({ title: "About page" }) },
+});
+

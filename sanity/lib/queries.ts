@@ -82,6 +82,11 @@ export const projectBySlugQuery = defineQuery(`
     location,
     "yearDisplay": coalesce(yearRange, string(year)),
     excerpt,
+    detailEyebrow,
+    summary,
+    introduction,
+    facts[]{label, value},
+    storySections[]{title, body, layout, "imageUrl": image.asset->url, "imageAlt": image.alt},
     "heroImageUrl": coverImage.asset->url,
     "heroImageAlt": coverImage.alt,
     "gallery": gallery[]{
@@ -89,5 +94,67 @@ export const projectBySlugQuery = defineQuery(`
       "imageAlt": alt
     },
     "relatedProjects": relatedProjects[]->${projectCardProjection}
+  }
+`);
+
+export const aboutPageQuery = defineQuery(`
+  coalesce(*[_id == "aboutPage"][0], *[_type == "aboutPage"] | order(_updatedAt desc)[0]){
+    heroTitle, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt,
+    introEyebrow, introHeading, introParagraphs,
+    "introImages": introImages[]{"imageUrl": asset->url, "imageAlt": alt},
+    stats[]{label, value}, philosophyEyebrow, philosophyHeading, philosophyIntro,
+    principles[]{title, description}, clientsEyebrow, clientsHeading, clientsIntro, clientNames,
+    peopleEyebrow, peopleHeading, "people": people[]{name, role, "imageUrl": image.asset->url, "imageAlt": image.alt},
+    awardsEyebrow, awardsHeading, awardsIntro, awards[]{project, award, year},
+    careersEyebrow, valuesHeading, valuesIntro, values[]{icon, title, description}, seo
+  }
+`);
+
+export const servicesPageQuery = defineQuery(`
+  coalesce(*[_id == "servicesPage"][0], *[_type == "servicesPage"] | order(_updatedAt desc)[0]){
+    heroTitle, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt,
+    processEyebrow, processHeading, processSteps[]{number, title, subtitle, deliverables},
+    servicesEyebrow, servicesHeading,
+    "services": services[]{mark, title, description, "items": items[]{title, description, "imageUrl": image.asset->url, "imageAlt": image.alt}},
+    "featuredProjects": featuredProjects[]->${projectCardProjection}, seo
+  }
+`);
+
+export const clientsPageQuery = defineQuery(`{
+  "page": coalesce(*[_id == "clientsPage"][0], *[_type == "clientsPage"] | order(_updatedAt desc)[0]){
+    countLabel, heroTitle, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt,
+    indexTitle, searchPlaceholder, loadMoreLabel, seo
+  },
+  "clients": *[_type == "client"] | order(coalesce(order, 999999) asc, name asc){name, category, year}
+}`);
+
+export const contactPageQuery = defineQuery(`
+  coalesce(*[_id == "contactPage"][0], *[_type == "contactPage"] | order(_updatedAt desc)[0]){
+    heroTitle, heroIntro, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt,
+    infoEyebrow, infoHeading, infoIntro, phoneLabel, emailLabel, mainOfficeLabel,
+    "mapImageUrl": mapImage.asset->url, "mapImageAlt": mapImage.alt,
+    satelliteOfficesHeading, socialLabel, careersEyebrow, seo
+  }
+`);
+
+const blogPostProjection = `{
+  _id, title, "slug": slug.current, category, publishedAt, excerpt,
+  "imageUrl": coverImage.asset->url, "imageAlt": coverImage.alt,
+  "sections": sections[]{title, "body": paragraphs, bullets, "imageUrl": image.asset->url, "imageAlt": image.alt, quote}
+}`;
+
+export const blogPageQuery = defineQuery(`{
+  "page": coalesce(*[_id == "blogPage"][0], *[_type == "blogPage"] | order(_updatedAt desc)[0]){
+    heroTitle, heroIntro, primaryTabLabel, secondaryTabLabel,
+    "featuredPosts": featuredPosts[]->${blogPostProjection},
+    "featuredProjects": featuredProjects[]->${projectCardProjection}, seo
+  },
+  "allPosts": *[_type == "blogPost"] | order(publishedAt desc)${blogPostProjection}
+}`);
+
+export const blogPostBySlugQuery = defineQuery(`
+  *[_type == "blogPost" && slug.current == $slug][0]{
+    ${blogPostProjection.slice(1, -1)},
+    "relatedPosts": relatedPosts[]->${blogPostProjection}
   }
 `);

@@ -1,25 +1,22 @@
 import type { StructureResolver } from "sanity/structure";
 
-const singletonTypes = new Set(["siteSettings", "homePage", "projectsPage"]);
+const singletonTypes = new Set(["siteSettings", "homePage", "projectsPage", "aboutPage", "servicesPage", "clientsPage", "contactPage", "blogPage"]);
+
+const singleton = (S: Parameters<StructureResolver>[0], title: string, type: string) =>
+  S.listItem().title(title).id(type).child(S.document().schemaType(type).documentId(type));
 
 export const structure: StructureResolver = (S) =>
   S.list()
     .title("Content")
     .items([
-      S.listItem()
-        .title("Site settings")
-        .id("siteSettings")
-        .child(S.document().schemaType("siteSettings").documentId("siteSettings")),
-      S.listItem()
-        .title("Homepage")
-        .id("homePage")
-        .child(S.document().schemaType("homePage").documentId("homePage")),
-      S.listItem()
-        .title("Projects page")
-        .id("projectsPage")
-        .child(
-          S.document().schemaType("projectsPage").documentId("projectsPage"),
-        ),
+      singleton(S, "Site settings", "siteSettings"),
+      singleton(S, "Homepage", "homePage"),
+      singleton(S, "About page", "aboutPage"),
+      singleton(S, "Services page", "servicesPage"),
+      singleton(S, "Projects page", "projectsPage"),
+      singleton(S, "Clients page", "clientsPage"),
+      singleton(S, "Blog page", "blogPage"),
+      singleton(S, "Contact page", "contactPage"),
       S.divider(),
       ...S.documentTypeListItems().filter(
         (item) => !singletonTypes.has(item.getId() ?? ""),

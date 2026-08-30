@@ -11,6 +11,7 @@ export const homePage = defineType({
     { name: "services", title: "Services" },
     { name: "projects", title: "Projects" },
     { name: "labs", title: "Space Labs" },
+    { name: "seo", title: "SEO" },
   ],
   fields: [
     defineField({
@@ -87,6 +88,11 @@ export const homePage = defineType({
         ], preview: { select: { title: "title", subtitle: "category", media: "image" } } })] }),
       ],
     }),
+    defineField({ name: "seo", title: "Search and social", type: "object", group: "seo", fields: [
+      defineField({ name: "title", title: "Meta title", type: "string", validation: (rule) => rule.max(70) }),
+      defineField({ name: "description", title: "Meta description", type: "text", rows: 3, validation: (rule) => rule.max(160) }),
+      defineField({ name: "image", title: "Social image", type: "image", options: { hotspot: true } }),
+    ] }),
   ],
   preview: { prepare: () => ({ title: "Homepage" }) },
 });

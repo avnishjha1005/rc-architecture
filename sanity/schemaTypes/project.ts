@@ -67,6 +67,19 @@ export const project = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({ name: "excerpt", type: "text", rows: 3 }),
+    defineField({ name: "detailEyebrow", title: "Case study eyebrow", type: "string", description: "Falls back to Category." }),
+    defineField({ name: "summary", title: "Case study summary", type: "text", rows: 2 }),
+    defineField({ name: "introduction", title: "Case study introduction", type: "text", rows: 5 }),
+    defineField({ name: "facts", type: "array", of: [defineArrayMember({ type: "object", fields: [
+      defineField({ name: "label", type: "string", validation: (rule) => rule.required() }),
+      defineField({ name: "value", type: "string", validation: (rule) => rule.required() }),
+    ], preview: { select: { title: "label", subtitle: "value" } } })] }),
+    defineField({ name: "storySections", title: "Case study sections", type: "array", of: [defineArrayMember({ type: "object", fields: [
+      defineField({ name: "title", type: "string", validation: (rule) => rule.required() }),
+      defineField({ name: "body", type: "text", rows: 6 }),
+      defineField({ name: "layout", type: "string", options: { list: [{ title: "Image left", value: "image-left" }, { title: "Image right", value: "image-right" }, { title: "Wide image", value: "wide" }], layout: "radio" }, initialValue: "image-left", validation: (rule) => rule.required() }),
+      defineField({ name: "image", type: "image", options: { hotspot: true }, fields: [defineField({ name: "alt", type: "string", validation: (rule) => rule.required() })], validation: (rule) => rule.required() }),
+    ], preview: { select: { title: "title", subtitle: "layout", media: "image" } } })] }),
     defineField({ name: "body", type: "blockContent" }),
     defineField({
       name: "relatedProjects",
@@ -91,6 +104,11 @@ export const project = defineType({
       ],
       options: { layout: "grid" },
     }),
+    defineField({ name: "seo", title: "Search and social", type: "object", options: { collapsible: true, collapsed: true }, fields: [
+      defineField({ name: "title", title: "Meta title", type: "string", validation: (rule) => rule.max(70) }),
+      defineField({ name: "description", title: "Meta description", type: "text", rows: 3, validation: (rule) => rule.max(160) }),
+      defineField({ name: "image", title: "Social image", type: "image", options: { hotspot: true } }),
+    ] }),
   ],
   orderings: [
     {

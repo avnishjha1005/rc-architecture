@@ -8,6 +8,9 @@ import { Header } from "@/components/site/Header";
 import { clients } from "@/content/clients";
 import { siteFooter } from "@/content/site";
 import { getSiteData } from "@/sanity/lib/site";
+import { isSanityConfigured } from "@/sanity/env";
+import { getSanityClient } from "@/sanity/lib/client";
+import { clientsPageQuery } from "@/sanity/lib/queries";
 import styles from "./clients.module.css";
 
 export const metadata: Metadata = {
@@ -16,17 +19,23 @@ export const metadata: Metadata = {
 };
 
 export default async function ClientsPage() {
-  const site = await getSiteData();
+  const sanityClient = await getSanityClient();
+  const [data, site] = await Promise.all([
+    isSanityConfigured ? sanityClient.fetch<{ page?: { countLabel?: string; heroTitle?: string; heroImageUrl?: string; heroImageAlt?: string; indexTitle?: string; searchPlaceholder?: string; loadMoreLabel?: string }; clients?: typeof clients } | null>(clientsPageQuery, {}, { next: { revalidate: 60 } }).catch(() => null) : null,
+    getSiteData(),
+  ]);
+  const page = data?.page;
+  const clientList = data?.clients?.length ? data.clients : clients;
 
   return (
     <main className={styles.page}>
       <section className={styles.hero}>
         <Header brandName={site.brandName} navigation={site.navigation} cta={site.cta} theme="dark" />
-        <div className={styles.heroCopy}><strong>150+</strong><h1>Private &amp;<br />Public Clients</h1></div>
-        <div className={styles.heroImage}><Image src="/images/home/service-architecture.jpg" alt="Contemporary RC Architecture building" fill priority sizes="(max-width: 900px) 100vw, 36vw" /></div>
+        <div className={styles.heroCopy}><strong>{page?.countLabel || "150+"}</strong><h1>{(page?.heroTitle || "Private &\nPublic Clients").split("\n").map((line, index) => <span key={line}>{line}{index === 0 && <br />}</span>)}</h1></div>
+        <div className={styles.heroImage}><Image src={page?.heroImageUrl || "/images/home/service-architecture.jpg"} alt={page?.heroImageAlt || "Contemporary RC Architecture building"} fill priority sizes="(max-width: 900px) 100vw, 36vw" /></div>
         <a className={styles.scrollCue} href="#client-index" aria-label="Scroll to the client index"><span aria-hidden="true">↓</span></a>
       </section>
-      <section className={styles.index} id="client-index"><ClientIndex clients={clients} /></section>
+      <section className={styles.index} id="client-index"><ClientIndex clients={clientList} title={page?.indexTitle} searchPlaceholder={page?.searchPlaceholder} loadMoreLabel={page?.loadMoreLabel} /></section>
       <ContactSection content={site.contact} />
       <NewsletterSection content={site.newsletter} />
       <Footer content={siteFooter(site)} />
