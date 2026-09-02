@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
-import { ProjectCard } from "@/components/projects/ProjectCard";
+import { FeaturedProjectsCarousel } from "@/components/projects/FeaturedProjectsCarousel";
 import { ProjectsGallery } from "@/components/projects/ProjectsGallery";
 import { portfolioProjects, type PortfolioProject } from "@/content/projects";
 import { siteFooter } from "@/content/site";
@@ -102,11 +102,7 @@ export default async function ProjectsPage() {
           <h1>{page?.featuredHeading || "Featured\nWork"}</h1>
           <div><p>{page?.featuredIntro || "Explore our services and see how we bring creativity and expertise to every project."}</p><small>{page?.featuredYearRange || "1999–2023"}</small></div>
         </div>
-        <div className={styles.featuredRail}>
-          {featured.map((project, index) => (
-            <ProjectCard project={project} variant="featured" eager={index === 0} key={project.id} />
-          ))}
-        </div>
+        <FeaturedProjectsCarousel projects={featured} />
       </section>
 
       <section className={styles.archive}>

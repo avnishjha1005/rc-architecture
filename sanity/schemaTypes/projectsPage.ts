@@ -48,7 +48,7 @@ export const projectsPage = defineType({
           to: [{ type: "project" }],
         }),
       ],
-      validation: (rule) => rule.required().min(1).max(5).unique(),
+      validation: (rule) => rule.required().min(1).max(10).unique(),
     }),
     defineField({
       name: "archiveEyebrow",

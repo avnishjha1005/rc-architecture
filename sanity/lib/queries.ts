@@ -66,7 +66,7 @@ export const projectsPageQuery = defineQuery(`{
     seo
   },
   "featuredFlagged": *[_type == "project" && featured == true]
-    | order(year desc, title asc)[0...5]${projectCardProjection},
+    | order(year desc, title asc)[0...10]${projectCardProjection},
   "allProjects": *[_type == "project"]
     | order(year desc, title asc)${projectCardProjection}
 }`);
