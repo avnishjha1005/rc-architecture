@@ -7,28 +7,30 @@ import styles from "@/app/projects/[slug]/project-detail.module.css";
 
 export function ProjectGallery({ images, title }: { images: ProjectDetail["gallery"]; title: string }) {
   const railRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  function updateProgress() {
+  function updateIndex() {
     const rail = railRef.current;
     if (!rail) return;
     const maximum = rail.scrollWidth - rail.clientWidth;
-    setProgress(maximum > 0 ? rail.scrollLeft / maximum : 1);
-  }
-
-  function move(direction: -1 | 1) {
-    railRef.current?.scrollBy({ left: direction * railRef.current.clientWidth * 0.72, behavior: "smooth" });
+    const nextIndex = maximum > 0
+      ? Math.round((rail.scrollLeft / maximum) * (images.length - 1))
+      : 0;
+    setActiveIndex(nextIndex);
   }
 
   return (
     <div className={styles.gallery} role="region" aria-label={`${title} image gallery`}>
-      <div className={styles.galleryRail} ref={railRef} onScroll={updateProgress} tabIndex={0}>
+      <div className={styles.galleryRail} ref={railRef} onScroll={updateIndex} tabIndex={0}>
         {images.map((image, index) => <div key={image.imageUrl + index}><Image src={image.imageUrl} alt={image.imageAlt} fill sizes="70vw" /></div>)}
       </div>
-      <div className={styles.galleryControls}>
-        <button type="button" onClick={() => move(-1)} aria-label="Previous gallery images">←</button>
-        <div className={styles.progress} aria-hidden="true"><span style={{ width: `${Math.max(12, progress * 100)}%` }} /></div>
-        <button type="button" onClick={() => move(1)} aria-label="Next gallery images">→</button>
+      <div className={styles.galleryIndicator} aria-hidden="true">
+        <span
+          style={{
+            width: `${100 / images.length}%`,
+            transform: `translateX(${activeIndex * 100}%)`,
+          }}
+        />
       </div>
     </div>
   );
