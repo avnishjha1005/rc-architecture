@@ -14,6 +14,7 @@ import "swiper/css/mousewheel";
 
 type NextProjectsProps = {
   projects: PortfolioProject[];
+  className?: string;
   eyebrow?: string;
   title?: string;
   backHref?: string;
@@ -22,6 +23,7 @@ type NextProjectsProps = {
 
 export function NextProjects({
   projects,
+  className = "",
   eyebrow = "Featured projects",
   title = "Next Projects.",
   backHref = "/projects",
@@ -30,7 +32,7 @@ export function NextProjects({
   if (!projects.length) return null;
 
   return (
-    <section className={styles.nextProjects} aria-labelledby="next-projects-title">
+    <section className={`${styles.nextProjects} ${className}`} aria-labelledby="next-projects-title">
       <div className={styles.nextHeading}>
         <Eyebrow>{eyebrow}</Eyebrow>
         <div className={styles.nextHeadingContent}>

@@ -38,8 +38,10 @@ export default async function BlogPage() {
   const cmsProjects: PortfolioProject[] = (page?.featuredProjects || []).flatMap((project, index) => project.title && project.slug && project.imageUrl ? [{ id: project._id || project.slug || index, slug: project.slug, title: project.title, featuredTitle: project.featuredTitle, type: project.type === "Interior Design" ? "Interior Design" as const : "Architecture" as const, category: project.category || project.type || "Architecture", location: project.location || "Location forthcoming", year: project.yearDisplay || "Year forthcoming", imageUrl: project.imageUrl, imageAlt: project.imageAlt || project.title, href: `/projects/${project.slug}` }] : []);
   return <main className={styles.page}>
     <section className={styles.hero}><Header brandName={site.brandName} navigation={site.navigation} cta={site.cta} theme="light" /><h1>{(page?.heroTitle || "In the\nSpotlight.").split("\n").map((line, index) => <span key={line}>{line}{index === 0 && <br />}</span>)}</h1><p>{page?.heroIntro || "Dive into our latest thoughts on design, industry trends, and behind-the-scenes looks at our projects."}</p></section>
-    <section className={styles.posts}><BlogCategoryToggle articles={articles} primaryLabel={page?.primaryTabLabel || "Space Labs"} secondaryLabel={page?.secondaryTabLabel || "Space Making"} tabsClassName={styles.tabs} emptyClassName={styles.empty} /></section>
-    <NextProjects projects={cmsProjects.length ? cmsProjects : portfolioProjects.slice(2,6)} />
+    <div className={styles.listingSurface}>
+      <section className={styles.posts}><BlogCategoryToggle articles={articles} primaryLabel={page?.primaryTabLabel || "Space Labs"} secondaryLabel={page?.secondaryTabLabel || "Space Making"} tabsClassName={styles.tabs} emptyClassName={styles.empty} /></section>
+      <NextProjects className={styles.nextProjects} projects={cmsProjects.length ? cmsProjects : portfolioProjects.slice(2,6)} />
+    </div>
     <ContactSection content={site.contact} />
     <Footer content={siteFooter(site)} />
   </main>;
