@@ -1,5 +1,5 @@
 .page{background:#fafafa;color:#202020}
-.page :global(.newsletter-card)>img{bottom:-15px}
+.page :global(.newsletter-card)>img{bottom:0px}
 .hero{background:#fff;box-sizing:border-box;display:flex;flex-direction:column;height:100vh;height:100svh;max-height:100vh;padding:108px 20px 40px;position:relative}
 .heroTitle{margin-top:51px}
 .heroTitle p{color:#ff3022;font:650 .68rem/1.2 var(--font-chivo-mono);letter-spacing:.06em;margin:0 0 20px;text-transform:uppercase}
@@ -21,6 +21,11 @@
 .wide .sectionImage{height:min(52vw,720px)}
 .wide .sectionCopy{margin-left:0}
 .gallery{overflow:hidden}
+.galleryViewport{position:relative}
+.galleryNext{background:var(--red);border:0;border-radius:50%;color:#fff;cursor:pointer;display:grid;height:38px;padding:0;place-items:center;position:absolute;right:10px;top:50%;transform:translateY(-50%);transition:opacity .2s,transform .2s;width:38px;z-index:2}
+.galleryNext:hover:not(:disabled){transform:translateY(-50%) translateX(2px)}
+.galleryNext:disabled{cursor:default;opacity:.35}
+.galleryNext img{display:block;height:14px;width:16px}
 .galleryRail{display:flex;gap:20px;overflow-x:auto;overscroll-behavior-inline:contain;scroll-behavior:smooth;scroll-snap-type:x mandatory;scrollbar-width:none}
 .galleryRail::-webkit-scrollbar{display:none}
 .galleryRail>div{flex:0 0 auto;height:min(42vw,600px);position:relative;width:min(76vw,1100px)}
@@ -47,6 +52,7 @@
   .sectionImage,.wide .sectionImage{height:310px;width:100%;order:1}
   .sectionCopy,.image-right .sectionCopy{margin-left:0;max-width:none;order:2;padding:0;width:100%}
   .wide .sectionCopy{margin-top:0}
+  .galleryNext{height:36px;right:8px;width:36px}
   .galleryRail{gap:12px}
   .galleryRail>div{height:270px;width:76vw}
   .galleryRail>div:nth-child(n+2){width:60vw}

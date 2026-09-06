@@ -3,9 +3,8 @@
 .nextHeading>p{color:#ff3022;font:650 .68rem/1.2 var(--font-chivo-mono);letter-spacing:.06em;margin:0 0 13px;text-transform:uppercase}
 .nextHeadingContent{align-items:end;display:flex;gap:70px;justify-content:space-between}
 .nextHeading h2{font-size:clamp(4rem,7vw,7.5rem);font-weight:400;letter-spacing:-.065em;line-height:.9;margin:0}
-.backLink{background:#202020;border-radius:999px;color:#fff;flex:none;font-size:.65rem;font-weight:650;margin-bottom:10px;padding:11px 22px;text-transform:uppercase}
-.backLink span{margin-left:12px}
-.swiperOffset{margin-left:230px}
+.backLink{background:#202020;border-radius:999px;color:#fff;flex:none;font-size:.65rem;font-weight:650;gap:8px;margin-bottom:10px;padding:11px 22px;text-transform:uppercase}
+.swiperOffset{margin-left:230px;margin-right:-20px}
 .relatedSwiper{overflow:visible!important;padding-bottom:15px}
 .relatedSlide{height:auto}
 .relatedCard{height:100%}
@@ -25,6 +24,6 @@
   .nextHeading>p{font-size:.58rem}
   .nextHeadingContent{align-items:start;display:block}
   .nextHeading h2{font-size:3.5rem;margin-bottom:22px}
-  .backLink{display:inline-block;margin-bottom:0}
-  .swiperOffset{margin:45px 0 0}
+  .backLink{display:inline-flex;margin-bottom:0}
+  .swiperOffset{margin:45px -20px 0 0}
 }

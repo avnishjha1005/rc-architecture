@@ -34,7 +34,7 @@ export function ProjectCard(props: ProjectCardProps) {
         <p>({project.category}) <span>{project.year}</span></p>
         <div>
           <h3><Link href={project.href}>{project.title}</Link></h3>
-          <Link href={project.href} aria-label={`View ${project.title}`}>↗</Link>
+          <Link href={project.href} aria-label={`View ${project.title}`}><Image src="/ArrowDiagonal.svg" alt="" width={12} height={12} /></Link>
         </div>
       </article>
     );

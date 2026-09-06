@@ -11,6 +11,10 @@ const images = [
   { src: "/images/about/team-outing.png", alt: "RC Architecture team outdoors" },
 ];
 
+const repeatedImages = Array.from({ length: 4 }, (_, repeat) =>
+  images.map((image) => ({ ...image, repeat })),
+).flat();
+
 export function CareersBanner({ email }: { email: string }) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -21,7 +25,7 @@ export function CareersBanner({ email }: { email: string }) {
 
     const maximum = carousel.scrollWidth - carousel.clientWidth;
     const nextIndex = maximum > 0
-      ? Math.round((carousel.scrollLeft / maximum) * (images.length - 1))
+      ? Math.round((carousel.scrollLeft / maximum) * (repeatedImages.length - 1))
       : 0;
     setActiveIndex(nextIndex);
   };
@@ -40,8 +44,8 @@ export function CareersBanner({ email }: { email: string }) {
         tabIndex={0}
       >
         <div className={styles.track}>
-          {images.map((image) => (
-            <div className={styles.image} key={image.src}>
+          {repeatedImages.map((image) => (
+            <div className={styles.image} key={`${image.repeat}-${image.src}`}>
               <Image src={image.src} alt={image.alt} fill sizes="(max-width: 900px) 52vw, 36vw" />
             </div>
           ))}
@@ -50,7 +54,7 @@ export function CareersBanner({ email }: { email: string }) {
       <div className={styles.progress} aria-hidden="true">
         <span
           style={{
-            width: `${100 / images.length}%`,
+            width: `${100 / repeatedImages.length}%`,
             transform: `translateX(${activeIndex * 100}%)`,
           }}
         />

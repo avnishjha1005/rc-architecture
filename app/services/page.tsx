@@ -12,6 +12,7 @@ import { getSiteData } from "@/sanity/lib/site";
 import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
 import { servicesPageQuery } from "@/sanity/lib/queries";
+import { ServiceCarousel } from "./ServiceCarousel";
 import styles from "./services.module.css";
 
 export const metadata: Metadata = {
@@ -26,8 +27,10 @@ const process = [
   ["04", "Deploy", "Executing the DNA", "Quality Monitoring", "In-time Execution"],
 ];
 
+const processMarks = ["/services-1.png", "/services-2.png", "/services-3.png", "/services-3.png"];
+
 const services = [
-  { mark: "(a)", title: "Architectural Design", description: "Design is ever evolving, and so is technology. That is why we intend to keep up with innovation to bring out the best facilities for our clients. Design is space-making, and so is technology.", items: [["Residential Architecture", "Designing homes, apartments, and hospitality complexes that balance aesthetics, comfort, and durability.", "/images/home/project-bale-county.jpg"], ["Commercial Architecture", "Spaces designed for business interaction, productivity, and the seamless flow of human activity.", "/images/home/service-architecture.jpg"]] },
+  { mark: "(a)", title: "Architectural Design", description: "Design is ever evolving, and so is technology. That is why we intend to keep up with innovation to bring out the best facilities for our clients. Design is space-making, and so is technology.", items: [["Residential Architecture", "Designing homes, apartments, and hospitality complexes that balance aesthetics, comfort, and durability.", "/images/home/project-bale-county.jpg"], ["Commercial Architecture", "Spaces designed for business interaction, productivity, and the seamless flow of human activity.", "/images/home/service-architecture.jpg"], ["Workplace Architecture", "Purpose-built workplaces that support collaboration, focus, adaptability, and the culture of each organisation.", "/images/home/project-ge-digital.jpg"]] },
   { mark: "(b)", title: "Interior Design", description: "Design is ever evolving, and so is technology. That is why we intend to keep up with innovation to bring out the best facilities for our clients. Design is space-making, and so is technology.", items: [["Residential Interior Design", "Spaces with calming environments, functional planning, and a highly liveable material palette.", "/images/home/project-avalahalli.jpg"], ["Commercial Interior Design", "Curated spaces meant for business, work, hospitality, branding and everyday interaction.", "/images/home/service-interiors.jpg"]] },
 ];
 
@@ -55,12 +58,12 @@ export default async function ServicesPage() {
       <section className={styles.intro}>
         <Eyebrow>{page?.processEyebrow || "Process"}</Eyebrow>
         <h2>{(page?.processHeading || "Great architecture isn’t just about talent and experience,\nbut collaborations and relationships.").split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h2>
-        <div className={styles.process}>{processItems.map(([number, title, subtitle, line1, line2], index) => <article key={title}><small>{number}</small><h3>{title}</h3><p>{subtitle}</p><div className={styles.processMark} aria-hidden="true"><i /><i /><i /></div><span>{line1}<br />{line2}</span><b>{String.fromCharCode(97 + index)}</b></article>)}</div>
+        <div className={styles.process}>{processItems.map(([number, title, subtitle, line1, line2], index) => <article key={title}><small>{number}</small><h3>{title}</h3><p>{subtitle}</p><div className={styles.processMark} aria-hidden="true"><Image src={processMarks[index] || processMarks[2]} alt="" fill sizes="165px" /></div><span>{line1}<br />{line2}</span><b>{String.fromCharCode(97 + index)}</b></article>)}</div>
       </section>
 
       <section className={styles.services}>
         <div className={styles.servicesHeading}><Eyebrow>{page?.servicesEyebrow || "What we do"}</Eyebrow><h2>{(page?.servicesHeading || "Our\nServices.").split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h2></div>
-        <div className={styles.serviceList}>{serviceItems.map((service) => <article className={styles.service} key={service.title}><span className={styles.serviceMark}>{service.mark}</span><div className={styles.serviceBody}><div className={styles.serviceIntro}><div><h3>{service.title}</h3><p>{service.description}</p></div><div className={styles.roundActions} aria-hidden="true"><span>→</span><span>↗</span></div></div><div className={styles.serviceImages}>{service.items.map(([title, copy, image]) => <div key={title}><div className={styles.serviceImage}><Image src={image} alt={title} fill sizes="(max-width: 800px) 100vw, 32vw" /></div><h4>{title}</h4><p>{copy}</p></div>)}</div></div></article>)}</div>
+        <div className={styles.serviceList}>{serviceItems.map((service) => <article className={styles.service} key={service.title}><span className={styles.serviceMark}>{service.mark}</span><div className={styles.serviceBody}><ServiceCarousel items={service.items} label={service.title} description={service.description} /></div></article>)}</div>
       </section>
 
       <NextProjects projects={cmsProjects.length ? cmsProjects : portfolioProjects.slice(1, 5)} eyebrow="Featured projects" />
