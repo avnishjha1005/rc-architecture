@@ -12,7 +12,7 @@ export function ServicesSection({ content }: { content: HomeContent["services"] 
         {content.items.map((service, index) => (
           <Reveal className={`service-card${index % 2 ? " service-card--reverse" : ""}`} key={service.number} delay={index * 80}>
             <span className="service-card__number">{service.number}</span>
-            <div className="service-card__image"><Image src={service.imageUrl} alt={service.imageAlt} fill sizes="(max-width: 760px) 100vw, 45vw" /></div>
+            <div className="service-card__image"><Image src={service.imageUrl} alt={service.imageAlt || service.title} fill sizes="(max-width: 760px) 100vw, 45vw" /></div>
             <div className="service-card__content"><h3>{service.title}</h3><p>{service.description}</p><ul>{service.features.map((feature) => <li key={feature}>{feature}</li>)}</ul></div>
           </Reveal>
         ))}

@@ -13,25 +13,6 @@ export const contactPage = defineType({
     defineField({ name: "phoneLabel", type: "string", group: "information", initialValue: "Phone number" }),
     defineField({ name: "emailLabel", type: "string", group: "information", initialValue: "Email" }),
     defineField({ name: "mainOfficeLabel", type: "string", group: "information", initialValue: "Main office (Bengaluru)" }),
-    defineField({
-      name: "mapUrl",
-      title: "Google Maps link",
-      type: "url",
-      group: "information",
-      description: "Paste a full Google Maps place, search, or embed link. Short maps.app.goo.gl links will use the main office address for the embed.",
-      validation: (rule) => rule.uri({ scheme: ["https"] }).custom((value) => {
-        if (!value) return true;
-
-        try {
-          const hostname = new URL(value).hostname;
-          return hostname === "maps.app.goo.gl" || hostname === "google.com" || hostname.endsWith(".google.com")
-            ? true
-            : "Enter a Google Maps link.";
-        } catch {
-          return "Enter a valid Google Maps link.";
-        }
-      }),
-    }),
     defineField({ name: "satelliteOfficesHeading", type: "string", group: "information", initialValue: "Satellite offices" }),
     defineField({ name: "socialLabel", type: "string", group: "information", initialValue: "Follow us" }),
     defineField({ name: "careersEyebrow", type: "string", group: "careers", initialValue: "Careers" }),

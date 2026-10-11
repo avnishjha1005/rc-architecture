@@ -7,6 +7,7 @@ import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
 import { projectBySlugQuery } from "@/sanity/lib/queries";
 import { getSiteData } from "@/sanity/lib/site";
+import { metadataFromSeo, type SeoData } from "@/sanity/lib/metadata";
 
 type CmsProjectCard = {
   _id?: string; title?: string; featuredTitle?: string; slug?: string; type?: string;
@@ -30,6 +31,7 @@ type CmsProjectDetail = {
   heroImageUrl?: string;
   heroImageAlt?: string;
   gallery?: { imageUrl?: string; imageAlt?: string }[];
+  seo?: SeoData;
   relatedProjects?: CmsProjectCard[];
 } | null;
 
@@ -53,7 +55,7 @@ function normalizeRelated(projects: CmsProjectCard[] | undefined): PortfolioProj
   });
 }
 
-async function resolveProject(slug: string): Promise<{ project: ProjectDetail; related: PortfolioProject[] } | undefined> {
+async function resolveProject(slug: string): Promise<{ project: ProjectDetail; related: PortfolioProject[]; seo?: SeoData } | undefined> {
   const sanityClient = await getSanityClient();
   const cmsProject = isSanityConfigured
     ? await sanityClient.fetch(projectBySlugQuery, { slug }, { next: { revalidate: 60 } }).catch((error) => {
@@ -89,7 +91,7 @@ async function resolveProject(slug: string): Promise<{ project: ProjectDetail; r
     ),
   };
   const cmsRelated = normalizeRelated(cmsProject.relatedProjects);
-  return { project, related: cmsRelated.length ? cmsRelated : selectRelatedProjects(slug, portfolioProjects) };
+  return { project, related: cmsRelated.length ? cmsRelated : selectRelatedProjects(slug, portfolioProjects), seo: cmsProject.seo };
 }
 
 export function generateStaticParams() {
@@ -105,7 +107,10 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/projects/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const resolved = await resolveProject(slug);
-  return resolved ? { title: `${resolved.project.title} — RC Architecture`, description: resolved.project.summary } : {};
+  return resolved ? metadataFromSeo(resolved.seo, {
+    title: `${resolved.project.title} — RC Architecture`,
+    description: resolved.project.summary,
+  }) : {};
 }
 
 export default async function ProjectPage({ params }: PageProps<"/projects/[slug]">) {

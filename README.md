@@ -48,8 +48,7 @@ Only variables prefixed with `NEXT_PUBLIC_` are used in the browser. Never expos
 2. Verify the `CONTACT_FROM_EMAIL` domain in Resend. Public forms fail safely with an explanatory message when delivery is not configured.
 3. Create a Sanity webhook that sends `POST /api/revalidate` with `Authorization: Bearer <SANITY_REVALIDATE_SECRET>`. Its JSON body may contain `{ "paths": ["/", "/projects"] }`.
 4. Configure Sanity presentation links as `/api/draft?secret=<SANITY_PREVIEW_SECRET>&path=/projects/<slug>`. Draft reads require the server-only `SANITY_API_READ_TOKEN`. Visit `/api/draft/disable` to leave preview mode.
-5. Connect analytics and monitoring endpoints if required, then enable their corresponding `NEXT_PUBLIC_` flags at build time.
-6. Run `npm run check` and `npm run build`. CI runs the same quality gate on every pull request and push to `main`.
-7. Smoke-test contact and newsletter delivery, mobile navigation, project filters/loading, gallery controls, 404 handling, preview mode, and the Sanity Studio in the production environment.
+5. Run `npm run check` and `npm run build`. CI runs the same quality gate on every pull request and push to `main`.
+6. Smoke-test contact and newsletter delivery, mobile navigation, project filters/loading, gallery controls, 404 handling, preview mode, and the Sanity Studio in the production environment.
 
 The form rate limiter is intentionally dependency-free and process-local. On multi-instance or serverless deployments, replace it with a durable shared store before high-volume campaigns.

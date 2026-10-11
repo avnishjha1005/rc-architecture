@@ -59,3 +59,4 @@
 }
 
 @media (prefers-reduced-motion: reduce) { .scrollCue span { animation: none; } }
+.resultCount{color:#aaa}

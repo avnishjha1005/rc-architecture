@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { CareersBanner } from "@/components/site/CareersBanner";
 import { Footer } from "@/components/site/Footer";
@@ -11,14 +10,17 @@ import { getSiteData } from "@/sanity/lib/site";
 import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
 import { aboutPageQuery } from "@/sanity/lib/queries";
+import { getSingletonMetadata } from "@/sanity/lib/metadata";
 import { IntroImageCarousel } from "./IntroImageCarousel";
 import { PhilosophyPrinciples } from "./PhilosophyPrinciples";
 import styles from "./about.module.css";
 
-export const metadata: Metadata = {
-  title: "About Us — RC Architecture",
-  description: "Meet RC Architecture: our studio, philosophy, clients, people, awards, and culture.",
-};
+export function generateMetadata() {
+  return getSingletonMetadata("aboutPage", {
+    title: "About Us — RC Architecture",
+    description: "Meet RC Architecture: our studio, philosophy, clients, people, awards, and culture.",
+  });
+}
 
 const principles = [
   ["Environment", "We do not look at sustainability as something applied to a building. We believe that sustainability should be in the DNA."],

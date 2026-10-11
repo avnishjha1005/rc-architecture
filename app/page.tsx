@@ -14,6 +14,14 @@ import { getSanityClient } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { homePageQuery } from "@/sanity/lib/queries";
 import { getSiteData } from "@/sanity/lib/site";
+import { getSingletonMetadata } from "@/sanity/lib/metadata";
+
+export function generateMetadata() {
+  return getSingletonMetadata("homePage", {
+    title: "RC Architecture — Space Making",
+    description: "A Bengaluru-based design studio crafting high-impact spaces with purpose.",
+  });
+}
 
 type CmsHome = Partial<Omit<HomeContent, "brandName" | "heroImageUrl">> & { heroImage?: SanityImageSource };
 type CmsResponse = { home?: CmsHome | null } | null;

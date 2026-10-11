@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { BlogCategoryToggle, type BlogListingArticle } from "@/components/blog/BlogCategoryToggle";
 import { ContactSection } from "@/components/home/ContactSection";
 import { NextProjects } from "@/components/projects/NextProjects";
@@ -11,9 +10,15 @@ import { getSiteData } from "@/sanity/lib/site";
 import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
 import { blogPageQuery } from "@/sanity/lib/queries";
+import { getSingletonMetadata } from "@/sanity/lib/metadata";
 import styles from "./blog.module.css";
 
-export const metadata: Metadata = { title: "Space Labs — RC Architecture", description: "Ideas, industry trends, and behind-the-scenes perspectives from RC Architecture." };
+export function generateMetadata() {
+  return getSingletonMetadata("blogPage", {
+    title: "Space Labs — RC Architecture",
+    description: "Ideas, industry trends, and behind-the-scenes perspectives from RC Architecture.",
+  });
+}
 
 export default async function BlogPage() {
   const sanityClient = await getSanityClient();

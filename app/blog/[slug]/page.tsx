@@ -11,13 +11,14 @@ import { getSiteData } from "@/sanity/lib/site";
 import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
 import { blogPostBySlugQuery } from "@/sanity/lib/queries";
+import { metadataFromSeo, type SeoData } from "@/sanity/lib/metadata";
 import styles from "./blog-detail.module.css";
 
 export function generateStaticParams() { return blogPosts.map(({ slug }) => ({ slug })); }
 
 type BlogPageProps = { params: Promise<{ slug: string }> };
 
-type CmsPost = { title?: string; slug?: string; category?: string; blogCategory?: "spaceLabs" | "spaceMaking"; publishedAt?: string; excerpt?: string; imageUrl?: string; imageAlt?: string; sections?: { title?: string; body?: string[]; bullets?: string[]; imageUrl?: string; imageAlt?: string; quote?: string }[]; relatedPosts?: CmsPost[] };
+type CmsPost = { title?: string; slug?: string; category?: string; blogCategory?: "spaceLabs" | "spaceMaking"; publishedAt?: string; excerpt?: string; imageUrl?: string; imageAlt?: string; sections?: { title?: string; body?: string[]; bullets?: string[]; imageUrl?: string; imageAlt?: string; quote?: string }[]; seo?: SeoData; relatedPosts?: CmsPost[] };
 
 function normalizePost(post: CmsPost): BlogPost | undefined {
   if (!post.title || !post.slug || !post.imageUrl) return undefined;
@@ -30,13 +31,13 @@ function normalizePost(post: CmsPost): BlogPost | undefined {
   };
 }
 
-async function resolvePost(slug: string): Promise<{ post: BlogPost; related: BlogPost[] } | undefined> {
+async function resolvePost(slug: string): Promise<{ post: BlogPost; related: BlogPost[]; seo?: SeoData } | undefined> {
   const sanityClient = await getSanityClient();
   const cms = isSanityConfigured ? await sanityClient.fetch<CmsPost | null>(blogPostBySlugQuery, { slug }, { next: { revalidate: 60 } }).catch(() => null) : null;
   const post = cms ? normalizePost(cms) : undefined;
   if (post) {
     const related = (cms?.relatedPosts || []).flatMap((item) => { const normalized = normalizePost(item); return normalized ? [normalized] : []; });
-    return { post, related };
+    return { post, related, seo: cms?.seo };
   }
   const fallback = getBlogPost(slug);
   return fallback ? { post: fallback, related: blogPosts.filter((item) => item.slug !== slug) } : undefined;
@@ -44,7 +45,10 @@ async function resolvePost(slug: string): Promise<{ post: BlogPost; related: Blo
 
 export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
   const resolved = await resolvePost((await params).slug);
-  return resolved ? { title: `${resolved.post.title} — RC Architecture`, description: resolved.post.excerpt } : {};
+  return resolved ? metadataFromSeo(resolved.seo, {
+    title: `${resolved.post.title} — RC Architecture`,
+    description: resolved.post.excerpt,
+  }) : {};
 }
 
 export default async function BlogDetailPage({ params }: BlogPageProps) {

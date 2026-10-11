@@ -73,15 +73,11 @@ export function PhilosophyPrinciples({ items }: PhilosophyPrinciplesProps) {
             key={title}
             ref={(node) => { itemRefs.current[index] = node; }}
             className={index === activeIndex ? styles.activePrinciple : undefined}
-            tabIndex={0}
-            aria-current={index === activeIndex ? "step" : undefined}
             onPointerEnter={() => activate(index)}
-            onFocus={() => activate(index)}
-            onClick={() => activate(index, true)}
           >
             <small>[{String(index + 1).padStart(2, "0")}]</small>
             <div>
-              <h3>{title}</h3>
+              <h3><button type="button" aria-pressed={index === activeIndex} onFocus={() => activate(index)} onClick={() => activate(index, true)}>{title}</button></h3>
               <p>{copy}</p>
             </div>
           </article>

@@ -27,7 +27,7 @@ export function ClientIndex({ clients, title = "Index", loadMoreLabel = "Load mo
     return (
       <li className={hiddenOnMobile ? styles.mobileHidden : undefined} key={client.name}>
         <span className={styles.category}>{client.category}</span>
-        <button className={styles.clientName} type="button">{client.name}</button>
+        <span className={styles.clientName}>{client.name}</span>
         <span className={styles.year}>{client.year}</span>
       </li>
     );

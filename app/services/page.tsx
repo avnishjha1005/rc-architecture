@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { ContactSection } from "@/components/home/ContactSection";
 import { NewsletterSection } from "@/components/home/NewsletterSection";
@@ -12,13 +11,16 @@ import { getSiteData } from "@/sanity/lib/site";
 import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
 import { servicesPageQuery } from "@/sanity/lib/queries";
+import { getSingletonMetadata } from "@/sanity/lib/metadata";
 import { ServiceCarousel } from "./ServiceCarousel";
 import styles from "./services.module.css";
 
-export const metadata: Metadata = {
-  title: "Services — RC Architecture",
-  description: "Architecture and interior design services grounded in collaboration, clarity, and thoughtful delivery.",
-};
+export function generateMetadata() {
+  return getSingletonMetadata("servicesPage", {
+    title: "Services — RC Architecture",
+    description: "Architecture and interior design services grounded in collaboration, clarity, and thoughtful delivery.",
+  });
+}
 
 const process = [
   ["01", "Design", "Conceptualisation", "Visualisation · 3D Views · Fly-through", "Look & Feel"],

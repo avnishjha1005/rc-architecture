@@ -10,6 +10,7 @@ main{container-type:inline-size}
 a{color:inherit;text-decoration:none}
 button,input{font:inherit}
 :where(a,button,input,textarea):focus-visible{outline:2px solid var(--red);outline-offset:4px}
+.skip-link{background:#fff;color:#111;left:16px;padding:12px 18px;position:fixed;top:12px;transform:translateY(-160%);transition:transform .2s;z-index:1000}.skip-link:focus{transform:none}#main-content:focus{outline:0}
 .sr-only,.sr-only:focus{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}
 .form-trap{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
 .form-status{grid-column:1/-1;min-height:1.4em;margin:4px 0 0;font-size:.7rem;line-height:1.4}
@@ -40,7 +41,7 @@ button,input{font:inherit}
 .stats__rail{align-items:center;min-height:65px;display:flex}
 .stats__group{display:contents}
 .stats__group--duplicate{display:none}
-.stat{flex:1 1 0;justify-content:center;align-items:center;gap:21px;display:flex}
+.stat{flex:1 1 0;justify-content:center;align-items:center;gap:21px;margin:0;display:flex}
 .stat dt{letter-spacing:-.06em;font-size:3.1875rem;font-weight:300;line-height:1}
 .stat dd{margin:0;font-size:0.8125rem;line-height:1.16}
 .stat dd span{display:block}
@@ -207,6 +208,7 @@ button,input{font:inherit}
   .footer__nav{width:100%;margin:0}.footer__nav a{grid-template-columns:36px 1fr;min-height:55px}.footer__nav small{font-size:.625rem}.footer__nav span{font-size:1.5rem;line-height:1.1}.footer__details{color:#d6d6d3;grid-template-columns:1fr;align-self:stretch;width:100%;margin:0;font-size:.6875rem;line-height:1.4;display:grid;gap:36px}.footer__details>div{border-bottom:1px solid #3b3b3b;margin:0;padding:0 0 38px}.footer__details small{margin-bottom:24px}.footer__details p{margin:0 0 12px}.footer__details p:last-child{margin-bottom:0}.footer__legal--desktop{display:none}.footer .footer__logo--desktop{display:none;margin:0}.footer__mobile-brand{align-self:stretch;width:100%;display:block}.footer__mobile-logo{opacity:.68;object-fit:contain;object-position:left center;width:100%;height:auto;margin:0;border-bottom:1px solid #3b3b3b;padding-bottom:14px;display:block}.footer__mobile-legal{color:#777;white-space:pre-line;width:100%;margin:12px 0 0;font-size:.625rem;line-height:1.35;display:block}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,:before,:after{transition-duration:.01ms!important}.reveal{opacity:1;transform:none}.stats__rail{animation:none}}
+.footer .eyebrow{color:#ff2e17}
 /* Homepage desktop system: proportional to the 1440px reference, capped at 2560px. */
 @media (min-width:901px){
   .home-page{

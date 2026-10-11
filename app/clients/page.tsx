@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { ClientIndex } from "@/components/clients/ClientIndex";
 import { ContactSection } from "@/components/home/ContactSection";
@@ -11,12 +10,15 @@ import { getSiteData } from "@/sanity/lib/site";
 import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
 import { clientsPageQuery } from "@/sanity/lib/queries";
+import { getSingletonMetadata } from "@/sanity/lib/metadata";
 import styles from "./clients.module.css";
 
-export const metadata: Metadata = {
-  title: "Clients — RC Architecture",
-  description: "Explore the private and public clients RC Architecture has partnered with.",
-};
+export function generateMetadata() {
+  return getSingletonMetadata("clientsPage", {
+    title: "Clients — RC Architecture",
+    description: "Explore the private and public clients RC Architecture has partnered with.",
+  });
+}
 
 export default async function ClientsPage() {
   const sanityClient = await getSanityClient();

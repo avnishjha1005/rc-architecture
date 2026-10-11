@@ -93,6 +93,7 @@ export const projectBySlugQuery = defineQuery(`
       "imageUrl": asset->url,
       "imageAlt": alt
     },
+    "seo": seo{title, description, "imageUrl": image.asset->url},
     "relatedProjects": relatedProjects[]->${projectCardProjection}
   }
 `);
@@ -133,7 +134,6 @@ export const contactPageQuery = defineQuery(`
   coalesce(*[_id == "contactPage"][0], *[_type == "contactPage"] | order(_updatedAt desc)[0]){
     heroTitle, heroIntro, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt,
     infoEyebrow, infoHeading, infoIntro, phoneLabel, emailLabel, mainOfficeLabel,
-    mapUrl,
     satelliteOfficesHeading, socialLabel, careersEyebrow, seo
   }
 `);
@@ -141,7 +141,8 @@ export const contactPageQuery = defineQuery(`
 const blogPostProjection = `{
   _id, title, "slug": slug.current, category, "blogCategory": coalesce(blogCategory, "spaceLabs"), publishedAt, excerpt,
   "imageUrl": coverImage.asset->url, "imageAlt": coverImage.alt,
-  "sections": sections[]{title, "body": paragraphs, bullets, "imageUrl": image.asset->url, "imageAlt": image.alt, quote}
+  "sections": sections[]{title, "body": paragraphs, bullets, "imageUrl": image.asset->url, "imageAlt": image.alt, quote},
+  "seo": seo{title, description, "imageUrl": image.asset->url}
 }`;
 
 export const blogPageQuery = defineQuery(`{

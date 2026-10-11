@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { CareersBanner } from "@/components/site/CareersBanner";
 import { Footer } from "@/components/site/Footer";
@@ -9,13 +8,16 @@ import { getSiteData } from "@/sanity/lib/site";
 import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
 import { contactPageQuery } from "@/sanity/lib/queries";
+import { getSingletonMetadata } from "@/sanity/lib/metadata";
 import { ContactForm } from "@/components/contact/ContactForm";
 import styles from "./contact.module.css";
 
-export const metadata: Metadata = {
-  title: "Contact — RC Architecture",
-  description: "Start a project with RC Architecture or find one of our offices.",
-};
+export function generateMetadata() {
+  return getSingletonMetadata("contactPage", {
+    title: "Contact — RC Architecture",
+    description: "Start a project with RC Architecture or find one of our offices.",
+  });
+}
 
 export default async function ContactPage() {
   const sanityClient = await getSanityClient();
@@ -23,8 +25,8 @@ export default async function ContactPage() {
     isSanityConfigured ? sanityClient.fetch<Record<string, string | undefined> | null>(contactPageQuery, {}, { next: { revalidate: 60 } }).catch(() => null) : null,
     getSiteData(),
   ]);
-  const mapLink = page?.mapUrl || toDirectionsHref(site.address);
-  const mapEmbedUrl = toGoogleMapsEmbedHref(page?.mapUrl, site.address);
+  const mapLink = toDirectionsHref(site.address);
+  const mapEmbedUrl = toGoogleMapsEmbedHref(site.address);
 
   return (
     <main className={styles.page}>

@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { FeaturedProjectsCarousel } from "@/components/projects/FeaturedProjectsCarousel";
@@ -9,12 +8,15 @@ import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
 import { projectsPageQuery } from "@/sanity/lib/queries";
 import { getSiteData } from "@/sanity/lib/site";
+import { getSingletonMetadata } from "@/sanity/lib/metadata";
 import styles from "./projects.module.css";
 
-export const metadata: Metadata = {
-  title: "Projects — RC Architecture",
-  description: "Explore RC Architecture's latest architecture and interior design projects.",
-};
+export function generateMetadata() {
+  return getSingletonMetadata("projectsPage", {
+    title: "Projects — RC Architecture",
+    description: "Explore RC Architecture's latest architecture and interior design projects.",
+  });
+}
 
 type CmsProject = {
   _id?: string;
