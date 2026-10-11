@@ -27,7 +27,7 @@ const process = [
   ["04", "Deploy", "Executing the DNA", "Quality Monitoring", "In-time Execution"],
 ];
 
-const processMarks = ["/services-1.png", "/services-2.png", "/services-3.png", "/services-3.png"];
+const processMarks = ["/services-1.svg", "/services-2.svg", "/services-3.svg", "/services-3.svg"];
 
 const services = [
   { mark: "(a)", title: "Architectural Design", description: "Design is ever evolving, and so is technology. That is why we intend to keep up with innovation to bring out the best facilities for our clients. Design is space-making, and so is technology.", items: [["Residential Architecture", "Designing homes, apartments, and hospitality complexes that balance aesthetics, comfort, and durability.", "/images/home/project-bale-county.jpg"], ["Commercial Architecture", "Spaces designed for business interaction, productivity, and the seamless flow of human activity.", "/images/home/service-architecture.jpg"], ["Workplace Architecture", "Purpose-built workplaces that support collaboration, focus, adaptability, and the culture of each organisation.", "/images/home/project-ge-digital.jpg"]] },

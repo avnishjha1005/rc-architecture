@@ -103,7 +103,8 @@ export const aboutPageQuery = defineQuery(`
     introEyebrow, introHeading, introParagraphs,
     "introImages": introImages[]{"imageUrl": asset->url, "imageAlt": alt},
     stats[]{label, value}, philosophyEyebrow, philosophyHeading, philosophyIntro,
-    principles[]{title, description}, clientsEyebrow, clientsHeading, clientsIntro, clientNames,
+    principles[]{title, description}, clientsEyebrow, clientsHeading, clientsIntro,
+    "clientLogos": clientLogos[]{"imageUrl": asset->url, "imageAlt": alt},
     peopleEyebrow, peopleHeading, "people": people[]{name, role, "imageUrl": image.asset->url, "imageAlt": image.alt},
     awardsEyebrow, awardsHeading, awardsIntro, awards[]{project, award, year},
     careersEyebrow, valuesHeading, valuesIntro, values[]{icon, title, description}, seo

@@ -4,6 +4,7 @@ import { CareersBanner } from "@/components/site/CareersBanner";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { Eyebrow } from "@/components/ui/Eyebrow";
+import { PillAction } from "@/components/ui/PillAction";
 import { Reveal } from "@/components/ui/Reveal";
 import { siteFooter } from "@/content/site";
 import { getSiteData } from "@/sanity/lib/site";
@@ -44,7 +45,7 @@ const awards = [
 ];
 
 export default async function AboutPage() {
-  type AboutData = { heroTitle?: string; heroImageUrl?: string; heroImageAlt?: string; introEyebrow?: string; introHeading?: string; introParagraphs?: string[]; introImages?: { imageUrl?: string; imageAlt?: string }[]; stats?: { label?: string; value?: string }[]; philosophyEyebrow?: string; philosophyHeading?: string; philosophyIntro?: string; principles?: { title?: string; description?: string }[]; clientsEyebrow?: string; clientsHeading?: string; clientsIntro?: string; clientNames?: string[]; peopleEyebrow?: string; peopleHeading?: string; people?: { name?: string; role?: string; imageUrl?: string; imageAlt?: string }[]; awardsEyebrow?: string; awardsHeading?: string; awardsIntro?: string; awards?: { project?: string; award?: string; year?: string }[]; careersEyebrow?: string; valuesHeading?: string; valuesIntro?: string; values?: { icon?: string; title?: string; description?: string }[] } | null;
+  type AboutData = { heroTitle?: string; heroImageUrl?: string; heroImageAlt?: string; introEyebrow?: string; introHeading?: string; introParagraphs?: string[]; introImages?: { imageUrl?: string; imageAlt?: string }[]; stats?: { label?: string; value?: string }[]; philosophyEyebrow?: string; philosophyHeading?: string; philosophyIntro?: string; principles?: { title?: string; description?: string }[]; clientsEyebrow?: string; clientsHeading?: string; clientsIntro?: string; clientLogos?: { imageUrl?: string; imageAlt?: string }[]; peopleEyebrow?: string; peopleHeading?: string; people?: { name?: string; role?: string; imageUrl?: string; imageAlt?: string }[]; awardsEyebrow?: string; awardsHeading?: string; awardsIntro?: string; awards?: { project?: string; award?: string; year?: string }[]; careersEyebrow?: string; valuesHeading?: string; valuesIntro?: string; values?: { icon?: string; title?: string; description?: string }[] } | null;
   const sanityClient = await getSanityClient();
   const [page, site] = await Promise.all([
     isSanityConfigured ? sanityClient.fetch<AboutData>(aboutPageQuery, {}, { next: { revalidate: 60 } }).catch(() => null) : null,
@@ -58,6 +59,8 @@ export default async function AboutPage() {
   ];
   const statItems = page?.stats?.length ? page.stats.flatMap((item) => item.label && item.value ? [[item.label, item.value]] : []) : [["Projects we finished", "126+"], ["Our Clients", "80+"], ["Our Partners", "24+"]];
   const principleItems = page?.principles?.length ? page.principles.flatMap((item) => item.title ? [[item.title, item.description || ""]] : []) : principles;
+  const uploadedClientLogos = page?.clientLogos?.flatMap((logo) => logo.imageUrl ? [{ imageUrl: logo.imageUrl, imageAlt: logo.imageAlt || "Client logo" }] : []) || [];
+  const clientLogos = uploadedClientLogos.length ? Array.from({ length: 18 }, (_, index) => uploadedClientLogos[index % uploadedClientLogos.length]) : [];
   const peopleItems = page?.people?.length ? page.people.flatMap((person) => person.name && person.imageUrl ? [{ name: person.name, role: person.role || "", image: person.imageUrl, imageAlt: person.imageAlt || person.name }] : []) : people.map((person) => ({ ...person, imageAlt: person.name }));
   const awardItems = page?.awards?.length ? page.awards.flatMap((item) => item.project && item.award ? [[item.project, item.award, item.year || ""]] : []) : awards;
   const valueItems = page?.values?.length ? page.values.flatMap((item) => item.title ? [{ title: item.title, icon: item.icon || "•", description: item.description || "" }] : []) : [["Open & Welcoming", "•"], ["Growth at Every Step", "∶"], ["Empathy & Kindness", "♣"]].map(([title, icon]) => ({ title, icon, description: "We do at look at sustainability as something applied on a building. We believe that sustainability should be in the DNA." }));
@@ -100,7 +103,10 @@ export default async function AboutPage() {
         <Eyebrow className={styles.label}>{page?.clientsEyebrow || "Our clients"}</Eyebrow>
         <div className={styles.clientsBody}>
           <div className={styles.clientsTitle}><h2>{page?.clientsHeading || "Our Clients."}</h2><p>{page?.clientsIntro || "Collaborating with organisations who share our belief in purposeful spaces."}</p></div>
-          <div className={styles.clientGrid}>{(page?.clientNames?.length ? page.clientNames : ["ECHO))", "BAGGU", "◯ BRANCH", "⌁ ClickUp", "ECHO))", "◯ BRANCH", "⌁ ClickUp", "BAGGU", "ECHO))", "BAGGU", "ECHO))", "BAGGU", "◯ BRANCH", "⌁ ClickUp", "◯ BRANCH", "◯ BRANCH", "⌁ ClickUp", "⌁ ClickUp", "+355 more..."]).map((client, i) => <span key={`${client}-${i}`}>{client}</span>)}</div>
+          {clientLogos.length > 0 && <div className={styles.clientGrid}>
+            {clientLogos.map((logo, index) => <div key={`${logo.imageUrl}-${index}`}><Image src={logo.imageUrl} alt={logo.imageAlt} fill sizes="(max-width: 900px) 50vw, 20vw" /></div>)}
+            <div className={styles.clientMore}>+355 more...</div>
+          </div>}
         </div>
       </section>
 
@@ -123,9 +129,12 @@ export default async function AboutPage() {
       <section className={`${styles.careers} ${styles.section}`}>
         <Eyebrow className={styles.label}>{page?.careersEyebrow || "Careers"}</Eyebrow>
         <div className={styles.careersBody}>
-          <CareersBanner email={site.email} />
+          <CareersBanner email={site.email} showAction={false} />
           <div className={styles.valuesIntro}><h3>{(page?.valuesHeading || "Our Team Values\nDiscipline & Principles").split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h3><p>{page?.valuesIntro || "We are excited to get started on new possibilities. We sketch, brainstorm, visualize and hurrah! We believe in a light-hearted workplace that results in some serious excellence."}</p></div>
           <div className={styles.values}>{valueItems.map(({ title, description }) => <article key={title}><span className={styles.valueIcon} aria-hidden="true"><i /></span><h3>{title}</h3><p>{description}</p></article>)}</div>
+          <div className={styles.careersAction}>
+            <PillAction href={`mailto:${site.email}?subject=Career%20opportunity`}>Explore opportunities</PillAction>
+          </div>
         </div>
       </section>
 

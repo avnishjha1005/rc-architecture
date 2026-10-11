@@ -15,7 +15,7 @@ const repeatedImages = Array.from({ length: 4 }, (_, repeat) =>
   images.map((image) => ({ ...image, repeat })),
 ).flat();
 
-export function CareersBanner({ email }: { email: string }) {
+export function CareersBanner({ email, showAction = true }: { email: string; showAction?: boolean }) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -31,10 +31,10 @@ export function CareersBanner({ email }: { email: string }) {
   };
 
   return (
-    <div className={styles.banner}>
+    <div className={`${styles.banner} ${showAction ? "" : styles.actionBelow}`.trim()}>
       <h2>Interested in<br /><span>Working with us?</span></h2>
       <p>RCA has always had a young energy. Each and every member of the team possesses curiosity towards the new and exciting. We work and play hard. We believe in delivering excellent results while following extremely ethical business practices.</p>
-      <PillAction className={styles.button} href={`mailto:${email}?subject=Career%20opportunity`}>Explore opportunities</PillAction>
+      {showAction && <PillAction className={styles.button} href={`mailto:${email}?subject=Career%20opportunity`}>Explore opportunities</PillAction>}
       <div
         ref={carouselRef}
         className={styles.carousel}
