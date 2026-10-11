@@ -35,11 +35,11 @@
 @keyframes scroll-nudge { 0%, 100% { opacity: .45; transform: translateY(-5px); } 45% { opacity: 1; transform: translateY(7px); } }
 
 @media (max-width: 900px) {
-  .hero { min-height: 806px; padding: 0 20px; }
-  .heroCopy { left: 20px; top: 145px; }
+  .hero { height: 100svh; min-height: 0; padding: 0 20px; }
+  .heroCopy { left: 20px; top: clamp(110px, 17.2svh, 145px); }
   .heroCopy strong { font-size: 6.3rem; line-height: .78; }
   .heroCopy h1 { font-size: 3rem; line-height: .88; margin-top: 28px; }
-  .heroImage { bottom: 38px; height: 318px; left: 20px; right: 20px; top: auto; width: auto; }
+  .heroImage { bottom: 38px; height: clamp(230px, 37.7svh, 318px); left: 20px; right: 20px; top: auto; width: auto; }
   .scrollCue { bottom: -24px; }
   .index { min-height: 0; padding: 115px 20px 96px; }
   .indexTopline { align-items: stretch; display: block; }

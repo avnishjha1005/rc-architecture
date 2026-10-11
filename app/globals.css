@@ -184,7 +184,7 @@ button,input{font:inherit}
 @media (min-width:901px) and (max-width:1100px){.hero__intro{margin:28px 0 0 auto;position:static}}
 @media (max-width:900px){
   .section-shell{width:calc(100% - 40px)}.eyebrow{font-size:0.625rem}.pill-link{width:100%;min-height:42px;font-size:0.6875rem}.reveal{transform:translateY(22px)}
-  .hero{height:100vh;min-height:0}
+  .hero{height:100svh;min-height:0}
   .hero__content{inset:50% 20px auto}.hero h1{line-height:.85}.hero__topline{text-align:left;letter-spacing:-.065em;margin-left:0;font-size:clamp(3rem,14.35vw,3.5rem)}.hero__bottomline{margin-top:10px;font-size:clamp(2.5625rem,11.8vw,2.875rem)}
   .hero__intro{white-space:normal;overflow-wrap:anywhere;width:min(335px,100vw - 40px);max-width:calc(100vw - 40px);margin-top:28px;font-size:0.625rem;line-height:1.45;position:static}
   .stats{min-height:67px;padding:0;bottom:35px;left:20px;right:20px}.stats__rail{will-change:transform;width:max-content;min-height:65px;animation:18s linear infinite stats-banner;display:flex}
