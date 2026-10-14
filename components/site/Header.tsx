@@ -60,7 +60,7 @@ export function Header({ brandName, navigation, cta, theme = "dark" }: HeaderPro
   }
 
   return (
-    <header className={`${styles.header} ${styles[theme]}`}>
+    <header className={`${styles.header} ${styles[theme]}`} data-motion-item>
       <Logo name={brandName} tone={theme} />
       <nav className={styles.desktopNav} aria-label="Primary navigation">
         {navigation.map((item) => <Link key={`${item.label}-${item.href}`} href={item.href} aria-current={current(item.href)}>{item.label}</Link>)}

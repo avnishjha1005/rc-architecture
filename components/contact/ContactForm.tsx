@@ -6,7 +6,7 @@ import { PillAction } from "@/components/ui/PillAction";
 
 const initialState: FormState = { status: "idle", message: "" };
 
-export function ContactForm({ className, messageClassName }: { className?: string; messageClassName?: string }) {
+export function ContactForm({ className, messageClassName, motionItem = false }: { className?: string; messageClassName?: string; motionItem?: boolean }) {
   const [state, action, pending] = useActionState(submitContact, initialState);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -15,7 +15,7 @@ export function ContactForm({ className, messageClassName }: { className?: strin
   }, [state.status]);
 
   return (
-    <form className={className} id="contact-form" action={action} ref={formRef}>
+    <form className={className} id="contact-form" action={action} ref={formRef} data-motion-item={motionItem || undefined}>
       <label>First name<input name="first-name" autoComplete="given-name" placeholder="Enter first name" maxLength={80} required /></label>
       <label>Last name<input name="last-name" autoComplete="family-name" placeholder="Enter last name" maxLength={80} required /></label>
       <label>Email address<input name="email" type="email" autoComplete="email" placeholder="Enter email address" maxLength={254} required /></label>

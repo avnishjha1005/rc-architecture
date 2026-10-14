@@ -14,8 +14,9 @@ const images = [
 const repeatedImages = Array.from({ length: 4 }, (_, repeat) =>
   images.map((image) => ({ ...image, repeat })),
 ).flat();
+const marqueeImages = [...images, ...images];
 
-export function CareersBanner({ email, showAction = true }: { email: string; showAction?: boolean }) {
+export function CareersBanner({ email, showAction = true, marquee = false }: { email: string; showAction?: boolean; marquee?: boolean }) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -37,28 +38,38 @@ export function CareersBanner({ email, showAction = true }: { email: string; sho
       {showAction && <PillAction className={styles.button} href={`mailto:${email}?subject=Career%20opportunity`}>Explore opportunities</PillAction>}
       <div
         ref={carouselRef}
-        className={styles.carousel}
+        className={`${styles.carousel} ${marquee ? styles.marquee : ""}`.trim()}
         role="region"
         aria-label="Life at RC Architecture"
-        onScroll={updateIndex}
+        onScroll={marquee ? undefined : updateIndex}
         tabIndex={0}
       >
         <div className={styles.track}>
-          {repeatedImages.map((image) => (
-            <div className={styles.image} key={`${image.repeat}-${image.src}`}>
-              <Image src={image.src} alt={image.alt} fill sizes="(max-width: 900px) 52vw, 36vw" />
-            </div>
-          ))}
+          {marquee
+            ? [0, 1].map((group) => (
+              <div className={styles.marqueeGroup} key={group} aria-hidden={group === 1 ? true : undefined}>
+                {marqueeImages.map((image, index) => (
+                  <div className={styles.image} key={`${group}-${index}-${image.src}`}>
+                    <Image src={image.src} alt={group === 0 && index < images.length ? image.alt : ""} fill sizes="(max-width: 900px) 52vw, 36vw" />
+                  </div>
+                ))}
+              </div>
+            ))
+            : repeatedImages.map((image) => (
+              <div className={styles.image} key={`${image.repeat}-${image.src}`}>
+                <Image src={image.src} alt={image.alt} fill sizes="(max-width: 900px) 52vw, 36vw" />
+              </div>
+            ))}
         </div>
       </div>
-      <div className={styles.progress} aria-hidden="true">
+      {!marquee && <div className={styles.progress} aria-hidden="true">
         <span
           style={{
             width: `${100 / repeatedImages.length}%`,
             transform: `translateX(${activeIndex * 100}%)`,
           }}
         />
-      </div>
+      </div>}
     </div>
   );
 }

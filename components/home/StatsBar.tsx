@@ -15,7 +15,7 @@ function StatItems({ stats, duplicate = false }: { stats: Stat[]; duplicate?: bo
 
 export function StatsBar({ stats }: { stats: Stat[] }) {
   return (
-    <section className="stats" aria-label="Practice highlights">
+    <section className="stats" aria-label="Practice highlights" data-motion-item>
       <div className="stats__rail">
         <StatItems stats={stats} />
         <StatItems stats={stats} duplicate />

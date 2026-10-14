@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
+import type { ComponentPropsWithoutRef } from "react";
 
-export function Eyebrow({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <p className={`eyebrow ${className}`.trim()}>({children})</p>;
+export function Eyebrow({ children, className = "", ...props }: ComponentPropsWithoutRef<"p">) {
+  return <p className={`eyebrow ${className}`.trim()} {...props}>({children})</p>;
 }

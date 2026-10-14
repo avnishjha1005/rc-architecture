@@ -15,7 +15,7 @@
 .controls label { display: block; }
 .controls select { background: #f5f5f3; border: 0; border-radius: 5px; color: #222; font: 400 16px/1 var(--font-hanken-grotesk), sans-serif; height: 34px; outline: 0; padding: 0 12px; width: 100%; }
 .controls select:focus { box-shadow: 0 0 0 2px var(--red); }
-.resultCount { color: #777; font: 400 .6rem/1 var(--font-chivo-mono), monospace; margin: 18px 0 25px; text-align: right; }
+.resultCount { color: #777; font: 400 .75rem/1 var(--font-chivo-mono), monospace; margin: 18px 0 25px; text-align: right; }
 .clientColumns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .clientColumn { border-right: 1px solid #444; padding: 0 18px; }
 .clientColumn:first-child { padding-left: 0; }
@@ -55,7 +55,7 @@
   .clientColumn li { min-height: 31px; }
   .category, .year { opacity: .7; }
   .mobileHidden { display: none !important; }
-  .loadMore { background: transparent; border: 1px solid #777; border-radius: 999px; color: #fff; display: block; font-size: .68rem; font-weight: 600; height: 42px; margin-top: 55px; text-transform: uppercase; width: 100%; }
+  .loadMore { background: transparent; border: 1px solid #777; border-radius: 999px; color: #fff; display: block; font-size: .75rem; font-weight: 600; height: 42px; margin-top: 55px; text-transform: uppercase; width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) { .scrollCue span { animation: none; } }

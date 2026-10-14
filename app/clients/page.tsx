@@ -31,13 +31,13 @@ export default async function ClientsPage() {
 
   return (
     <main className={styles.page}>
-      <section className={styles.hero}>
+      <section className={styles.hero} data-motion-group="hero">
         <Header brandName={site.brandName} navigation={site.navigation} cta={site.cta} theme="dark" />
-        <div className={styles.heroCopy}><strong>{page?.countLabel || "150+"}</strong><h1>{(page?.heroTitle || "Private &\nPublic Clients").split("\n").map((line, index) => <span key={line}>{line}{index === 0 && <br />}</span>)}</h1></div>
-        <div className={styles.heroImage}><Image src={page?.heroImageUrl || "/images/home/service-architecture.jpg"} alt={page?.heroImageAlt || "Contemporary RC Architecture building"} fill priority sizes="(max-width: 900px) 100vw, 36vw" /></div>
-        <a className={styles.scrollCue} href="#client-index" aria-label="Scroll to the client index"><span aria-hidden="true">↓</span></a>
+        <div className={styles.heroCopy} data-motion-item><strong>{page?.countLabel || "150+"}</strong><h1>{(page?.heroTitle || "Private &\nPublic Clients").split("\n").map((line, index) => <span key={line}>{line}{index === 0 && <br />}</span>)}</h1></div>
+        <div className={styles.heroImage} data-motion-item data-motion-image><Image src={page?.heroImageUrl || "/images/home/service-architecture.jpg"} alt={page?.heroImageAlt || "Contemporary RC Architecture building"} fill priority sizes="(max-width: 900px) 100vw, 36vw" /></div>
+        <a className={styles.scrollCue} href="#client-index" aria-label="Scroll to the client index" data-motion-item><span aria-hidden="true">↓</span></a>
       </section>
-      <section className={styles.index} id="client-index"><ClientIndex clients={clientList} title={page?.indexTitle} loadMoreLabel={page?.loadMoreLabel} /></section>
+      <section className={styles.index} id="client-index" data-motion-group="section"><div data-motion-item><ClientIndex clients={clientList} title={page?.indexTitle} loadMoreLabel={page?.loadMoreLabel} /></div></section>
       <ContactSection content={site.contact} />
       <NewsletterSection content={site.newsletter} />
       <Footer content={siteFooter(site)} />

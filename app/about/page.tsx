@@ -68,29 +68,29 @@ export default async function AboutPage() {
   const valueItems = page?.values?.length ? page.values.flatMap((item) => item.title ? [{ title: item.title, icon: item.icon || "•", description: item.description || "" }] : []) : [["Open & Welcoming", "•"], ["Growth at Every Step", "∶"], ["Empathy & Kindness", "♣"]].map(([title, icon]) => ({ title, icon, description: "We do at look at sustainability as something applied on a building. We believe that sustainability should be in the DNA." }));
   return (
     <main className={styles.page}>
-      <section className={styles.hero}>
-        <Image src={page?.heroImageUrl || "/images/home/service-architecture.jpg"} alt={page?.heroImageAlt || "Contemporary RC Architecture residence"} fill priority sizes="100vw" className={styles.heroImage} />
+      <section className={styles.hero} data-motion-group="hero">
+        <Image src={page?.heroImageUrl || "/images/home/service-architecture.jpg"} alt={page?.heroImageAlt || "Contemporary RC Architecture residence"} fill priority sizes="100vw" className={styles.heroImage} data-motion-image />
         <div className={styles.heroShade} />
         <Header brandName={site.brandName} navigation={site.navigation} cta={site.cta} theme="dark" />
-        <h1>{(page?.heroTitle || "About\nRC Architecture").split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h1>
+        <h1 data-motion-item>{(page?.heroTitle || "About\nRC Architecture").split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h1>
       </section>
 
-      <section className={`${styles.section} ${styles.intro}`}>
-        <Eyebrow className={styles.label}>{page?.introEyebrow || "Who we are"}</Eyebrow>
+      <section className={`${styles.section} ${styles.intro}`} data-motion-group="section">
+        <Eyebrow className={styles.label} data-motion-item>{page?.introEyebrow || "Who we are"}</Eyebrow>
         <Reveal className={styles.introHeadline}>
           <h2>{(page?.introHeading || "We’re a studio built on clarity,\ncare, and long-term thinking.\nDesigning and managing homes\nthat hold up over time.").split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h2>
         </Reveal>
-        <div className={styles.photoGarden}><Image src={introImages[0]?.imageUrl || "/images/about/studio-garden.png"} alt={introImages[0]?.imageAlt || "Garden residence designed by RC Architecture"} fill sizes="50vw" /></div>
-        <div className={styles.photoOcean}><Image src={introImages[1]?.imageUrl || "/images/about/studio-ocean.png"} alt={introImages[1]?.imageAlt || "A calm concrete home overlooking the water"} fill sizes="20vw" /></div>
-        <div className={styles.photoKitchen}><Image src={introImages[2]?.imageUrl || "/images/about/studio-kitchen.png"} alt={introImages[2]?.imageAlt || "Warm contemporary kitchen and living space"} fill sizes="25vw" /></div>
-        <div className={styles.introCopy}>
+        <div className={styles.photoGarden} data-motion-item data-motion-image><Image src={introImages[0]?.imageUrl || "/images/about/studio-garden.png"} alt={introImages[0]?.imageAlt || "Garden residence designed by RC Architecture"} fill sizes="50vw" /></div>
+        <div className={styles.photoOcean} data-motion-item data-motion-image><Image src={introImages[1]?.imageUrl || "/images/about/studio-ocean.png"} alt={introImages[1]?.imageAlt || "A calm concrete home overlooking the water"} fill sizes="20vw" /></div>
+        <div className={styles.photoKitchen} data-motion-item data-motion-image><Image src={introImages[2]?.imageUrl || "/images/about/studio-kitchen.png"} alt={introImages[2]?.imageAlt || "Warm contemporary kitchen and living space"} fill sizes="25vw" /></div>
+        <div className={styles.introCopy} data-motion-item>
           {(page?.introParagraphs?.length ? page.introParagraphs : ["We don’t follow trends or rush timelines. Every project begins with listening — to how you live, what matters most, and where clarity is missing. It’s not about surface-level change, but understanding the way a space needs to work, feel, and evolve over time. From those conversations, we shape environments with structure, rhythm, and intention.", "From those conversations, we shape environments with structure, rhythm, and intention — built for the people who use them, and made to hold up well beyond the finished photo. With experience across design, building, and project management."]).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         </div>
         <IntroImageCarousel images={introCarouselImages} />
       </section>
 
-      <section className={styles.stats} aria-label="Studio statistics">
-        {statItems.map(([name, value]) => <div key={name}><p>{name}</p><strong>{value}</strong></div>)}
+      <section className={styles.stats} aria-label="Studio statistics" data-motion-group="section">
+        {statItems.map(([name, value]) => <div key={name} data-motion-item><p>{name}</p><strong>{value}</strong></div>)}
       </section>
 
       <section className={`${styles.section} ${styles.philosophy}`}>
@@ -101,39 +101,47 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className={`${styles.clients} ${styles.section}`} id="clients">
-        <Eyebrow className={styles.label}>{page?.clientsEyebrow || "Our clients"}</Eyebrow>
+      <section className={`${styles.clients} ${styles.section}`} id="clients" data-motion-group="section">
+        <Eyebrow className={styles.label} data-motion-item>{page?.clientsEyebrow || "Our clients"}</Eyebrow>
         <div className={styles.clientsBody}>
-          <div className={styles.clientsTitle}><h2>{page?.clientsHeading || "Our Clients."}</h2><p>{page?.clientsIntro || "Collaborating with organisations who share our belief in purposeful spaces."}</p></div>
+          <div className={styles.clientsTitle} data-motion-item><h2>{page?.clientsHeading || "Our Clients."}</h2><p>{page?.clientsIntro || "Collaborating with organisations who share our belief in purposeful spaces."}</p></div>
           {clientLogos.length > 0 && <div className={styles.clientGrid}>
-            {clientLogos.map((logo, index) => <div key={`${logo.imageUrl}-${index}`}><Image src={logo.imageUrl} alt={logo.imageAlt} fill sizes="(max-width: 900px) 50vw, 20vw" /></div>)}
-            <div className={styles.clientMore}>+355 more...</div>
+            {clientLogos.map((logo, index) => <div key={`${logo.imageUrl}-${index}`} data-motion-item><Image src={logo.imageUrl} alt={logo.imageAlt} fill sizes="(max-width: 900px) 50vw, 20vw" /></div>)}
+            <div className={styles.clientMore} data-motion-item>+355 more...</div>
           </div>}
         </div>
       </section>
 
-      <section className={`${styles.section} ${styles.team}`}>
-        <Eyebrow className={styles.label}>{page?.peopleEyebrow || "People"}</Eyebrow>
+      <section className={`${styles.section} ${styles.team}`} data-motion-group="section">
+        <Eyebrow className={styles.label} data-motion-item>{page?.peopleEyebrow || "People"}</Eyebrow>
         <div className={styles.teamBody}>
           <Reveal><h2>{(page?.peopleHeading || "People Behind\nRC Architecture.").split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h2></Reveal>
-          <div className={styles.peopleGrid}>{peopleItems.map((person, index) => <article key={`${person.name}-${index}`}><div className={styles.portrait}><Image src={person.image} alt={person.imageAlt} fill sizes="20vw" /></div><div><h3>{person.name}</h3><p>{person.role}</p></div></article>)}</div>
+          <div className={styles.peopleGrid}>{peopleItems.map((person, index) => {
+            const cropClass = person.image.endsWith("/team-tomas.png")
+              ? styles.portraitTomas
+              : person.image.endsWith("/team-clara.png")
+                ? styles.portraitClara
+                : "";
+
+            return <article key={`${person.name}-${index}`} data-motion-item><div className={styles.portrait} data-motion-image><Image className={cropClass} src={person.image} alt={person.imageAlt} fill sizes="(max-width: 900px) 50vw, 20vw" /></div><div><h3>{person.name}</h3><p>{person.role}</p></div></article>;
+          })}</div>
         </div>
       </section>
 
-      <section className={`${styles.section} ${styles.awards}`}>
-        <Eyebrow className={styles.label}>{page?.awardsEyebrow || "Awards"}</Eyebrow>
+      <section className={`${styles.section} ${styles.awards}`} data-motion-group="section">
+        <Eyebrow className={styles.label} data-motion-item>{page?.awardsEyebrow || "Awards"}</Eyebrow>
         <div className={styles.awardsBody}>
-          <div className={styles.awardsHeading}><h2>{(page?.awardsHeading || "Awards &\nRecognitions.").split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h2><p>{page?.awardsIntro || "Explore our awards and see how we bring creativity and expertise to every project."}</p></div>
-          <div className={styles.awardsTable}>{awardItems.map(([project, award, year]) => <div key={project}><span>{project}</span><span>{award}</span><span>{year}</span></div>)}</div>
+          <div className={styles.awardsHeading} data-motion-item><h2>{(page?.awardsHeading || "Awards &\nRecognitions.").split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h2><p>{page?.awardsIntro || "Explore our awards and see how we bring creativity and expertise to every project."}</p></div>
+          <div className={styles.awardsTable}>{awardItems.map(([project, award, year]) => <div key={project} data-motion-item><span>{project}</span><span>{award}</span><span>{year}</span></div>)}</div>
         </div>
       </section>
 
-      <section className={`${styles.careers} ${styles.section}`}>
-        <Eyebrow className={styles.label}>{page?.careersEyebrow || "Careers"}</Eyebrow>
+      <section className={`${styles.careers} ${styles.section}`} data-motion-group="section">
+        <Eyebrow className={styles.label} data-motion-item>{page?.careersEyebrow || "Careers"}</Eyebrow>
         <div className={styles.careersBody}>
-          <CareersBanner email={site.email} showAction={false} />
-          <div className={styles.valuesIntro}><h3>{(page?.valuesHeading || "Our Team Values\nDiscipline & Principles").split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h3><p>{page?.valuesIntro || "We are excited to get started on new possibilities. We sketch, brainstorm, visualize and hurrah! We believe in a light-hearted workplace that results in some serious excellence."}</p></div>
-          <div className={styles.values}>{valueItems.map(({ title, description }) => <article key={title}><span className={styles.valueIcon} aria-hidden="true"><i /></span><h3>{title}</h3><p>{description}</p></article>)}</div>
+          <CareersBanner email={site.email} showAction={false} marquee />
+          <div className={styles.valuesIntro} data-motion-item><h3>{(page?.valuesHeading || "Our Team Values\nDiscipline & Principles").split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h3><p>{page?.valuesIntro || "We are excited to get started on new possibilities. We sketch, brainstorm, visualize and hurrah! We believe in a light-hearted workplace that results in some serious excellence."}</p></div>
+          <div className={styles.values}>{valueItems.map(({ title, description }) => <article key={title} data-motion-item><span className={styles.valueIcon} aria-hidden="true"><i /></span><h3>{title}</h3><p>{description}</p></article>)}</div>
           <div className={styles.careersAction}>
             <PillAction href={`mailto:${site.email}?subject=Career%20opportunity`}>Explore opportunities</PillAction>
           </div>

@@ -6,6 +6,8 @@ import { Reveal } from "@/components/ui/Reveal";
 import { headingLines } from "@/components/ui/headingLines";
 
 export function ContactSection({ content }: { content: ContactSectionData }) {
+  const [firstLine = "", ...remainingLines] = headingLines(content.title, 3);
+
   return (
     <section className="contact-section" id="contact">
       <Image src={content.imageUrl} alt={content.imageAlt} fill sizes="100vw" />
@@ -13,7 +15,13 @@ export function ContactSection({ content }: { content: ContactSectionData }) {
       <Reveal className="contact-section__content section-shell">
         <Eyebrow>{content.eyebrow}</Eyebrow>
         <div className="contact-section__body">
-          <h2>{headingLines(content.title, 3).map((line) => <span key={line}>{line}</span>)}</h2>
+          <h2>
+            <span className="contact-section__first-line">
+              <span className="contact-section__lead-letter">{firstLine.slice(0, 1)}</span>
+              <span className="contact-section__first-rest">{firstLine.slice(1)}</span>
+            </span>
+            {remainingLines.map((line) => <span className="contact-section__following-line" key={line}>{line}</span>)}
+          </h2>
           <div className="contact-section__copy"><Image className="contact-section__star" src="/StarIcon.png" alt="" width={21} height={21} /><p>{content.description}</p></div>
           <CtaLink link={content.cta} red />
         </div>

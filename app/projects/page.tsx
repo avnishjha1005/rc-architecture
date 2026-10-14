@@ -98,22 +98,22 @@ export default async function ProjectsPage() {
 
   return (
     <main className={styles.page}>
-      <section className={styles.featured}>
+      <section className={styles.featured} data-motion-group="hero">
         <Header brandName={site.brandName} navigation={navigation} cta={cta} theme="light" />
-        <div className={styles.featuredIntro}>
+        <div className={styles.featuredIntro} data-motion-item>
           <h1>{page?.featuredHeading || "Featured\nWork"}</h1>
           <div><p>{page?.featuredIntro || "Explore our services and see how we bring creativity and expertise to every project."}</p><small>{page?.featuredYearRange || "1999–2023"}</small></div>
         </div>
-        <FeaturedProjectsCarousel projects={featured} />
+        <div data-motion-item><FeaturedProjectsCarousel projects={featured} /></div>
       </section>
 
-      <section className={styles.archive}>
-        <div className={styles.archiveHeading}>
+      <section className={styles.archive} data-motion-group="section">
+        <div className={styles.archiveHeading} data-motion-item>
           <p>{page?.archiveEyebrow || "(All projects)"}</p>
           <h2>{page?.archiveHeading || "Our Latest\nProjects."}</h2>
           <span>{page?.archiveIntro || "Explore our services and see how we bring creativity and expertise to every project."}</span>
         </div>
-        <ProjectsGallery projects={projects} loadMoreLabel={page?.loadMoreLabel || "Load more"} />
+        <div data-motion-item><ProjectsGallery projects={projects} loadMoreLabel={page?.loadMoreLabel || "Load more"} /></div>
       </section>
       <div id="contact"><Footer content={footer} /></div>
     </main>

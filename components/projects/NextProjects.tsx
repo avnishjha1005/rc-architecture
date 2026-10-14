@@ -32,8 +32,8 @@ export function NextProjects({
   if (!projects.length) return null;
 
   return (
-    <section className={`${styles.nextProjects} ${className}`} aria-labelledby="next-projects-title">
-      <div className={styles.nextHeading}>
+    <section className={`${styles.nextProjects} ${className}`} aria-labelledby="next-projects-title" data-motion-group="section">
+      <div className={styles.nextHeading} data-motion-item>
         <Eyebrow>{eyebrow}</Eyebrow>
         <div className={styles.nextHeadingContent}>
           <h2 id="next-projects-title">{title}</h2>
@@ -41,7 +41,7 @@ export function NextProjects({
         </div>
       </div>
 
-      <div className={styles.swiperOffset}>
+      <div className={styles.swiperOffset} data-motion-item>
         <Swiper
           className={styles.relatedSwiper}
           modules={[A11y, FreeMode, Mousewheel]}

@@ -63,7 +63,7 @@ export function ProjectCard(props: ProjectCardProps) {
 
   const { project } = props;
   return (
-    <article className={styles.card}>
+    <article className={styles.card} data-project-item>
       <Link className={styles.gridCardLink} href={project.href}>
         <div className={styles.cardImage}>
           <Image src={project.imageUrl} alt={project.imageAlt} fill sizes="(max-width: 720px) 100vw, 33vw" />
