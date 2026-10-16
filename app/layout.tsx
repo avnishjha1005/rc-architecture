@@ -4,6 +4,7 @@ import "lenis/dist/lenis.css";
 import "./globals.css";
 import { SmoothScroll } from "@/components/site/SmoothScroll";
 import { SiteMotion } from "@/components/site/SiteMotion";
+import { FeedbackBridge } from "@rc/website-feedback/client";
 
 const hankenGrotesk = localFont({
   variable: "--font-hanken-grotesk",
@@ -39,7 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${hankenGrotesk.variable} ${chivoMono.variable} h-full antialiased motion-ready`}
     >
-      <body><SmoothScroll /><a className="skip-link" href="#main-content">Skip to main content</a><div id="main-content" tabIndex={-1}>{children}</div><SiteMotion /><noscript><style>{`.motion-ready [data-motion-item]{opacity:1!important;transform:none!important}.motion-ready [data-motion-image],.motion-ready [data-motion-image] img{transform:none!important}`}</style></noscript></body>
+      <body><SmoothScroll /><a className="skip-link" href="#main-content">Skip to main content</a><div id="main-content" tabIndex={-1}>{children}</div><SiteMotion /><FeedbackBridge /><noscript><style>{`.motion-ready [data-motion-item]{opacity:1!important;transform:none!important}.motion-ready [data-motion-image],.motion-ready [data-motion-image] img{transform:none!important}`}</style></noscript></body>
     </html>
   );
 }

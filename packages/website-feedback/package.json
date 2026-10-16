@@ -1,0 +1,22 @@
+{
+  "name": "@rc/website-feedback",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "files": ["src"],
+  "exports": {
+    "./client": "./src/client/index.ts",
+    "./server": "./src/server/index.ts",
+    "./providers/github": "./src/providers/github.ts",
+    "./providers/notion": "./src/providers/notion.ts",
+    "./types": "./src/types.ts"
+  },
+  "dependencies": {
+    "html2canvas": "^1.4.1"
+  },
+  "peerDependencies": {
+    "next": ">=16.0.0 <17",
+    "react": ">=19.0.0 <20",
+    "react-dom": ">=19.0.0 <20"
+  }
+}

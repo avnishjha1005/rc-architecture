@@ -52,3 +52,9 @@ Only variables prefixed with `NEXT_PUBLIC_` are used in the browser. Never expos
 6. Smoke-test contact and newsletter delivery, mobile navigation, project filters/loading, gallery controls, 404 handling, preview mode, and the Sanity Studio in the production environment.
 
 The form rate limiter is intentionally dependency-free and process-local. On multi-instance or serverless deployments, replace it with a durable shared store before high-volume campaigns.
+
+## Client website feedback
+
+The reusable `@rc/website-feedback` workspace package powers a private review shell at `/feedback`. Configure the shared passcode and choose either the Notion or GitHub Issues provider using the variables in `.env.example`, then follow [the feedback setup guide](docs/feedback-setup.md).
+
+The package is intentionally private and source-based for now. The application transpiles it through `next.config.ts`; `html2canvas` is loaded only when a reviewer submits a screenshot.
