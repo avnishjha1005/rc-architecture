@@ -70,6 +70,9 @@ export function NextProjects({
           ))}
         </Swiper>
       </div>
+      <div className={styles.mobileRelated} data-motion-item>
+        {projects.slice(0, 3).map((item) => <ProjectCard project={item} variant="related" key={item.id} />)}
+      </div>
     </section>
   );
 }

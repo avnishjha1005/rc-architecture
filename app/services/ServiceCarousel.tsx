@@ -48,10 +48,10 @@ export function ServiceCarousel({ items, label, description }: ServiceCarouselPr
         </div>
         <div className={styles.roundActions}>
           <button type="button" disabled={!hasMultipleItems} onClick={() => swiper?.slidePrev()} aria-label={`Previous ${label} service`}>
-            <span aria-hidden="true">←</span>
+            <Image src="/arrow-left.svg" alt="" width={18} height={16} aria-hidden="true" />
           </button>
           <button type="button" disabled={!hasMultipleItems} onClick={() => swiper?.slideNext()} aria-label={`Next ${label} service`}>
-            <span aria-hidden="true">→</span>
+            <Image className={styles.arrowRight} src="/arrow-left.svg" alt="" width={18} height={16} aria-hidden="true" />
           </button>
         </div>
       </div>

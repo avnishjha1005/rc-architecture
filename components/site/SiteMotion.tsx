@@ -56,7 +56,8 @@ export function SiteMotion() {
           const image = frame.matches("img") ? frame : frame.querySelector<HTMLElement>("img");
           if (!image || image.closest("[data-motion-image]") !== frame) return;
 
-          gsap.set(image, { scale: 1.055 });
+          const mobileHero = image.matches(".hero__image") && window.matchMedia("(max-width: 900px)").matches;
+          gsap.set(image, { scale: mobileHero ? 1 : 1.055 });
           frame.setAttribute("data-motion-image-active", "");
           const settle = () => gsap.to(image, {
             scale: 1,

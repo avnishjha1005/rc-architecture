@@ -1,5 +1,5 @@
 .page { background: var(--ink); color: #f4f4f2; }
-.hero { min-height: 805px; position: relative; border-bottom: 1px solid #424242; }
+.hero { height: 95vh; height: 95svh; min-height: 0; position: relative; border-bottom: 1px solid #424242; }
 .heroCopy { position: absolute; left: 20px; top: 170px; }
 .heroCopy strong { display: block; font-size: clamp(7rem, 12.5vw, 11.25rem); font-weight: 300; letter-spacing: -.075em; line-height: .72; }
 .heroCopy h1 { font-size: clamp(4rem, 7.4vw, 6.7rem); font-weight: 300; letter-spacing: -.065em; line-height: .88; margin: 150px 0 0; }
@@ -35,7 +35,7 @@
 @keyframes scroll-nudge { 0%, 100% { opacity: .45; transform: translateY(-5px); } 45% { opacity: 1; transform: translateY(7px); } }
 
 @media (max-width: 900px) {
-  .hero { height: 100svh; min-height: 0; padding: 0 20px; }
+  .hero { height: 100vh; height: 100svh; min-height: 0; padding: 0 20px; }
   .heroCopy { left: 20px; top: clamp(110px, 17.2svh, 145px); }
   .heroCopy strong { font-size: 6.3rem; line-height: .78; }
   .heroCopy h1 { font-size: 3rem; line-height: .88; margin-top: 28px; }

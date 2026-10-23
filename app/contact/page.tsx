@@ -12,6 +12,14 @@ import { getSingletonMetadata } from "@/sanity/lib/metadata";
 import { ContactForm } from "@/components/contact/ContactForm";
 import styles from "./contact.module.css";
 
+const awards = [
+  ["Ashgrove", "ArchForm Renovation Award", "2023"],
+  ["Stonefield", "Modern Home Excellence", "2024"],
+  ["Orchard", "Small Space Design Honours", "2022"],
+  ["Haywood", "Residential Detail Award", "2024"],
+  ["Belmont", "Contemporary Bath Feature", "2023"],
+];
+
 export function generateMetadata() {
   return getSingletonMetadata("contactPage", {
     title: "Contact — RC Architecture",
@@ -27,6 +35,12 @@ export default async function ContactPage() {
   ]);
   const mapLink = toDirectionsHref(site.address);
   const mapEmbedUrl = toGoogleMapsEmbedHref(site.address);
+  const socialLinks = site.socialLinks.length ? site.socialLinks : [
+    { label: "LinkedIn", shortLabel: "in" },
+    { label: "Facebook", shortLabel: "f" },
+    { label: "X", shortLabel: "x" },
+    { label: "Instagram", shortLabel: "ig" },
+  ];
 
   return (
     <main className={styles.page}>
@@ -63,7 +77,19 @@ export default async function ContactPage() {
           </div>
           <h3 data-motion-item>{page?.satelliteOfficesHeading || "Satellite offices"}</h3>
           <div className={styles.offices}>{site.offices.map((office) => <article key={office.city} data-motion-item><span>{office.city}</span><div><p>{office.address}</p><p>T.: <a href={toTelephoneHref(office.phone)}>{office.phone}</a></p></div></article>)}</div>
-          {site.socialLinks.length > 0 && <div className={styles.socials}><small>{page?.socialLabel || "Follow us"}</small><div>{site.socialLinks.map((social) => <a href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} key={social.label}>{social.shortLabel}</a>)}</div></div>}
+          <div className={styles.socials}><small>{page?.socialLabel || "Follow us"}</small><div>{socialLinks.map((social) => "href" in social ? <a href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} key={social.label}>{social.shortLabel}</a> : <span aria-label={social.label} key={social.label}>{social.shortLabel}</span>)}</div></div>
+        </div>
+      </section>
+
+      <section className={styles.awards} data-motion-group="section">
+        <Eyebrow className={styles.label} data-motion-item>Awards</Eyebrow>
+        <div className={styles.awardsBody}>
+          <h2 data-motion-item>Awards &amp;<br />Recognitions.</h2>
+          <p data-motion-item>Explore our services and see how we bring creativity and expertise to every project.</p>
+          <div className={styles.awardsTable} data-motion-item>
+            <div className={styles.awardsHead}><span>Projects</span><span>Award</span><span>Year</span></div>
+            {awards.map(([project, award, year]) => <div key={project}><span>{project}</span><span>{award}</span><span>{year}</span></div>)}
+          </div>
         </div>
       </section>
 

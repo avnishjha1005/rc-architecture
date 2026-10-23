@@ -1,6 +1,6 @@
 .nextProjects{background:#f6f6f6;overflow:hidden;padding:145px 20px 155px}
 .nextHeading{display:grid;grid-template-columns:200px 1fr;gap:30px;margin-bottom:70px}
-.nextHeading>p{color:#ff3022;font:650 .75rem/1.2 var(--font-chivo-mono);letter-spacing:.06em;margin:0 0 13px;text-transform:uppercase}
+.nextHeading>p{color:#ff2e17;font:650 .75rem/1.2 var(--font-chivo-mono);letter-spacing:.06em;margin:0 0 13px;text-transform:uppercase}
 .nextHeadingContent{align-items:end;display:flex;gap:70px;justify-content:space-between}
 .nextHeading h2{font-size:clamp(4rem,7vw,7.5rem);font-weight:400;letter-spacing:-.065em;line-height:.9;margin:0}
 .backLink{background:#202020;border-radius:999px;color:#fff;flex:none;font-size:.75rem;font-weight:650;gap:8px;margin-bottom:10px;padding:11px 22px;text-transform:uppercase}
@@ -17,6 +17,7 @@
 .relatedCard h3{font-size:1.05rem;font-weight:400;margin:0}
 .relatedCard h3 a{color:inherit}
 .relatedCard>div>a{background:#202020;border-radius:50%;color:#fff;display:grid;height:28px;place-items:center;width:28px}
+.mobileRelated{display:none}
 
 @media(max-width:760px){
   .nextProjects{padding:78px 20px 95px}
@@ -25,5 +26,7 @@
   .nextHeadingContent{align-items:start;display:block}
   .nextHeading h2{font-size:3.5rem;margin-bottom:22px}
   .backLink{display:inline-flex;margin-bottom:0}
-  .swiperOffset{margin:45px -20px 0 0}
+  .swiperOffset{display:none}
+  .mobileRelated{display:grid;gap:36px;margin-top:45px}
+  .mobileRelated .relatedImage{aspect-ratio:355/220}
 }

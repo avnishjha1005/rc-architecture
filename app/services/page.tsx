@@ -22,11 +22,13 @@ export function generateMetadata() {
   });
 }
 
-const process = [
-  ["01", "Design", "Conceptualisation", "Visualisation · 3D Views · Fly-through", "Look & Feel"],
-  ["02", "Define", "Searching for the DNA", "Interior with colour leadership", "Engagement with project leads"],
-  ["03", "Develop", "Developing the DNA into feasibility", "Tender Drawings", "Specs · Vendor Finalisation"],
-  ["04", "Deploy", "Executing the DNA", "Quality Monitoring", "In-time Execution"],
+type ProcessItem = [number: string, title: string, subtitle: string, deliverables: string[]];
+
+const process: ProcessItem[] = [
+  ["01", "Design", "Conceptualisation", ["Concept", "Visualisation · 3D Views · AR/VR", "Look & Feel"]],
+  ["02", "Define", "Searching for the DNA", ["Interview with senior leadership", "Engagement with project leads", "Observation of employees"]],
+  ["03", "Develop", "Developing the DNA into feasibility", ["Tender Drawings", "Specs", "Vendor Finalisation"]],
+  ["04", "Deploy", "Executing the DNA", ["Quality Monitoring", "In-time Execution"]],
 ];
 
 const processMarks = ["/services-1.svg", "/services-2.svg", "/services-3.svg", "/services-3.svg"];
@@ -45,7 +47,12 @@ export default async function ServicesPage() {
     isSanityConfigured ? sanityClient.fetch<ServicesData>(servicesPageQuery, {}, { next: { revalidate: 60 } }).catch(() => null) : null,
     getSiteData(),
   ]);
-  const processItems = page?.processSteps?.length ? page.processSteps.map((step, index) => [step.number || String(index + 1).padStart(2, "0"), step.title || "", step.subtitle || "", step.deliverables?.[0] || "", step.deliverables?.[1] || ""]) : process;
+  const processItems = page?.processSteps?.length ? page.processSteps.map((step, index) => {
+    const fallback = process[index]?.[3] as string[] | undefined;
+    const providedDeliverables = step.deliverables?.filter(Boolean);
+    const deliverables = providedDeliverables?.length ? providedDeliverables : fallback || [];
+    return [step.number || String(index + 1).padStart(2, "0"), step.title || "", step.subtitle || "", deliverables] satisfies ProcessItem;
+  }) : process;
   const serviceItems = page?.services?.length ? page.services.map((service, index) => ({ mark: service.mark || `(${String.fromCharCode(97 + index)})`, title: service.title || "Service", description: service.description || "", items: (service.items || []).flatMap((item) => item.title && item.imageUrl ? [[item.title, item.description || "", item.imageUrl] as string[]] : []) })) : services;
   const cmsProjects: PortfolioProject[] = (page?.featuredProjects || []).flatMap((project, index) => project.title && project.slug && project.imageUrl ? [{ id: project._id || project.slug || index, slug: project.slug, title: project.title, featuredTitle: project.featuredTitle, type: project.type === "Interior Design" ? "Interior Design" as const : "Architecture" as const, category: project.category || project.type || "Architecture", location: project.location || "Location forthcoming", year: project.yearDisplay || "Year forthcoming", imageUrl: project.imageUrl, imageAlt: project.imageAlt || project.title, href: `/projects/${project.slug}` }] : []);
   return (
@@ -60,7 +67,7 @@ export default async function ServicesPage() {
       <section className={styles.intro} data-motion-group="section">
         <Eyebrow data-motion-item>{page?.processEyebrow || "Process"}</Eyebrow>
         <h2 data-motion-item>{(page?.processHeading || "Great architecture isn’t just about talent and experience,\nbut collaborations and relationships.").split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h2>
-        <div className={styles.process}>{processItems.map(([number, title, subtitle, line1, line2], index) => <article key={title} data-motion-item><small>{number}</small><h3>{title}</h3><p>{subtitle}</p><div className={styles.processMark} aria-hidden="true"><Image src={processMarks[index] || processMarks[2]} alt="" fill sizes="165px" /></div><span>{line1}<br />{line2}</span><b>{String.fromCharCode(97 + index)}</b></article>)}</div>
+        <div className={styles.process}>{processItems.map(([number, title, subtitle, deliverables], index) => <article key={title} data-motion-item><small>{number}</small><h3>{title}</h3><p>{subtitle}</p><div className={styles.processMark} aria-hidden="true"><Image src={processMarks[index] || processMarks[2]} alt="" fill sizes="165px" /></div><ul className={styles.processDeliverables}>{deliverables.filter(Boolean).map((deliverable) => <li key={deliverable}>{deliverable}</li>)}</ul></article>)}</div>
       </section>
 
       <section className={styles.services} data-motion-group="section">

@@ -37,7 +37,9 @@ export async function getSiteData(): Promise<SiteData> {
       navigation: data.navigation?.length ? data.navigation : defaultSiteData.navigation,
       cta: data.cta?.label && data.cta.href ? data.cta : defaultSiteData.cta,
       offices: data.offices?.length ? data.offices : defaultSiteData.offices,
-      socialLinks: data.socialLinks?.filter((link) => link.label && link.href) ?? defaultSiteData.socialLinks,
+      socialLinks: data.socialLinks?.filter((link) => link.label && link.href).length
+        ? data.socialLinks.filter((link) => link.label && link.href)
+        : defaultSiteData.socialLinks,
       contact: {
         ...defaultSiteData.contact,
         ...(contact?.eyebrow ? { eyebrow: contact.eyebrow } : {}),

@@ -14,10 +14,14 @@ type BlogCategoryToggleProps = {
   secondaryLabel: string;
   tabsClassName: string;
   emptyClassName: string;
+  viewAllClassName: string;
 };
 
-export function BlogCategoryToggle({ articles, primaryLabel, secondaryLabel, tabsClassName, emptyClassName }: BlogCategoryToggleProps) {
+const INITIAL_VISIBLE_POSTS = 4;
+
+export function BlogCategoryToggle({ articles, primaryLabel, secondaryLabel, tabsClassName, emptyClassName, viewAllClassName }: BlogCategoryToggleProps) {
   const [activeCategory, setActiveCategory] = useState<BlogListingArticle["blogCategory"]>("spaceLabs");
+  const [expanded, setExpanded] = useState(false);
   const counts = useMemo(() => ({
     spaceLabs: articles.filter((article) => article.blogCategory === "spaceLabs").length,
     spaceMaking: articles.filter((article) => article.blogCategory === "spaceMaking").length,
@@ -29,7 +33,7 @@ export function BlogCategoryToggle({ articles, primaryLabel, secondaryLabel, tab
       aria-controls="blog-post-list"
       aria-selected={activeCategory === category}
       id={`blog-tab-${category}`}
-      onClick={() => setActiveCategory(category)}
+      onClick={() => { setActiveCategory(category); setExpanded(false); }}
       role="tab"
       type="button"
     >
@@ -45,7 +49,8 @@ export function BlogCategoryToggle({ articles, primaryLabel, secondaryLabel, tab
     </div>
     <div id="blog-post-list" role="tabpanel" aria-labelledby={`blog-tab-${activeCategory}`}>
       {visibleArticles.length
-        ? <SpaceLabsGrid key={activeCategory} articles={visibleArticles} layout="mosaic" />
+        ? <><SpaceLabsGrid key={activeCategory} articles={visibleArticles} layout="mosaic" mobileVisibleCount={expanded ? undefined : INITIAL_VISIBLE_POSTS} />
+          {visibleArticles.length > INITIAL_VISIBLE_POSTS && !expanded && <button className={viewAllClassName} type="button" onClick={() => setExpanded(true)}>View all <span aria-hidden="true">↓</span></button>}</>
         : <p className={emptyClassName}>No posts have been added to this category yet.</p>}
     </div>
   </>;

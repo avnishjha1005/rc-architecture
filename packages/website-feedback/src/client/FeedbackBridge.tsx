@@ -67,7 +67,7 @@ async function capture(target: HTMLElement | null, options: FeedbackHostMessage 
     const scaleY = canvas.height / window.innerHeight;
     const context = canvas.getContext("2d");
     if (context) {
-      context.strokeStyle = "#ff3022"; context.lineWidth = Math.max(3, 3 * scaleX);
+      context.strokeStyle = "#ff2e17"; context.lineWidth = Math.max(3, 3 * scaleX);
       context.strokeRect(rect.left * scaleX, rect.top * scaleY, rect.width * scaleX, rect.height * scaleY);
     }
   }
@@ -103,7 +103,7 @@ export function FeedbackBridge() {
     const root = document.createElement("div"); root.setAttribute(OVERLAY, "");
     Object.assign(root.style, { position: "fixed", inset: "0", pointerEvents: "none", zIndex: "2147483000" });
     const outline = document.createElement("div"); outline.setAttribute(OVERLAY, "");
-    Object.assign(outline.style, { display: "none", position: "fixed", border: "2px solid #ff3022", background: "rgba(255,48,34,.08)", pointerEvents: "none" });
+    Object.assign(outline.style, { display: "none", position: "fixed", border: "2px solid #ff2e17", background: "rgba(255,46,23,.08)", pointerEvents: "none" });
     root.append(outline); document.body.append(root);
 
     function resolve(selector: string) { try { return selector ? document.querySelector<HTMLElement>(selector) : null; } catch { return null; } }
@@ -121,7 +121,7 @@ export function FeedbackBridge() {
         const y = rect ? rect.top + rect.height * pin.anchorY : pin.fallbackY - window.scrollY;
         const button = document.createElement("button"); button.type = "button"; button.textContent = String(pin.number); button.setAttribute(OVERLAY, "");
         button.title = element ? `Feedback ${pin.number}` : `Feedback ${pin.number} · anchor unavailable`;
-        Object.assign(button.style, { position: "fixed", left: `${x}px`, top: `${y}px`, transform: "translate(-50%,-50%)", width: "28px", height: "28px", borderRadius: "50%", border: "2px solid white", background: pin.status === "resolved" ? "#777" : "#ff3022", color: "white", font: "700 11px Arial", cursor: "pointer", pointerEvents: "auto", boxShadow: "0 2px 10px #0005" });
+        Object.assign(button.style, { position: "fixed", left: `${x}px`, top: `${y}px`, transform: "translate(-50%,-50%)", width: "28px", height: "28px", borderRadius: "50%", border: "2px solid white", background: pin.status === "resolved" ? "#777" : "#ff2e17", color: "white", font: "700 11px Arial", cursor: "pointer", pointerEvents: "auto", boxShadow: "0 2px 10px #0005" });
         button.addEventListener("click", (event) => { event.preventDefault(); event.stopPropagation(); post({ type: "rc-feedback:pin-focus", id: pin.id }); });
         root.append(button);
       });

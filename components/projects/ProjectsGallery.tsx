@@ -13,6 +13,7 @@ import styles from "@/app/projects/projects.module.css";
 type View = "image" | "list";
 type Filter = "All Projects" | "Architecture" | "Interior Design";
 const PAGE_SIZE = 6;
+const LIST_PAGE_SIZE = 12;
 
 export function ProjectsGallery({ projects, loadMoreLabel = "Load more" }: { projects: PortfolioProject[]; loadMoreLabel?: string }) {
   const [view, setView] = useState<View>("image");
@@ -24,7 +25,8 @@ export function ProjectsGallery({ projects, loadMoreLabel = "Load more" }: { pro
   const entranceFrom = useRef<number | null>(null);
   const prefersReducedMotion = useRef(false);
   const filtered = useMemo(() => filter === "All Projects" ? projects : projects.filter((project) => project.type === filter), [filter, projects]);
-  const visibleProjects = filtered.slice(0, page * PAGE_SIZE);
+  const pageSize = view === "list" ? LIST_PAGE_SIZE : PAGE_SIZE;
+  const visibleProjects = filtered.slice(0, page * pageSize);
   const hasMore = visibleProjects.length < filtered.length;
 
   useEffect(() => {
@@ -145,7 +147,7 @@ export function ProjectsGallery({ projects, loadMoreLabel = "Load more" }: { pro
             {hovered && <Image key={hovered.id} src={hovered.imageUrl} alt="" fill sizes="32vw" />}
           </div>
           <div className={styles.projectList}>
-            {filtered.map((project) => (
+            {visibleProjects.map((project) => (
               <Link className={styles.listRow} data-project-item href={project.href} key={project.id} onMouseEnter={() => setHovered(project)} onFocus={() => setHovered(project)} onBlur={() => setHovered(null)}>
                 <span>{project.title}</span><ProjectCategory category={project.category} /><span>{project.location}</span><span>{project.year}</span>
               </Link>
@@ -154,8 +156,8 @@ export function ProjectsGallery({ projects, loadMoreLabel = "Load more" }: { pro
         </div>
       )}
 
-      {view === "image" && hasMore && (
-        <PillAction className={styles.loadMore} arrow={false} onClick={loadMore}>{loadMoreLabel} <span aria-hidden="true">↓</span></PillAction>
+      {hasMore && (
+        <PillAction className={styles.loadMore} arrow={false} onClick={loadMore}>{loadMoreLabel} <span aria-hidden="true">↑</span></PillAction>
       )}
     </section>
   );

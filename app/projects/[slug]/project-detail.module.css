@@ -1,8 +1,8 @@
 .page{background:#fafafa;color:#202020}
 .page :global(.newsletter-card)>img{bottom:0px}
-.hero{background:#fff;box-sizing:border-box;display:flex;flex-direction:column;height:100vh;height:100svh;max-height:100vh;padding:108px 20px 40px;position:relative}
+.hero{background:#fff;box-sizing:border-box;display:flex;flex-direction:column;height:95vh;height:95svh;padding:108px 20px 40px;position:relative}
 .heroTitle{margin-top:51px}
-.heroTitle p{color:#ff3022;font:650 .75rem/1.2 var(--font-chivo-mono);letter-spacing:.06em;margin:0 0 20px;text-transform:uppercase}
+.heroTitle p{color:#ff2e17;font:650 .75rem/1.2 var(--font-chivo-mono);letter-spacing:.06em;margin:0 0 20px;text-transform:uppercase}
 .heroTitle h1{font-size:clamp(4rem,5.5vw,5rem);font-weight:400;letter-spacing:-.065em;line-height:.9;margin:0}
 .heroImage{flex:1;height:auto;margin-top:67px;min-height:0;position:relative;overflow:hidden}
 .heroImage img,.sectionImage img,.galleryRail img{object-fit:cover}
@@ -38,18 +38,18 @@
   .hero>header img{height:auto;width:180px}
 }
 @media(max-width:760px){
-  .hero{display:block;height:auto;max-height:100vh;padding:82px 20px 50px}
+  .hero{display:block;height:100vh;height:100svh;padding:108px 20px 72px}
   .heroTitle{margin-top:25px}
   .heroTitle p{font-size:.75rem;margin-bottom:9px}
   .heroTitle h1{font-size:3rem}
-  .heroImage{height:230px;margin:25px -20px 0}
+  .heroImage{height:448px;margin:38px -20px 0}
   .story{padding:0 20px 90px}
-  .intro{display:block;margin-bottom:70px;padding-top:62px}
-  .intro>div>h2,.sectionCopy h2{font-size:1.65rem;max-width:315px}
+  .intro{display:block;margin-bottom:78px;padding-top:78px}
+  .intro>div>h2,.sectionCopy h2{font-size:2rem;max-width:335px}
   .intro>div>p,.sectionCopy p{font-size:.75rem}
   .intro dl{margin-top:45px}
-  .section,.image-right{display:flex;flex-direction:column;margin-bottom:70px;gap:28px}
-  .sectionImage,.wide .sectionImage{height:310px;width:100%;order:1}
+  .section,.image-right{display:flex;flex-direction:column;margin-bottom:86px;gap:62px}
+  .sectionImage,.wide .sectionImage{height:335px;width:100%;order:1}
   .sectionCopy,.image-right .sectionCopy{margin-left:0;max-width:none;order:2;padding:0;width:100%}
   .wide .sectionCopy{margin-top:0}
   .galleryNext{height:36px;right:8px;width:36px}

@@ -44,7 +44,7 @@ export default async function BlogPage() {
   return <main className={styles.page}>
     <section className={styles.hero} data-motion-group="hero"><Header brandName={site.brandName} navigation={site.navigation} cta={site.cta} theme="light" /><h1 data-motion-item>{(page?.heroTitle || "In the\nSpotlight.").split("\n").map((line, index) => <span key={line}>{line}{index === 0 && <br />}</span>)}</h1><p data-motion-item>{page?.heroIntro || "Dive into our latest thoughts on design, industry trends, and behind-the-scenes looks at our projects."}</p></section>
     <div className={styles.listingSurface}>
-      <section className={styles.posts} data-motion-group="section"><div data-motion-item><BlogCategoryToggle articles={articles} primaryLabel={page?.primaryTabLabel || "Space Labs"} secondaryLabel={page?.secondaryTabLabel || "Space Making"} tabsClassName={styles.tabs} emptyClassName={styles.empty} /></div></section>
+      <section className={styles.posts} data-motion-group="section"><div data-motion-item><BlogCategoryToggle articles={articles} primaryLabel={page?.primaryTabLabel || "Space Labs"} secondaryLabel={page?.secondaryTabLabel || "Space Making"} tabsClassName={styles.tabs} emptyClassName={styles.empty} viewAllClassName={styles.viewAll} /></div></section>
       <NextProjects className={styles.nextProjects} projects={cmsProjects.length ? cmsProjects : portfolioProjects.slice(2,6)} />
     </div>
     <ContactSection content={site.contact} />

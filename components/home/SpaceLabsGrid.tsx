@@ -6,15 +6,18 @@ import { Reveal } from "@/components/ui/Reveal";
 type SpaceLabsGridProps = {
   articles: ArticleItem[];
   layout?: "grid" | "mosaic";
+  mobileVisibleCount?: number;
 };
 
-export function SpaceLabsGrid({ articles, layout = "grid" }: SpaceLabsGridProps) {
+export function SpaceLabsGrid({ articles, layout = "grid", mobileVisibleCount }: SpaceLabsGridProps) {
   const renderArticle = (article: ArticleItem, index: number, useRowPattern = false) => {
     const column = index % 4;
     const row = Math.floor(index / 4);
     const isTall = useRowPattern ? (row + column) % 2 === 1 : index % 2 === 1;
 
-    return <Reveal className={`article-card${isTall ? " article-card--tall" : ""}`} key={article.title} delay={(index % 4) * 60}>
+    const mobileVisibilityClass = mobileVisibleCount !== undefined && index >= mobileVisibleCount ? " article-card--mobile-hidden" : "";
+
+    return <Reveal className={`article-card${isTall ? " article-card--tall" : ""}${mobileVisibilityClass}`} key={article.title} delay={(index % 4) * 60}>
       {article.href === "#"
         ? <div className="article-card__image"><Image src={article.imageUrl} alt={article.imageAlt} fill sizes="(max-width: 760px) 100vw, 25vw" /></div>
         : <Link className="article-card__image" href={article.href}><Image src={article.imageUrl} alt={article.imageAlt} fill sizes="(max-width: 760px) 100vw, 25vw" /></Link>}

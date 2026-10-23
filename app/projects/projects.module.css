@@ -1,5 +1,5 @@
 .page{background:#fafafa;color:#202020;font-family:var(--font-hanken-grotesk),Arial,sans-serif}
-.featured{background:#fff;min-height:900px;padding:112px 20px 40px;position:relative;overflow:hidden}
+.featured{background:#fff;min-height:95vh;min-height:95svh;padding:112px 20px 40px;position:relative;overflow:hidden}
 .featuredIntro{align-items:end;display:flex;justify-content:space-between;margin-top:80px;padding-bottom:50px;border-bottom:1px solid #e4e4e4}
 .featuredIntro h1{font-size:clamp(5.5rem,10vw,9.5rem);font-weight:400;letter-spacing:-.075em;line-height:.75;margin:0;white-space:pre-line}
 .featuredIntro>div{width:220px;margin:0 0 6px}
@@ -15,7 +15,7 @@
 .featuredCard h2{font-size:1rem;font-weight:400;line-height:1.4;margin:0}
 .archive{background:#fafafa;padding:135px 20px 155px}
 .archiveHeading{display:grid;grid-template-columns:200px minmax(480px,720px) 205px;gap:28px;align-items:start}
-.archiveHeading>p{color:#ff3022;font:500 .75rem/1.2 var(--font-chivo-mono),monospace;letter-spacing:.08em;margin:8px 0 0;text-transform:uppercase}
+.archiveHeading>p{color:#ff2e17;font:500 .75rem/1.2 var(--font-chivo-mono),monospace;letter-spacing:.08em;margin:8px 0 0;text-transform:uppercase}
 .archiveHeading h2{font-size:clamp(5.25rem,8.8vw,8.4rem);font-weight:400;letter-spacing:-.075em;line-height:.84;margin:0;white-space:pre-line}
 .archiveHeading>span{align-self:end;font-size:.8rem;line-height:1.45;margin-bottom:7px}
 .gallery{margin-top:90px}
@@ -42,7 +42,7 @@
 .listRow{border-bottom:1px solid #2c2c2c;display:grid;grid-template-columns:2fr 2fr 1.65fr .65fr;align-items:center;min-height:48px;font-size:.875rem;line-height:1.4;position:relative;transition:color .2s}
 .listRow .projectCategory{font-size:.75rem}
 .listRow span:last-child{text-align:right}
-.listRow:hover{color:#ff3022}
+.listRow:hover{color:#ff2e17}
 .hoverReveal{height:250px;left:50%;opacity:0;pointer-events:none;position:fixed;top:50%;transform:translate(-50%,-42%) scale(.96);transition:opacity .22s,transform .3s cubic-bezier(.22,1,.36,1);width:360px;z-index:4}
 .hoverReveal img{object-fit:cover}
 .hoverRevealVisible{opacity:1;transform:translate(-50%,-50%) scale(1)}
@@ -51,17 +51,17 @@
 .loadMore:hover span{transform:translateY(-3px)}
 
 @media(max-width:760px){
-  .featured{min-height:auto;padding:88px 20px 145px}
+  .featured{min-height:100vh;min-height:100svh;padding:105px 20px 80px}
   .featuredIntro{align-items:start;display:block;margin-top:25px;padding-bottom:28px}
-  .featuredIntro h1{font-size:3rem;line-height:.82}
+  .featuredIntro h1{font-size:3.75rem;line-height:.78}
   .featuredIntro>div{margin:25px 0 0;width:190px}
   .featuredIntro p{font-size:.75rem}
-  .featuredCarousel{margin-top:25px}.featuredSlide{width:calc(100vw - 40px)!important}.featuredSlide:nth-child(n) .featuredCardImage{aspect-ratio:355/410}.featuredNext{align-items:center;background:#ff3022;border:0;border-radius:50%;color:#fff;cursor:pointer;display:flex;font-size:1.2rem;height:38px;justify-content:center;padding:0;position:absolute;right:20px;top:calc(50% - 28px);width:38px;z-index:10}.featuredNext span{line-height:1;transform:translateY(-1px)}
+  .featuredCarousel{margin-top:25px}.featuredSlide{width:calc(100vw - 40px)!important}.featuredSlide:nth-child(n) .featuredCardImage{aspect-ratio:355/448}.featuredNext{align-items:center;background:#ff2e17;border:0;border-radius:50%;color:#fff;cursor:pointer;display:flex;font-size:1.2rem;height:38px;justify-content:center;padding:0;position:absolute;right:20px;top:calc(50% - 28px);width:38px;z-index:10}.featuredNext span{line-height:1;transform:translateY(-1px)}
   .featuredCard h2{font-size:1.125rem}
   .archive{padding:85px 20px 105px}
   .archiveHeading{display:block}
   .archiveHeading>p{font-size:.75rem;margin:0 0 24px}
-  .archiveHeading h2{font-size:3rem;line-height:.88}
+  .archiveHeading h2{font-size:3.5rem;line-height:.86}
   .archiveHeading>span{display:block;font-size:.75rem;margin:36px 0 0;max-width:260px}
   .gallery{margin-top:68px}
   .controls{display:flex;flex-direction:column-reverse;padding:0}
@@ -70,7 +70,7 @@
   .filters button{font-size:.75rem}
   .imageGrid{display:block;padding-top:25px}
   .card{margin-bottom:39px}
-  .cardImage{aspect-ratio:1.55}
+  .cardImage{aspect-ratio:1.5}
   .cardTopline{margin-top:10px}
   .cardTopline p{font-size:1.125rem}
   .projectCategory{font-size:.75rem}
