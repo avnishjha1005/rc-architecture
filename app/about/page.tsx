@@ -11,7 +11,10 @@ import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
 import { aboutPageQuery } from "@/sanity/lib/queries";
 import { getSingletonMetadata } from "@/sanity/lib/metadata";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import { resolveImage, type CmsResponsiveImage } from "@/lib/responsive-image";
 import { IntroImageCarousel } from "./IntroImageCarousel";
+import { AboutStats } from "./AboutStats";
 import { PhilosophyPrinciples } from "./PhilosophyPrinciples";
 import styles from "./about.module.css";
 
@@ -47,7 +50,7 @@ const awards = [
 ];
 
 export default async function AboutPage() {
-  type AboutData = { heroTitle?: string; heroImageUrl?: string; heroImageAlt?: string; introEyebrow?: string; introHeading?: string; introParagraphs?: string[]; introImages?: { imageUrl?: string; imageAlt?: string }[]; stats?: { label?: string; value?: string }[]; philosophyEyebrow?: string; philosophyHeading?: string; philosophyIntro?: string; principles?: { title?: string; description?: string }[]; clientsEyebrow?: string; clientsHeading?: string; clientsIntro?: string; clientLogos?: { imageUrl?: string; imageAlt?: string }[]; peopleEyebrow?: string; peopleHeading?: string; people?: { name?: string; role?: string; imageUrl?: string; imageAlt?: string }[]; awardsEyebrow?: string; awardsHeading?: string; awardsIntro?: string; awards?: { project?: string; award?: string; year?: string }[]; careersEyebrow?: string; valuesHeading?: string; valuesIntro?: string; values?: { icon?: string; title?: string; description?: string }[] } | null;
+  type AboutData = { heroTitle?: string; heroImageUrl?: string; heroImageAlt?: string; heroImageData?: CmsResponsiveImage; introEyebrow?: string; introHeading?: string; introParagraphs?: string[]; introImages?: { imageUrl?: string; imageAlt?: string }[]; stats?: { label?: string; value?: string }[]; philosophyEyebrow?: string; philosophyHeading?: string; philosophyIntro?: string; principles?: { title?: string; description?: string }[]; clientsEyebrow?: string; clientsHeading?: string; clientsIntro?: string; clientLogos?: { imageUrl?: string; imageAlt?: string }[]; peopleEyebrow?: string; peopleHeading?: string; people?: { name?: string; role?: string; imageUrl?: string; imageAlt?: string }[]; awardsEyebrow?: string; awardsHeading?: string; awardsIntro?: string; awards?: { project?: string; award?: string; year?: string }[]; careersEyebrow?: string; valuesHeading?: string; valuesIntro?: string; values?: { icon?: string; title?: string; description?: string }[] } | null;
   const sanityClient = await getSanityClient();
   const [page, site] = await Promise.all([
     isSanityConfigured ? sanityClient.fetch<AboutData>(aboutPageQuery, {}, { next: { revalidate: 60 } }).catch(() => null) : null,
@@ -59,7 +62,7 @@ export default async function AboutPage() {
     { imageUrl: introImages[1]?.imageUrl || "/images/about/studio-ocean.png", imageAlt: introImages[1]?.imageAlt || "A calm concrete home overlooking the water" },
     { imageUrl: introImages[2]?.imageUrl || "/images/about/studio-kitchen.png", imageAlt: introImages[2]?.imageAlt || "Warm contemporary kitchen and living space" },
   ];
-  const statItems = page?.stats?.length ? page.stats.flatMap((item) => item.label && item.value ? [[item.label, item.value]] : []) : [["Projects we finished", "126+"], ["Our Clients", "80+"], ["Our Partners", "24+"]];
+  const statItems: Array<readonly [string, string]> = page?.stats?.length ? page.stats.flatMap((item): Array<readonly [string, string]> => item.label && item.value ? [[item.label, item.value]] : []) : [["Projects we finished", "126+"], ["Our Clients", "80+"], ["Our Partners", "24+"]];
   const principleItems = page?.principles?.length ? page.principles.flatMap((item) => item.title ? [[item.title, item.description || ""]] : []) : principles;
   const uploadedClientLogos = page?.clientLogos?.flatMap((logo) => logo.imageUrl ? [{ imageUrl: logo.imageUrl, imageAlt: logo.imageAlt || "Client logo" }] : []) || [];
   const clientLogos = uploadedClientLogos.length ? Array.from({ length: 18 }, (_, index) => uploadedClientLogos[index % uploadedClientLogos.length]) : [];
@@ -69,29 +72,27 @@ export default async function AboutPage() {
   return (
     <main className={styles.page}>
       <section className={styles.hero} data-motion-group="hero">
-        <Image src={page?.heroImageUrl || "/images/home/service-architecture.jpg"} alt={page?.heroImageAlt || "Contemporary RC Architecture residence"} fill priority sizes="100vw" className={styles.heroImage} data-motion-image />
+        <ResponsiveImage image={resolveImage(page?.heroImageData, page?.heroImageUrl || "/images/home/service-architecture.jpg", page?.heroImageAlt || "Contemporary RC Architecture residence")} fill loading="eager" sizes="100vw" className={styles.heroImage} data-motion-image data-motion-parallax />
         <div className={styles.heroShade} />
         <Header brandName={site.brandName} navigation={site.navigation} cta={site.cta} theme="dark" />
         <h1 data-motion-item>{(page?.heroTitle || "About\nRC Architecture").split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h1>
       </section>
 
-      <section className={`${styles.section} ${styles.intro}`} data-motion-group="section">
+      <section className={`${styles.section} ${styles.intro}`} id="who-we-are" data-motion-group="section">
         <Eyebrow className={styles.label} data-motion-item>{page?.introEyebrow || "Who we are"}</Eyebrow>
         <Reveal className={styles.introHeadline}>
           <h2>{(page?.introHeading || "We’re a studio built on clarity,\ncare, and long-term thinking.\nDesigning and managing homes\nthat hold up over time.").split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h2>
         </Reveal>
-        <div className={styles.photoGarden} data-motion-item data-motion-image><Image src={introImages[0]?.imageUrl || "/images/about/studio-garden.png"} alt={introImages[0]?.imageAlt || "Garden residence designed by RC Architecture"} fill sizes="50vw" /></div>
-        <div className={styles.photoOcean} data-motion-item data-motion-image><Image src={introImages[1]?.imageUrl || "/images/about/studio-ocean.png"} alt={introImages[1]?.imageAlt || "A calm concrete home overlooking the water"} fill sizes="20vw" /></div>
-        <div className={styles.photoKitchen} data-motion-item data-motion-image><Image src={introImages[2]?.imageUrl || "/images/about/studio-kitchen.png"} alt={introImages[2]?.imageAlt || "Warm contemporary kitchen and living space"} fill sizes="25vw" /></div>
+        <div className={styles.photoGarden} style={{ position: "absolute" }} data-motion-item data-motion-image><Image src={introImages[0]?.imageUrl || "/images/about/studio-garden.png"} alt={introImages[0]?.imageAlt || "Garden residence designed by RC Architecture"} fill sizes="(max-width: 900px) 84vw, 54vw" /></div>
+        <div className={styles.photoOcean} style={{ position: "absolute" }} data-motion-item data-motion-image><Image src={introImages[1]?.imageUrl || "/images/about/studio-ocean.png"} alt={introImages[1]?.imageAlt || "A calm concrete home overlooking the water"} fill sizes="(max-width: 900px) 84vw, 25vw" /></div>
+        <div className={styles.photoKitchen} style={{ position: "absolute" }} data-motion-item data-motion-image><Image src={introImages[2]?.imageUrl || "/images/about/studio-kitchen.png"} alt={introImages[2]?.imageAlt || "Warm contemporary kitchen and living space"} fill sizes="(max-width: 900px) 84vw, 32vw" /></div>
         <div className={styles.introCopy} data-motion-item>
           {(page?.introParagraphs?.length ? page.introParagraphs : ["We don’t follow trends or rush timelines. Every project begins with listening — to how you live, what matters most, and where clarity is missing. It’s not about surface-level change, but understanding the way a space needs to work, feel, and evolve over time. From those conversations, we shape environments with structure, rhythm, and intention.", "From those conversations, we shape environments with structure, rhythm, and intention — built for the people who use them, and made to hold up well beyond the finished photo. With experience across design, building, and project management."]).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         </div>
         <IntroImageCarousel images={introCarouselImages} />
       </section>
 
-      <section className={styles.stats} aria-label="Studio statistics" data-motion-group="section">
-        {statItems.map(([name, value]) => <div key={name} data-motion-item><p>{name}</p><strong>{value}</strong></div>)}
-      </section>
+      <AboutStats className={styles.stats} items={statItems} />
 
       <section className={`${styles.section} ${styles.philosophy}`}>
         <Eyebrow className={styles.label}>{page?.philosophyEyebrow || "Our ideology"}</Eyebrow>

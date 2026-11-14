@@ -11,10 +11,10 @@ export function NewsletterSection({ content }: { content: NewsletterSectionData 
       <Reveal className="newsletter-card section-shell">
         <Eyebrow>{content.eyebrow}</Eyebrow>
         <div className="newsletter-card__body">
-          <h2>{headingLines(content.title, 2).map((line) => <span key={line}>{line}</span>)}</h2>
+          <h2>{headingLines(content.title, 2).map((line) => <span data-motion-heading key={line}>{line}</span>)}</h2>
           <div className="newsletter-card__form"><p>{content.description}</p><NewsletterForm placeholder={content.placeholder} buttonLabel={content.buttonLabel} /></div>
         </div>
-        <Image src={content.imageUrl} alt="" width={995} height={346} />
+        <Image src={content.imageUrl} alt="" width={995} height={346} data-motion-image />
       </Reveal>
     </section>
   );

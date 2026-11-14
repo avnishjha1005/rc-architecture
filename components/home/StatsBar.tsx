@@ -5,8 +5,8 @@ function StatItems({ stats, duplicate = false }: { stats: Stat[]; duplicate?: bo
     <div className={`stats__group${duplicate ? " stats__group--duplicate" : ""}`} aria-hidden={duplicate || undefined}>
       {stats.map((stat) => (
         <dl className="stat" key={`${duplicate ? "copy-" : ""}${stat.value}-${stat.label}`}>
-          <dt>{stat.value}</dt>
-          <dd>{stat.label.split("\n").map((line) => <span key={line}>{line}</span>)}</dd>
+          <dt>{stat.value || "—"}</dt>
+          <dd>{(stat.label || "Studio highlight").split("\n").map((line) => <span key={line}>{line}</span>)}</dd>
         </dl>
       ))}
     </div>

@@ -1,6 +1,7 @@
 import { defaultSiteData, type SiteData } from "@/content/site";
 import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "./client";
+import { reportSanityError } from "./errors";
 import { siteSettingsQuery } from "./queries";
 
 type CmsSiteData = Partial<Omit<SiteData, "footer" | "contact" | "newsletter">> & {
@@ -8,6 +9,10 @@ type CmsSiteData = Partial<Omit<SiteData, "footer" | "contact" | "newsletter">> 
   contact?: Partial<SiteData["contact"]> & { cta?: Partial<SiteData["contact"]["cta"]> };
   newsletter?: Partial<SiteData["newsletter"]>;
 };
+
+function validSiteLink(link: Partial<SiteData["cta"]> | null | undefined): link is SiteData["cta"] {
+  return Boolean(link && typeof link.label === "string" && link.label.trim() && typeof link.href === "string" && link.href.trim());
+}
 
 function definedFields<T extends object>(value: Partial<T> | null | undefined): Partial<T> {
   if (!value) return {};
@@ -26,6 +31,7 @@ export async function getSiteData(): Promise<SiteData> {
 
     const contact = data.contact;
     const newsletter = data.newsletter;
+    const navigation = data.navigation?.filter(validSiteLink) || [];
 
     return {
       ...defaultSiteData,
@@ -34,8 +40,8 @@ export async function getSiteData(): Promise<SiteData> {
       phone: data.phone || defaultSiteData.phone,
       address: data.address || defaultSiteData.address,
       hours: data.hours || defaultSiteData.hours,
-      navigation: data.navigation?.length ? data.navigation : defaultSiteData.navigation,
-      cta: data.cta?.label && data.cta.href ? data.cta : defaultSiteData.cta,
+      navigation: navigation.length ? navigation : defaultSiteData.navigation,
+      cta: validSiteLink(data.cta) ? data.cta : defaultSiteData.cta,
       offices: data.offices?.length ? data.offices : defaultSiteData.offices,
       socialLinks: data.socialLinks?.filter((link) => link.label && link.href).length
         ? data.socialLinks.filter((link) => link.label && link.href)
@@ -47,7 +53,7 @@ export async function getSiteData(): Promise<SiteData> {
         ...(contact?.description ? { description: contact.description } : {}),
         ...(contact?.imageUrl ? { imageUrl: contact.imageUrl } : {}),
         ...(contact?.imageAlt ? { imageAlt: contact.imageAlt } : {}),
-        cta: contact?.cta?.label && contact.cta.href ? contact.cta as SiteData["contact"]["cta"] : defaultSiteData.contact.cta,
+        cta: validSiteLink(contact?.cta) ? contact.cta : defaultSiteData.contact.cta,
       },
       newsletter: {
         ...defaultSiteData.newsletter,
@@ -61,7 +67,7 @@ export async function getSiteData(): Promise<SiteData> {
       footer: { ...defaultSiteData.footer, ...definedFields<SiteData["footer"]>(data.footer) },
     };
   } catch (error) {
-    console.error("Unable to load global site settings from Sanity", error);
+    reportSanityError("Unable to load global site settings from Sanity", error);
     return defaultSiteData;
   }
 }

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { CareersBanner } from "@/components/site/CareersBanner";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
@@ -10,6 +9,8 @@ import { getSanityClient } from "@/sanity/lib/client";
 import { contactPageQuery } from "@/sanity/lib/queries";
 import { getSingletonMetadata } from "@/sanity/lib/metadata";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import { resolveImage, type CmsResponsiveImage } from "@/lib/responsive-image";
 import styles from "./contact.module.css";
 
 const awards = [
@@ -28,9 +29,14 @@ export function generateMetadata() {
 }
 
 export default async function ContactPage() {
+  type ContactData = {
+    heroTitle?: string; heroIntro?: string; heroImageUrl?: string; heroImageAlt?: string; heroImageData?: CmsResponsiveImage;
+    infoEyebrow?: string; infoHeading?: string; infoIntro?: string; phoneLabel?: string; emailLabel?: string;
+    mainOfficeLabel?: string; satelliteOfficesHeading?: string; socialLabel?: string; careersEyebrow?: string;
+  };
   const sanityClient = await getSanityClient();
   const [page, site] = await Promise.all([
-    isSanityConfigured ? sanityClient.fetch<Record<string, string | undefined> | null>(contactPageQuery, {}, { next: { revalidate: 60 } }).catch(() => null) : null,
+    isSanityConfigured ? sanityClient.fetch<ContactData | null>(contactPageQuery, {}, { next: { revalidate: 60 } }).catch(() => null) : null,
     getSiteData(),
   ]);
   const mapLink = toDirectionsHref(site.address);
@@ -50,7 +56,7 @@ export default async function ContactPage() {
           <h1 data-motion-item>{page?.heroTitle || "Let’s Discuss."}</h1>
           <aside className={styles.intro} data-motion-item>
             <p>{page?.heroIntro || "We’re always open to new projects, collaborations, and conversations. Whether you’re starting with a clear brief or just an idea, we’ll be happy to hear from you."}</p>
-            <div className={styles.officeImage} data-motion-image><Image src={page?.heroImageUrl || "/images/home/service-interiors.jpg"} alt={page?.heroImageAlt || "RC Architecture office corridor"} fill priority sizes="(max-width: 900px) 100vw, 40vw" /></div>
+            <div className={styles.officeImage} data-motion-image><ResponsiveImage image={resolveImage(page?.heroImageData, page?.heroImageUrl || "/images/home/service-interiors.jpg", page?.heroImageAlt || "RC Architecture office corridor")} fill loading="eager" sizes="(max-width: 900px) 100vw, 40vw" /></div>
           </aside>
           <ContactForm className={styles.form} messageClassName={styles.message} motionItem />
         </div>

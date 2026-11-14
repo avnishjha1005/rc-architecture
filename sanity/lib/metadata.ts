@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { defineQuery } from "next-sanity";
 import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
+import { reportSanityError } from "@/sanity/lib/errors";
 
 export type SeoData = {
   title?: string;
@@ -51,7 +52,7 @@ export async function getSingletonMetadata(documentType: string, fallback: Metad
     );
     return metadataFromSeo(result?.seo, fallback);
   } catch (error) {
-    console.error(`Unable to load ${documentType} SEO metadata from Sanity`, error);
+    reportSanityError(`Unable to load ${documentType} SEO metadata from Sanity`, error);
     return metadataFromSeo(undefined, fallback);
   }
 }

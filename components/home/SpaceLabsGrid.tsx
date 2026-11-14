@@ -19,8 +19,8 @@ export function SpaceLabsGrid({ articles, layout = "grid", mobileVisibleCount }:
 
     return <Reveal className={`article-card${isTall ? " article-card--tall" : ""}${mobileVisibilityClass}`} key={article.title} delay={(index % 4) * 60}>
       {article.href === "#"
-        ? <div className="article-card__image"><Image src={article.imageUrl} alt={article.imageAlt} fill sizes="(max-width: 760px) 100vw, 25vw" /></div>
-        : <Link className="article-card__image" href={article.href}><Image src={article.imageUrl} alt={article.imageAlt} fill sizes="(max-width: 760px) 100vw, 25vw" /></Link>}
+        ? <div className="article-card__image" data-motion-image><Image src={article.imageUrl} alt={article.imageAlt} fill sizes="(max-width: 760px) 100vw, 25vw" /></div>
+        : <Link className="article-card__image" href={article.href} data-motion-image><Image src={article.imageUrl} alt={article.imageAlt} fill sizes="(max-width: 760px) 100vw, 25vw" /></Link>}
       <p>({article.category})</p><h3>{article.href === "#" ? article.title : <Link href={article.href}>{article.title}</Link>}</h3>
     </Reveal>;
   };

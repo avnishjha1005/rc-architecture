@@ -12,6 +12,8 @@ import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
 import { servicesPageQuery } from "@/sanity/lib/queries";
 import { getSingletonMetadata } from "@/sanity/lib/metadata";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import { resolveImage, type CmsResponsiveImage } from "@/lib/responsive-image";
 import { ServiceCarousel } from "./ServiceCarousel";
 import styles from "./services.module.css";
 
@@ -42,7 +44,7 @@ export default async function ServicesPage() {
   const sanityClient = await getSanityClient();
   type CmsService = { mark?: string; title?: string; description?: string; items?: { title?: string; description?: string; imageUrl?: string; imageAlt?: string }[] };
   type CmsProject = { _id?: string; slug?: string; title?: string; featuredTitle?: string; type?: string; category?: string; location?: string; yearDisplay?: string; imageUrl?: string; imageAlt?: string };
-  type ServicesData = { heroTitle?: string; heroImageUrl?: string; heroImageAlt?: string; processEyebrow?: string; processHeading?: string; processSteps?: { number?: string; title?: string; subtitle?: string; deliverables?: string[] }[]; servicesEyebrow?: string; servicesHeading?: string; services?: CmsService[]; featuredProjects?: CmsProject[] } | null;
+  type ServicesData = { heroTitle?: string; heroImageUrl?: string; heroImageAlt?: string; heroImageData?: CmsResponsiveImage; processEyebrow?: string; processHeading?: string; processSteps?: { number?: string; title?: string; subtitle?: string; deliverables?: string[] }[]; servicesEyebrow?: string; servicesHeading?: string; services?: CmsService[]; featuredProjects?: CmsProject[] } | null;
   const [page, site] = await Promise.all([
     isSanityConfigured ? sanityClient.fetch<ServicesData>(servicesPageQuery, {}, { next: { revalidate: 60 } }).catch(() => null) : null,
     getSiteData(),
@@ -58,7 +60,7 @@ export default async function ServicesPage() {
   return (
     <main className={styles.page}>
       <section className={styles.hero} data-motion-group="hero">
-        <Image src={page?.heroImageUrl || "/rc-studio-hero.png"} alt={page?.heroImageAlt || "RC Architecture studio at night"} fill priority sizes="100vw" data-motion-image />
+        <ResponsiveImage image={resolveImage(page?.heroImageData, page?.heroImageUrl || "/rc-studio-hero.png", page?.heroImageAlt || "RC Architecture studio at night")} fill loading="eager" sizes="100vw" data-motion-image data-motion-parallax />
         <div className={styles.heroShade} />
         <Header brandName={site.brandName} navigation={site.navigation} cta={site.cta} theme="dark" />
         <h1 data-motion-item>{(page?.heroTitle || "Experience\nfocused design.").split("\n").map((line, index) => <span key={line}>{line}{index === 0 && <br />}</span>)}</h1>

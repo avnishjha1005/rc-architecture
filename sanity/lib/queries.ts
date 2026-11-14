@@ -1,5 +1,15 @@
 import { defineQuery } from "next-sanity";
 
+const responsiveImageProjection = `{
+  "src": asset->url,
+  "alt": alt,
+  "width": asset->metadata.dimensions.width,
+  "height": asset->metadata.dimensions.height,
+  "lqip": asset->metadata.lqip,
+  crop,
+  hotspot
+}`;
+
 export const siteSettingsQuery = defineQuery(`
   *[_id == "siteSettings"][0]{
     "brandName": title,
@@ -24,6 +34,7 @@ export const homePageQuery = defineQuery(`{
   ){
     heroImage,
     "heroImageAlt": heroImage.alt,
+    "heroImageData": heroImage${responsiveImageProjection},
     headlineTop,
     headlineAccent,
     headlineEnd,
@@ -46,7 +57,8 @@ const projectCardProjection = `{
   location,
   "yearDisplay": coalesce(yearRange, string(year)),
   "imageUrl": coverImage.asset->url,
-  "imageAlt": coverImage.alt
+  "imageAlt": coverImage.alt,
+  "image": coverImage${responsiveImageProjection}
 }`;
 
 export const projectsPageQuery = defineQuery(`{
@@ -86,12 +98,14 @@ export const projectBySlugQuery = defineQuery(`
     summary,
     introduction,
     facts[]{label, value},
-    storySections[]{title, body, layout, "imageUrl": image.asset->url, "imageAlt": image.alt},
+    storySections[]{title, body, layout, "imageUrl": image.asset->url, "imageAlt": image.alt, "imageData": image${responsiveImageProjection}},
     "heroImageUrl": coverImage.asset->url,
     "heroImageAlt": coverImage.alt,
+    "heroImageData": coverImage${responsiveImageProjection},
     "gallery": gallery[]{
       "imageUrl": asset->url,
-      "imageAlt": alt
+      "imageAlt": alt,
+      "imageData": @${responsiveImageProjection}
     },
     "seo": seo{title, description, "imageUrl": image.asset->url},
     "relatedProjects": relatedProjects[]->${projectCardProjection}
@@ -100,7 +114,7 @@ export const projectBySlugQuery = defineQuery(`
 
 export const aboutPageQuery = defineQuery(`
   coalesce(*[_id == "aboutPage"][0], *[_type == "aboutPage"] | order(_updatedAt desc)[0]){
-    heroTitle, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt,
+    heroTitle, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt, "heroImageData": heroImage${responsiveImageProjection},
     introEyebrow, introHeading, introParagraphs,
     "introImages": introImages[]{"imageUrl": asset->url, "imageAlt": alt},
     stats[]{label, value}, philosophyEyebrow, philosophyHeading, philosophyIntro,
@@ -114,7 +128,7 @@ export const aboutPageQuery = defineQuery(`
 
 export const servicesPageQuery = defineQuery(`
   coalesce(*[_id == "servicesPage"][0], *[_type == "servicesPage"] | order(_updatedAt desc)[0]){
-    heroTitle, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt,
+    heroTitle, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt, "heroImageData": heroImage${responsiveImageProjection},
     processEyebrow, processHeading, processSteps[]{number, title, subtitle, deliverables},
     servicesEyebrow, servicesHeading,
     "services": services[]{mark, title, description, "items": items[]{title, description, "imageUrl": image.asset->url, "imageAlt": image.alt}},
@@ -124,7 +138,7 @@ export const servicesPageQuery = defineQuery(`
 
 export const clientsPageQuery = defineQuery(`{
   "page": coalesce(*[_id == "clientsPage"][0], *[_type == "clientsPage"] | order(_updatedAt desc)[0]){
-    countLabel, heroTitle, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt,
+    countLabel, heroTitle, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt, "heroImageData": heroImage${responsiveImageProjection},
     indexTitle, loadMoreLabel, seo
   },
   "clients": *[_type == "client"] | order(coalesce(order, 999999) asc, name asc){name, category, year}
@@ -132,7 +146,7 @@ export const clientsPageQuery = defineQuery(`{
 
 export const contactPageQuery = defineQuery(`
   coalesce(*[_id == "contactPage"][0], *[_type == "contactPage"] | order(_updatedAt desc)[0]){
-    heroTitle, heroIntro, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt,
+    heroTitle, heroIntro, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt, "heroImageData": heroImage${responsiveImageProjection},
     infoEyebrow, infoHeading, infoIntro, phoneLabel, emailLabel, mainOfficeLabel,
     satelliteOfficesHeading, socialLabel, careersEyebrow, seo
   }
@@ -140,8 +154,8 @@ export const contactPageQuery = defineQuery(`
 
 const blogPostProjection = `{
   _id, title, "slug": slug.current, category, "blogCategory": coalesce(blogCategory, "spaceLabs"), publishedAt, excerpt,
-  "imageUrl": coverImage.asset->url, "imageAlt": coverImage.alt,
-  "sections": sections[]{title, "body": paragraphs, bullets, "imageUrl": image.asset->url, "imageAlt": image.alt, quote},
+  "imageUrl": coverImage.asset->url, "imageAlt": coverImage.alt, "image": coverImage${responsiveImageProjection},
+  "sections": sections[]{title, "body": paragraphs, bullets, "imageUrl": image.asset->url, "imageAlt": image.alt, "imageData": image${responsiveImageProjection}, quote},
   "seo": seo{title, description, "imageUrl": image.asset->url}
 }`;
 

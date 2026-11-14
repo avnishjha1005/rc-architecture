@@ -12,8 +12,9 @@ export function Logo({ name, tone = "light" }: { name: string; tone?: "light" | 
         src={isDarkBackground ? "/RC_White.png" : "/RC LOGO TRANSPARENT 1.png"}
         width={isDarkBackground ? 359 : 2804}
         height={isDarkBackground ? 64 : 408}
+        quality={70}
         alt=""
-        priority
+        loading="eager"
       />
     </Link>
   );

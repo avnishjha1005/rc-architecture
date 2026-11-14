@@ -18,7 +18,7 @@ type LatestPost = Pick<BlogPost, "slug" | "title" | "category" | "date" | "image
 
 export function LatestPostsCarousel({ posts }: { posts: LatestPost[] }) {
   return (
-    <section className={styles.latest} aria-labelledby="latest-posts-title" data-motion-group="section">
+    <section className={styles.latest} aria-labelledby="latest-posts-title" data-motion-group="section" data-motion-variant="subtle">
       <div className={styles.latestHead}>
         <Eyebrow className={styles.latestLabel} data-motion-item>Featured posts</Eyebrow>
         <div className={styles.latestTitle} data-motion-item>

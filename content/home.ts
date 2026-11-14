@@ -1,9 +1,10 @@
 import { defaultSiteData, siteFooter, type ContactSectionData, type NewsletterSectionData, type SiteFooterContent } from "@/content/site";
+import type { ResponsiveImage } from "@/lib/responsive-image";
 
 export type LinkItem = { label: string; href: string };
 export type NavigationItem = LinkItem;
 export type Stat = { value: string; label: string };
-export type ImageItem = { imageUrl: string; imageAlt: string };
+export type ImageItem = { imageUrl: string; imageAlt: string; image?: ResponsiveImage };
 export type Ideology = { title: string; description: string };
 export type Service = ImageItem & { number: string; title: string; description: string; features: string[] };
 export type ProjectItem = ImageItem & { title: string; category: string; year: string; href: string };
@@ -11,7 +12,7 @@ export type ArticleItem = ImageItem & { title: string; category: string; href: s
 
 export type HomeContent = {
   brandName: string; navigation: LinkItem[]; cta: LinkItem;
-  heroImageUrl: string; heroImageAlt: string; headlineTop: string; headlineAccent: string; headlineEnd: string; intro: string; stats: Stat[];
+  heroImageUrl: string; heroImageAlt: string; heroImage: ResponsiveImage; headlineTop: string; headlineAccent: string; headlineEnd: string; intro: string; stats: Stat[];
   about: { eyebrow: string; title: string; description: string; cta: LinkItem; ideologiesLabel: string; ideologies: Ideology[] };
   services: { eyebrow: string; title: string; intro: string; cta: LinkItem; items: Service[] };
   projects: { eyebrow: string; title: string; intro: string; cta: LinkItem; items: ProjectItem[] };
@@ -26,6 +27,7 @@ const navigation: LinkItem[] = defaultSiteData.navigation;
 export const fallbackHomeContent: HomeContent = {
   brandName: defaultSiteData.brandName, navigation, cta: defaultSiteData.cta,
   heroImageUrl: "/rc-studio-hero.png", heroImageAlt: "A warm contemporary architecture studio with timber screens and glass meeting rooms",
+  heroImage: { src: "/rc-studio-hero.png", alt: "A warm contemporary architecture studio with timber screens and glass meeting rooms", width: 1672, height: 941 },
   headlineTop: "Let’s Go", headlineAccent: "space", headlineEnd: "making",
   intro: "We’re a Bangalore-based design studio crafting high-impact spaces with purpose. We balance bold creativity with a conscious use of time, money, and materials.",
   stats: [{ value: "100+", label: "clients\nglobally" }, { value: "500+", label: "projects\ncompleted" }, { value: "50+", label: "million sqft\ndesigned" }, { value: "30+", label: "awards\nreceived" }],

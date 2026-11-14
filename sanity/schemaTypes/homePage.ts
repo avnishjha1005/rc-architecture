@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { minimumImageWidth } from "./imageValidation";
 
 export const homePage = defineType({
   name: "homePage",
@@ -18,6 +19,7 @@ export const homePage = defineType({
       name: "heroImage", title: "Hero image", type: "image", group: "hero",
       description: "Use a wide landscape image (ideally 16:9 or wider).", options: { hotspot: true },
       fields: [defineField({ name: "alt", title: "Alternative text", type: "string", description: "Describe the image for visitors using screen readers.", validation: (rule) => rule.required() })],
+      validation: (rule) => minimumImageWidth(rule, 3200, "Homepage hero"),
     }),
     defineField({ name: "headlineTop", title: "Headline — top line", type: "string", group: "hero", initialValue: "Let’s Go", validation: (rule) => rule.required().max(24) }),
     defineField({ name: "headlineAccent", title: "Headline — red word", type: "string", group: "hero", initialValue: "space", validation: (rule) => rule.required().max(16) }),

@@ -6,10 +6,12 @@ import { portfolioProjects, type PortfolioProject } from "@/content/projects";
 import { siteFooter } from "@/content/site";
 import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
+import { reportSanityError } from "@/sanity/lib/errors";
 import { projectsPageQuery } from "@/sanity/lib/queries";
 import { getSiteData } from "@/sanity/lib/site";
 import { getSingletonMetadata } from "@/sanity/lib/metadata";
 import styles from "./projects.module.css";
+import { resolveImage, type CmsResponsiveImage } from "@/lib/responsive-image";
 
 export function generateMetadata() {
   return getSingletonMetadata("projectsPage", {
@@ -29,6 +31,7 @@ type CmsProject = {
   yearDisplay?: string;
   imageUrl?: string;
   imageAlt?: string;
+  image?: CmsResponsiveImage;
 };
 
 type CmsProjectsPage = {
@@ -64,6 +67,7 @@ function normalizeProjects(projects: CmsProject[] | undefined): PortfolioProject
       year: project.yearDisplay || "Year forthcoming",
       imageUrl: project.imageUrl,
       imageAlt: project.imageAlt || project.title,
+      image: resolveImage(project.image, project.imageUrl, project.imageAlt || project.title),
       href: `/projects/${project.slug}`,
     }];
   });
@@ -74,7 +78,7 @@ export default async function ProjectsPage() {
   const [data, site] = await Promise.all([
     isSanityConfigured
       ? sanityClient.fetch(projectsPageQuery, {}, { next: { revalidate: 60 } }).catch((error) => {
-        console.error("Unable to load projects from Sanity", error);
+        reportSanityError("Unable to load projects from Sanity", error);
         return null;
       }) as Promise<CmsResponse>
       : Promise.resolve(null),

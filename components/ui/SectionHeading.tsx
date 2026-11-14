@@ -6,7 +6,7 @@ export function SectionHeading({ eyebrow, title, intro, dark = false }: { eyebro
     <div className={`section-heading${dark ? " section-heading--dark" : ""}`}>
       <Eyebrow>{eyebrow}</Eyebrow>
       <div className="section-heading__body">
-        <h2>{headingLines(title, "before-last").map((line) => <span key={line}>{line}</span>)}</h2>
+        <h2>{headingLines(title, "before-last").map((line) => <span data-motion-heading key={line}>{line}</span>)}</h2>
         {intro && <p className="section-heading__intro">{intro}</p>}
       </div>
     </div>

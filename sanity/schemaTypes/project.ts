@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { minimumImageWidth } from "./imageValidation";
 
 export const project = defineType({
   name: "project",
@@ -63,8 +64,8 @@ export const project = defineType({
       name: "coverImage",
       type: "image",
       options: { hotspot: true },
-      fields: [{ name: "alt", type: "string", title: "Alternative text" }],
-      validation: (rule) => rule.required(),
+      fields: [{ name: "alt", type: "string", title: "Alternative text", validation: (rule) => rule.required() }],
+      validation: (rule) => minimumImageWidth(rule.required(), 3200, "Project cover / hero"),
     }),
     defineField({ name: "excerpt", type: "text", rows: 3 }),
     defineField({ name: "detailEyebrow", title: "Case study eyebrow", type: "string", description: "Falls back to Category." }),
@@ -78,7 +79,7 @@ export const project = defineType({
       defineField({ name: "title", type: "string", validation: (rule) => rule.required() }),
       defineField({ name: "body", type: "text", rows: 6 }),
       defineField({ name: "layout", type: "string", options: { list: [{ title: "Image left", value: "image-left" }, { title: "Image right", value: "image-right" }, { title: "Wide image", value: "wide" }], layout: "radio" }, initialValue: "image-left", validation: (rule) => rule.required() }),
-      defineField({ name: "image", type: "image", options: { hotspot: true }, fields: [defineField({ name: "alt", type: "string", validation: (rule) => rule.required() })], validation: (rule) => rule.required() }),
+      defineField({ name: "image", type: "image", options: { hotspot: true }, fields: [defineField({ name: "alt", type: "string", validation: (rule) => rule.required() })], validation: (rule) => minimumImageWidth(rule.required(), 2400, "Project story image") }),
     ], preview: { select: { title: "title", subtitle: "layout", media: "image" } } })] }),
     defineField({ name: "body", type: "blockContent" }),
     defineField({
@@ -93,14 +94,15 @@ export const project = defineType({
       name: "gallery",
       type: "array",
       of: [
-        {
+        defineArrayMember({
           type: "image",
           options: { hotspot: true },
           fields: [
-            { name: "alt", type: "string", title: "Alternative text" },
+            { name: "alt", type: "string", title: "Alternative text", validation: (rule) => rule.required() },
             { name: "caption", type: "string" },
           ],
-        },
+          validation: (rule) => minimumImageWidth(rule, 2400, "Project gallery image"),
+        }),
       ],
       options: { layout: "grid" },
     }),

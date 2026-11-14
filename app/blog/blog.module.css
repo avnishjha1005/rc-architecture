@@ -5,8 +5,7 @@
 
 .hero {
   background: transparent;
-  min-height: 95vh;
-  min-height: 95svh;
+  min-height: clamp(620px, 72svh, 780px);
   padding: clamp(155px, 10.8vw, 276px) 20px 80px;
   position: relative;
 }
@@ -116,8 +115,7 @@
 
 @media(max-width:760px) {
   .hero {
-    min-height: 100vh;
-    min-height: 100svh;
+    min-height: 560px;
     padding: 158px 20px 60px;
   }
 

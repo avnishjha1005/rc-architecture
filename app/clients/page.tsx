@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ClientIndex } from "@/components/clients/ClientIndex";
 import { ContactSection } from "@/components/home/ContactSection";
 import { NewsletterSection } from "@/components/home/NewsletterSection";
@@ -11,6 +10,8 @@ import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
 import { clientsPageQuery } from "@/sanity/lib/queries";
 import { getSingletonMetadata } from "@/sanity/lib/metadata";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import { resolveImage, type CmsResponsiveImage } from "@/lib/responsive-image";
 import styles from "./clients.module.css";
 
 export function generateMetadata() {
@@ -23,7 +24,7 @@ export function generateMetadata() {
 export default async function ClientsPage() {
   const sanityClient = await getSanityClient();
   const [data, site] = await Promise.all([
-    isSanityConfigured ? sanityClient.fetch<{ page?: { countLabel?: string; heroTitle?: string; heroImageUrl?: string; heroImageAlt?: string; indexTitle?: string; loadMoreLabel?: string }; clients?: typeof clients } | null>(clientsPageQuery, {}, { next: { revalidate: 60 } }).catch(() => null) : null,
+    isSanityConfigured ? sanityClient.fetch<{ page?: { countLabel?: string; heroTitle?: string; heroImageUrl?: string; heroImageAlt?: string; heroImageData?: CmsResponsiveImage; indexTitle?: string; loadMoreLabel?: string }; clients?: typeof clients } | null>(clientsPageQuery, {}, { next: { revalidate: 60 } }).catch(() => null) : null,
     getSiteData(),
   ]);
   const page = data?.page;
@@ -34,7 +35,7 @@ export default async function ClientsPage() {
       <section className={styles.hero} data-motion-group="hero">
         <Header brandName={site.brandName} navigation={site.navigation} cta={site.cta} theme="dark" />
         <div className={styles.heroCopy} data-motion-item><strong>{page?.countLabel || "150+"}</strong><h1>{(page?.heroTitle || "Private &\nPublic Clients").split("\n").map((line, index) => <span key={line}>{line}{index === 0 && <br />}</span>)}</h1></div>
-        <div className={styles.heroImage} data-motion-item data-motion-image><Image src={page?.heroImageUrl || "/images/home/service-architecture.jpg"} alt={page?.heroImageAlt || "Contemporary RC Architecture building"} fill priority sizes="(max-width: 900px) 100vw, 36vw" /></div>
+        <div className={styles.heroImage} data-motion-item data-motion-image><ResponsiveImage image={resolveImage(page?.heroImageData, page?.heroImageUrl || "/images/home/service-architecture.jpg", page?.heroImageAlt || "Contemporary RC Architecture building")} fill loading="eager" sizes="(max-width: 900px) 100vw, 36vw" /></div>
         <a className={styles.scrollCue} href="#client-index" aria-label="Scroll to the client index" data-motion-item><span aria-hidden="true">↓</span></a>
       </section>
       <section className={styles.index} id="client-index" data-motion-group="section"><div data-motion-item><ClientIndex clients={clientList} title={page?.indexTitle} loadMoreLabel={page?.loadMoreLabel} /></div></section>

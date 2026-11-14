@@ -1,4 +1,3 @@
-import type { SanityImageSource } from "@sanity/image-url";
 import { Hero } from "@/components/home/Hero";
 import { AboutSection } from "@/components/home/AboutSection";
 import { ServicesSection } from "@/components/home/ServicesSection";
@@ -7,14 +6,15 @@ import { SpaceLabsSection } from "@/components/home/SpaceLabsSection";
 import { ContactSection } from "@/components/home/ContactSection";
 import { NewsletterSection } from "@/components/home/NewsletterSection";
 import { Footer } from "@/components/site/Footer";
-import { fallbackHomeContent, type HomeContent } from "@/content/home";
+import { fallbackHomeContent, type HomeContent, type Stat } from "@/content/home";
 import { siteFooter, type SiteData } from "@/content/site";
 import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
-import { urlFor } from "@/sanity/lib/image";
+import { reportSanityError } from "@/sanity/lib/errors";
 import { homePageQuery } from "@/sanity/lib/queries";
 import { getSiteData } from "@/sanity/lib/site";
 import { getSingletonMetadata } from "@/sanity/lib/metadata";
+import { resolveImage, type CmsResponsiveImage } from "@/lib/responsive-image";
 
 export function generateMetadata() {
   return getSingletonMetadata("homePage", {
@@ -23,7 +23,10 @@ export function generateMetadata() {
   });
 }
 
-type CmsHome = Partial<Omit<HomeContent, "brandName" | "heroImageUrl">> & { heroImage?: SanityImageSource };
+type CmsHome = Partial<Omit<HomeContent, "brandName" | "heroImageUrl" | "heroImage" | "stats">> & {
+  heroImageData?: CmsResponsiveImage;
+  stats?: Array<Partial<Stat> | null>;
+};
 type CmsResponse = { home?: CmsHome | null } | null;
 
 function omitNullish<T extends object>(value: T | null | undefined): Partial<T> {
@@ -35,15 +38,21 @@ function omitNullish<T extends object>(value: T | null | undefined): Partial<T> 
 
 function resolveContent(data: CmsResponse, site: SiteData): HomeContent {
   const home = data?.home;
+  const stats = home?.stats?.flatMap((stat) => (
+    typeof stat?.value === "string" && stat.value.trim() && typeof stat.label === "string" && stat.label.trim()
+      ? [{ value: stat.value, label: stat.label }]
+      : []
+  )) || [];
   return {
     ...fallbackHomeContent,
     ...omitNullish(home),
     brandName: site.brandName,
-    heroImageUrl: home?.heroImage ? urlFor(home.heroImage).width(2400).height(1500).quality(88).url() : fallbackHomeContent.heroImageUrl,
-    heroImageAlt: home?.heroImageAlt || fallbackHomeContent.heroImageAlt,
+    heroImageUrl: home?.heroImageData?.src || fallbackHomeContent.heroImageUrl,
+    heroImageAlt: home?.heroImageData?.alt || fallbackHomeContent.heroImageAlt,
+    heroImage: resolveImage(home?.heroImageData, fallbackHomeContent.heroImageUrl, fallbackHomeContent.heroImageAlt),
     navigation: site.navigation,
     cta: site.cta,
-    stats: home?.stats?.length ? home.stats : fallbackHomeContent.stats,
+    stats: stats.length ? stats : fallbackHomeContent.stats,
     about: { ...fallbackHomeContent.about, ...omitNullish(home?.about), cta: { ...fallbackHomeContent.about.cta, ...omitNullish(home?.about?.cta) }, ideologies: home?.about?.ideologies?.length ? home.about.ideologies : fallbackHomeContent.about.ideologies },
     services: { ...fallbackHomeContent.services, ...omitNullish(home?.services), cta: { ...fallbackHomeContent.services.cta, ...omitNullish(home?.services?.cta) }, items: home?.services?.items?.length ? home.services.items : fallbackHomeContent.services.items },
     projects: { ...fallbackHomeContent.projects, ...omitNullish(home?.projects), cta: { ...fallbackHomeContent.projects.cta, ...omitNullish(home?.projects?.cta) }, items: home?.projects?.items?.length ? home.projects.items : fallbackHomeContent.projects.items },
@@ -59,7 +68,7 @@ export default async function Home() {
   const [data, site] = await Promise.all([
     isSanityConfigured
       ? sanityClient.fetch(homePageQuery, {}, { next: { revalidate: 60 } }).catch((error) => {
-        console.error("Unable to load homepage content from Sanity", error);
+        reportSanityError("Unable to load homepage content from Sanity", error);
         return null;
       })
       : null,

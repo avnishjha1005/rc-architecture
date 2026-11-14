@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
@@ -9,6 +8,8 @@ import { PillAction } from "@/components/ui/PillAction";
 import { ProjectCard } from "./ProjectCard";
 import { ProjectCategory } from "./ProjectMeta";
 import styles from "@/app/projects/projects.module.css";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import { legacyImage } from "@/lib/responsive-image";
 
 type View = "image" | "list";
 type Filter = "All Projects" | "Architecture" | "Interior Design";
@@ -144,7 +145,7 @@ export function ProjectsGallery({ projects, loadMoreLabel = "Load more" }: { pro
       ) : (
         <div className={styles.listWrap} onMouseLeave={() => setHovered(null)} ref={itemsRoot}>
           <div className={`${styles.hoverReveal} ${hovered ? styles.hoverRevealVisible : ""}`} aria-hidden="true">
-            {hovered && <Image key={hovered.id} src={hovered.imageUrl} alt="" fill sizes="32vw" />}
+            {hovered && <ResponsiveImage key={hovered.id} image={{ ...(hovered.image || legacyImage(hovered.imageUrl, "")), alt: "" }} fill sizes="32vw" />}
           </div>
           <div className={styles.projectList}>
             {visibleProjects.map((project) => (

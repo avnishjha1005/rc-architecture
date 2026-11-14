@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   transpilePackages: ["@rc/website-feedback"],
   images: {
+    qualities: [70, 75],
     remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io", pathname: "/images/**" }],
   },
   async headers() {

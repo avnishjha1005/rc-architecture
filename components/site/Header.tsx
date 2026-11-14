@@ -54,8 +54,10 @@ export function Header({ brandName, navigation, cta, theme = "dark" }: HeaderPro
     };
   }, [menuOpen]);
 
-  function current(href: string) {
-    const linkPath = href.split("#")[0] || "/";
+  const safeNavigation = navigation.filter((item) => typeof item?.label === "string" && typeof item?.href === "string");
+
+  function current(href: string | undefined) {
+    const linkPath = href?.split("#")[0] || "/";
     return linkPath === pathname ? "page" as const : undefined;
   }
 
@@ -63,13 +65,13 @@ export function Header({ brandName, navigation, cta, theme = "dark" }: HeaderPro
     <header className={`${styles.header} ${styles[theme]}`} data-motion-item>
       <Logo name={brandName} tone={theme} />
       <nav className={styles.desktopNav} aria-label="Primary navigation">
-        {navigation.map((item) => <Link key={`${item.label}-${item.href}`} href={item.href} aria-current={current(item.href)}>{item.label}</Link>)}
+        {safeNavigation.map((item) => <Link key={`${item.label}-${item.href}`} href={item.href} aria-current={current(item.href)}>{item.label}</Link>)}
       </nav>
       <PillAction className={styles.cta} href={cta.href}>{cta.label}</PillAction>
       <div className={`${styles.mobile} ${menuOpen ? styles.open : ""}`} ref={menuRef}>
         <button className={styles.trigger} ref={triggerRef} type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls={menuId} onClick={() => setMenuOpen((open) => !open)}><span /><span /><span /></button>
         <nav className={styles.mobileNav} id={menuId} aria-label="Mobile navigation">
-          {navigation.map((item) => <Link key={`${item.label}-${item.href}`} href={item.href} aria-current={current(item.href)} onClick={() => setMenuOpen(false)}>{item.label}</Link>)}
+          {safeNavigation.map((item) => <Link key={`${item.label}-${item.href}`} href={item.href} aria-current={current(item.href)} onClick={() => setMenuOpen(false)}>{item.label}</Link>)}
           <PillAction className={styles.mobileCta} href={cta.href} onClick={() => setMenuOpen(false)}>{cta.label}</PillAction>
         </nav>
       </div>

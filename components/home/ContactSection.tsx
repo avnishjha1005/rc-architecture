@@ -10,17 +10,17 @@ export function ContactSection({ content }: { content: ContactSectionData }) {
 
   return (
     <section className="contact-section" id="contact">
-      <Image src={content.imageUrl} alt={content.imageAlt} fill sizes="100vw" />
+      <Image src={content.imageUrl} alt={content.imageAlt} fill sizes="100vw" data-motion-image />
       <div className="contact-section__shade" />
       <Reveal className="contact-section__content section-shell">
         <Eyebrow>{content.eyebrow}</Eyebrow>
         <div className="contact-section__body">
           <h2>
-            <span className="contact-section__first-line">
+            <span className="contact-section__first-line" data-motion-heading>
               <span className="contact-section__lead-letter">{firstLine.slice(0, 1)}</span>
               <span className="contact-section__first-rest">{firstLine.slice(1)}</span>
             </span>
-            {remainingLines.map((line) => <span className="contact-section__following-line" key={line}>{line}</span>)}
+            {remainingLines.map((line) => <span className="contact-section__following-line" data-motion-heading key={line}>{line}</span>)}
           </h2>
           <div className="contact-section__copy"><Image className="contact-section__star" src="/StarIcon.png" alt="" width={21} height={21} /><p>{content.description}</p></div>
           <CtaLink link={content.cta} red />

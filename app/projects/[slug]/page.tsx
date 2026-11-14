@@ -5,13 +5,16 @@ import { getProjectDetail, projectDetails, type ProjectDetail } from "@/content/
 import { portfolioProjects, selectRelatedProjects, type PortfolioProject } from "@/content/projects";
 import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
+import { reportSanityError } from "@/sanity/lib/errors";
 import { projectBySlugQuery } from "@/sanity/lib/queries";
 import { getSiteData } from "@/sanity/lib/site";
 import { metadataFromSeo, type SeoData } from "@/sanity/lib/metadata";
+import { resolveImage, type CmsResponsiveImage } from "@/lib/responsive-image";
 
 type CmsProjectCard = {
   _id?: string; title?: string; featuredTitle?: string; slug?: string; type?: string;
   category?: string; location?: string; yearDisplay?: string; imageUrl?: string; imageAlt?: string;
+  image?: CmsResponsiveImage;
 };
 
 type CmsProjectDetail = {
@@ -27,10 +30,11 @@ type CmsProjectDetail = {
   summary?: string;
   introduction?: string;
   facts?: { label?: string; value?: string }[];
-  storySections?: { title?: string; body?: string; layout?: string; imageUrl?: string; imageAlt?: string }[];
+  storySections?: { title?: string; body?: string; layout?: string; imageUrl?: string; imageAlt?: string; imageData?: CmsResponsiveImage }[];
   heroImageUrl?: string;
   heroImageAlt?: string;
-  gallery?: { imageUrl?: string; imageAlt?: string }[];
+  heroImageData?: CmsResponsiveImage;
+  gallery?: { imageUrl?: string; imageAlt?: string; imageData?: CmsResponsiveImage }[];
   seo?: SeoData;
   relatedProjects?: CmsProjectCard[];
 } | null;
@@ -50,6 +54,7 @@ function normalizeRelated(projects: CmsProjectCard[] | undefined): PortfolioProj
       year: project.yearDisplay || "Year forthcoming",
       imageUrl: project.imageUrl,
       imageAlt: project.imageAlt || project.title,
+      image: resolveImage(project.image, project.imageUrl, project.imageAlt || project.title),
       href: `/projects/${project.slug}`,
     }];
   });
@@ -59,7 +64,7 @@ async function resolveProject(slug: string): Promise<{ project: ProjectDetail; r
   const sanityClient = await getSanityClient();
   const cmsProject = isSanityConfigured
     ? await sanityClient.fetch(projectBySlugQuery, { slug }, { next: { revalidate: 60 } }).catch((error) => {
-      console.error(`Unable to load project ${slug} from Sanity`, error);
+      reportSanityError(`Unable to load project ${slug} from Sanity`, error);
       return null;
     }) as CmsProjectDetail
     : null;
@@ -77,17 +82,16 @@ async function resolveProject(slug: string): Promise<{ project: ProjectDetail; r
     eyebrow: cmsProject.detailEyebrow || cmsProject.category || discipline,
     summary: cmsProject.summary || cmsProject.excerpt || `${discipline} shaped by its setting`,
     introduction: cmsProject.introduction || cmsProject.excerpt || `${title} reflects our considered approach to ${discipline.toLowerCase()}, balancing character, function, and a strong sense of place.`,
-    heroImageUrl: cmsProject.heroImageUrl,
-    heroImageAlt: cmsProject.heroImageAlt || title,
+    heroImage: resolveImage(cmsProject.heroImageData, cmsProject.heroImageUrl, cmsProject.heroImageAlt || title),
     facts: cmsProject.facts?.some((fact) => fact.label && fact.value) ? cmsProject.facts.flatMap((fact) => fact.label && fact.value ? [{ label: fact.label, value: fact.value }] : []) : [
       { label: "Project Name", value: title },
       { label: "Project Location", value: cmsProject.location || "Forthcoming" },
       { label: "Project Type", value: discipline },
       { label: "Project Period", value: cmsProject.yearDisplay || "Forthcoming" },
     ],
-    sections: (cmsProject.storySections || []).flatMap((section) => section.title && section.imageUrl ? [{ title: section.title, body: section.body || "", imageUrl: section.imageUrl, imageAlt: section.imageAlt || section.title, layout: section.layout === "image-right" || section.layout === "wide" ? section.layout : "image-left" as const }] : []),
+    sections: (cmsProject.storySections || []).flatMap((section) => section.title && section.imageUrl ? [{ title: section.title, body: section.body || "", image: resolveImage(section.imageData, section.imageUrl, section.imageAlt || section.title), layout: section.layout === "image-right" || section.layout === "wide" ? section.layout : "image-left" as const }] : []),
     gallery: (cmsProject.gallery ?? []).flatMap((image) =>
-      image.imageUrl ? [{ imageUrl: image.imageUrl, imageAlt: image.imageAlt || title }] : [],
+      image.imageUrl ? [resolveImage(image.imageData, image.imageUrl, image.imageAlt || title)] : [],
     ),
   };
   const cmsRelated = normalizeRelated(cmsProject.relatedProjects);
