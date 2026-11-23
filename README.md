@@ -55,6 +55,8 @@ The form rate limiter is intentionally dependency-free and process-local. On mul
 
 ## Client website feedback
 
-The reusable `@rc/website-feedback` workspace package powers a private review shell at `/feedback`. Configure the shared passcode and choose either the Notion or GitHub Issues provider using the variables in `.env.example`, then follow [the feedback setup guide](docs/feedback-setup.md).
+Chisel provides the review dashboard at `/chisel`. This repository is connected to its hosted project through the public project ID in `.chisel.json` and `app/chisel/page.tsx`; comments and authentication are managed by Chisel.
 
-The package is intentionally private and source-based for now. The application transpiles it through `next.config.ts`; `html2canvas` is loaded only when a reviewer submits a screenshot.
+For client review, deploy a branch to Vercel Preview, set `CHISEL_ENABLED=1` for that preview environment, and redeploy. Open the deployed `/chisel` page as the project owner, select Comment, then use **Share review link → Copy review link**. Reviewers sign in through that invitation. If Vercel Deployment Protection is enabled, reviewers also need access through it.
+
+Production builds show Comment and View only; Edit is available during local development. The dashboard defaults off in production unless explicitly enabled. To close reviews, unset `CHISEL_ENABLED` or set it to `0` in the deployment and redeploy. The old `/feedback` interface and its Notion/GitHub providers have been removed; existing external feedback records are not migrated or deleted.
