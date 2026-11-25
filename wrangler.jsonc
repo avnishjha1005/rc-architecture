@@ -1,0 +1,39 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "rc-architecture",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-11-24",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "global_fetch_strictly_public"
+  ],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".open-next/assets"
+  },
+  "images": {
+    "binding": "IMAGES"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "rc-architecture"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "NEXT_INC_CACHE_KV",
+      "id": "c66c4ab7061f4acb987329b17725505b"
+    },
+    {
+      "binding": "NEXT_TAG_CACHE_KV",
+      "id": "faf96e5b889846269e0eea672380a50d"
+    }
+  ],
+  "vars": {
+    "CHISEL_ENABLED": "1",
+    "NEXT_PUBLIC_SANITY_PROJECT_ID": "dlbl0h64",
+    "NEXT_PUBLIC_SANITY_DATASET": "production"
+  },
+  "keep_vars": true
+}

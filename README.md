@@ -42,6 +42,12 @@ npx sanity deploy # optional standalone Studio deployment
 
 Only variables prefixed with `NEXT_PUBLIC_` are used in the browser. Never expose a Sanity write token that way; keep server-side tokens unprefixed.
 
+## Production deployment
+
+A push to `main` runs the quality checks, builds the pushed revision with OpenNext and deploys the `rc-architecture` Cloudflare Worker. Pull requests run quality checks and a build but cannot deploy. The production job is serialized and skips publishing if a newer push has already replaced its commit on `main`.
+
+Set `CLOUDFLARE_API_TOKEN` in the GitHub **Production** environment. The dedicated token needs permission to deploy this Worker and write to its production cache KV namespaces. The build reads published Sanity content, not the staging design preview. The **Deploy production Worker** job logs the Worker version after publication.
+
 ## Production checklist
 
 1. Set every variable required for Sanity and form delivery from `.env.example` in the hosting environment.

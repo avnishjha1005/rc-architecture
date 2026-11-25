@@ -1,6 +1,6 @@
-import type { NextConfig } from "next";
+import { withChisel } from "use-chisel/next";
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   poweredByHeader: false,
   transpilePackages: ["@rc/website-feedback"],
   images: {
@@ -24,4 +24,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default process.env.CHISEL_ENABLED === "1" ? withChisel(nextConfig) : nextConfig;
