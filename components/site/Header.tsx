@@ -1,18 +1,16 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { SiteNavLink } from "./SiteNavLink";
 import { useEffect, useId, useRef, useState } from "react";
-import type { NavigationItem } from "@/content/home";
+import type { SiteData } from "@/content/site";
 import { PillAction } from "@/components/ui/PillAction";
 import { Logo } from "./Logo";
 import styles from "./Header.module.css";
 
-type HeaderProps = { brandName: string; navigation: NavigationItem[]; cta: NavigationItem; theme?: "light" | "dark" };
+type HeaderProps = Pick<SiteData, "brandName" | "navigation" | "cta"> & { theme?: "light" | "dark" };
 
 export function Header({ brandName, navigation, cta, theme = "dark" }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const pathname = usePathname();
   const menuId = useId();
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -48,30 +46,28 @@ export function Header({ brandName, navigation, cta, theme = "dark" }: HeaderPro
 
     document.addEventListener("pointerdown", onPointerDown);
     document.addEventListener("keydown", onKeyDown);
+    const close = () => setMenuOpen(false);
+    document.addEventListener("rc:close-navigation", close);
     return () => {
       document.removeEventListener("pointerdown", onPointerDown);
       document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("rc:close-navigation", close);
     };
   }, [menuOpen]);
 
   const safeNavigation = navigation.filter((item) => typeof item?.label === "string" && typeof item?.href === "string");
 
-  function current(href: string | undefined) {
-    const linkPath = href?.split("#")[0] || "/";
-    return linkPath === pathname ? "page" as const : undefined;
-  }
-
   return (
-    <header className={`${styles.header} ${styles[theme]}`} data-motion-item>
-      <Logo name={brandName} tone={theme} />
+    <header className={`${styles.header} ${styles[theme]}`} data-site-header={theme} data-motion-item>
+      <Logo name={brandName} />
       <nav className={styles.desktopNav} aria-label="Primary navigation">
-        {safeNavigation.map((item) => <Link key={`${item.label}-${item.href}`} href={item.href} aria-current={current(item.href)}>{item.label}</Link>)}
+        {safeNavigation.map((item) => <SiteNavLink key={`${item.label}-${item.href}`} href={item.href} label={item.label} />)}
       </nav>
       <PillAction className={styles.cta} href={cta.href}>{cta.label}</PillAction>
       <div className={`${styles.mobile} ${menuOpen ? styles.open : ""}`} ref={menuRef}>
         <button className={styles.trigger} ref={triggerRef} type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls={menuId} onClick={() => setMenuOpen((open) => !open)}><span /><span /><span /></button>
         <nav className={styles.mobileNav} id={menuId} aria-label="Mobile navigation">
-          {safeNavigation.map((item) => <Link key={`${item.label}-${item.href}`} href={item.href} aria-current={current(item.href)} onClick={() => setMenuOpen(false)}>{item.label}</Link>)}
+          {safeNavigation.map((item) => <SiteNavLink key={`${item.label}-${item.href}`} href={item.href} onClick={() => setMenuOpen(false)} label={item.label} />)}
           <PillAction className={styles.mobileCta} href={cta.href} onClick={() => setMenuOpen(false)}>{cta.label}</PillAction>
         </nav>
       </div>

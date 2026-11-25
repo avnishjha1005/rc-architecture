@@ -10,6 +10,7 @@ export const aboutPage = defineType({
   ],
   fields: [
     defineField({ name: "heroTitle", type: "text", rows: 2, group: "hero", initialValue: "About\nRC Architecture", validation: (r) => r.required() }),
+    defineField({ name: "heroEyebrow", title: "Mobile hero caption", type: "string", group: "hero" }),
     defineField({ name: "heroImage", type: "image", group: "hero", options: { hotspot: true }, fields: [defineField({ name: "alt", type: "string", validation: (r) => r.required() })], validation: (r) => r.required() }),
     defineField({ name: "introEyebrow", type: "string", group: "intro", initialValue: "Who we are" }),
     defineField({ name: "introHeading", type: "text", rows: 4, group: "intro", validation: (r) => r.required() }),
@@ -28,7 +29,7 @@ export const aboutPage = defineType({
       title: "Client logos",
       type: "array",
       group: "clients",
-      description: "Upload up to 18 logos. If fewer are uploaded, the site repeats them to fill all 18 tiles.",
+      description: "Upload up to 18 transparent logos in display order and add each client’s official website.",
       validation: (r) => r.max(18),
       of: [defineArrayMember({
         type: "image",
@@ -37,12 +38,26 @@ export const aboutPage = defineType({
           title: "Client name / alt text",
           type: "string",
           validation: (r) => r.required(),
+        }), defineField({
+          name: "website",
+          title: "Official website",
+          type: "url",
+          validation: (r) => r.required().uri({ scheme: ["http", "https"] }),
         })],
       })],
     }),
     defineField({ name: "peopleEyebrow", type: "string", group: "people", initialValue: "People" }),
     defineField({ name: "peopleHeading", type: "text", rows: 2, group: "people" }),
-    defineField({ name: "people", type: "array", group: "people", of: [defineArrayMember({ type: "object", fields: [defineField({ name: "name", type: "string", validation: (r) => r.required() }), defineField({ name: "role", type: "string" }), defineField({ name: "image", type: "image", options: { hotspot: true }, fields: [defineField({ name: "alt", type: "string" })] })], preview: { select: { title: "name", subtitle: "role", media: "image" } } })] }),
+    defineField({ name: "people", type: "array", group: "people", of: [defineArrayMember({
+      type: "object",
+      fields: [
+        defineField({ name: "name", type: "string", validation: (r) => r.required() }),
+        defineField({ name: "role", type: "string" }),
+        defineField({ name: "image", title: "Featured card portrait", type: "image", description: "Adds this person to the featured card grid instead of the directory.", options: { hotspot: true }, fields: [defineField({ name: "alt", type: "string" })] }),
+        defineField({ name: "directoryPortrait", title: "Directory preview portrait", type: "image", description: "Optional portrait shown when this directory name is hovered or focused. Leave the featured card portrait empty to keep this person in the directory.", fields: [defineField({ name: "alt", type: "string" })] }),
+      ],
+      preview: { select: { title: "name", subtitle: "role", media: "image" } },
+    })] }),
     defineField({ name: "awardsEyebrow", type: "string", group: "awards", initialValue: "Awards" }),
     defineField({ name: "awardsHeading", type: "text", rows: 2, group: "awards" }),
     defineField({ name: "awardsIntro", type: "text", rows: 3, group: "awards" }),
@@ -55,4 +70,3 @@ export const aboutPage = defineType({
   ],
   preview: { prepare: () => ({ title: "About page" }) },
 });
-

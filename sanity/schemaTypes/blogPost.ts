@@ -13,6 +13,7 @@ export const blogPost = defineType({
       validation: (r) => r.required(),
     }),
     defineField({ name: "category", type: "string", group: "content", validation: (r) => r.required() }),
+    defineField({ name: "topics", title: "Listing topics", type: "array", group: "content", of: [{ type: "string" }], options: { layout: "tags" }, description: "Ordered topics for the overview cards. When empty, the card shows its category." }),
     defineField({ name: "publishedAt", type: "datetime", group: "content", validation: (r) => r.required() }),
     defineField({ name: "excerpt", type: "text", rows: 3, group: "content", validation: (r) => r.max(220) }),
     defineField({ name: "coverImage", type: "image", group: "content", options: { hotspot: true }, fields: [defineField({ name: "alt", type: "string", validation: (r) => r.required() })], validation: (r) => r.required() }),

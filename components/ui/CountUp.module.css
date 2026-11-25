@@ -1,0 +1,12 @@
+.count {
+  display: inline-block;
+  position: relative;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.digit {
+  display: inline-block;
+  width: 1ch;
+  text-align: center;
+}

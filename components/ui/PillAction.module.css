@@ -1,2 +1,8 @@
 .action{align-items:center;border-radius:999px;display:inline-flex;flex-wrap:nowrap;justify-content:center;text-decoration:none;text-transform:uppercase;white-space:nowrap}
-.action :global(.cta-arrow){flex-shrink:0}
+.action :global(.cta-arrow){flex-shrink:0;transform:translate(var(--arrow-x,0px),var(--arrow-y,0px)) scale(.8125)}
+@media(prefers-reduced-motion:no-preference){
+  .action :global(.cta-arrow){transition:transform .22s cubic-bezier(.22,1,.36,1)}
+  .action [data-direction="diagonal"]{--arrow-rise:-3px}
+  .action:focus-visible :global(.cta-arrow){--arrow-x:4px;--arrow-y:var(--arrow-rise,0px)}
+  @media(hover:hover){.action:hover:not(:disabled) :global(.cta-arrow){--arrow-x:4px;--arrow-y:var(--arrow-rise,0px)}}
+}

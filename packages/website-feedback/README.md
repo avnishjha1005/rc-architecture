@@ -3,6 +3,7 @@
 Private, source-based Next.js workspace package for the RC Architecture client review experience.
 
 - `@rc/website-feedback/client` exports the review workspace and preview bridge.
+- Mount `FeedbackPreview` from `@rc/website-feedback/preview` in a shared layout to load the bridge only in an embedded feedback session.
 - `@rc/website-feedback/server` exports the authenticated route-handler factory and shared server types.
 - `@rc/website-feedback/providers/github` exports the GitHub Issues adapter.
 - `@rc/website-feedback/providers/notion` exports the Notion storage adapter.

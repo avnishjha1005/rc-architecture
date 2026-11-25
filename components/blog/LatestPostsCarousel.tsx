@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
 import { A11y, FreeMode, Mousewheel, Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -26,7 +26,7 @@ export function LatestPostsCarousel({ posts }: { posts: LatestPost[] }) {
           <PillAction className={styles.latestBack} href="/blog">Back to all posts</PillAction>
         </div>
       </div>
-      <div className={styles.latestRail} data-motion-item>
+      <div className={styles.latestRail} data-card-group data-motion-item>
         <Swiper
           className={styles.latestGrid}
           modules={[A11y, FreeMode, Mousewheel, Scrollbar]}
@@ -36,13 +36,13 @@ export function LatestPostsCarousel({ posts }: { posts: LatestPost[] }) {
           watchOverflow
           freeMode={{ enabled: true, momentum: true, sticky: false }}
           mousewheel={{ forceToAxis: true, releaseOnEdges: true }}
-          scrollbar={{ draggable: true, hide: false }}
-          breakpoints={{ 761: { slidesPerView: 2.55, spaceBetween: 20 } }}
+          scrollbar={{ draggable: true, hide: true }}
+          breakpoints={{ 761: { slidesPerView: 2.45, spaceBetween: 24 } }}
           a11y={{ containerMessage: "Latest posts carousel" }}
         >
           {posts.map((item) => (
             <SwiperSlide className={styles.latestSlide} key={item.slug}>
-              <article>
+              <article data-card>
                 <Link className={styles.latestImage} href={`/blogs/${item.slug}`}><Image src={item.imageUrl} alt={item.imageAlt} fill sizes="(max-width: 760px) 84vw, 34vw" /></Link>
                 <p className={styles.latestEyebrow}>{item.category}</p>
                 <h3><Link href={`/blogs/${item.slug}`}>{item.title}</Link></h3>

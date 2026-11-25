@@ -7,6 +7,7 @@ import { ContactSection } from "@/components/home/ContactSection";
 import { NewsletterSection } from "@/components/home/NewsletterSection";
 import { Footer } from "@/components/site/Footer";
 import { fallbackHomeContent, type HomeContent, type Stat } from "@/content/home";
+import { featuredProjectSlugs as featuredSlugs } from "@/content/featured-projects.mjs";
 import { siteFooter, type SiteData } from "@/content/site";
 import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
@@ -15,6 +16,7 @@ import { homePageQuery } from "@/sanity/lib/queries";
 import { getSiteData } from "@/sanity/lib/site";
 import { getSingletonMetadata } from "@/sanity/lib/metadata";
 import { resolveImage, type CmsResponsiveImage } from "@/lib/responsive-image";
+import "./home-design.css";
 
 export function generateMetadata() {
   return getSingletonMetadata("homePage", {
@@ -27,7 +29,7 @@ type CmsHome = Partial<Omit<HomeContent, "brandName" | "heroImageUrl" | "heroIma
   heroImageData?: CmsResponsiveImage;
   stats?: Array<Partial<Stat> | null>;
 };
-type CmsResponse = { home?: CmsHome | null } | null;
+type CmsResponse = { home?: CmsHome | null; featured?: (HomeContent["projects"]["items"][number] & { slug: string })[] } | null;
 
 function omitNullish<T extends object>(value: T | null | undefined): Partial<T> {
   if (!value) return {};
@@ -38,6 +40,9 @@ function omitNullish<T extends object>(value: T | null | undefined): Partial<T> 
 
 function resolveContent(data: CmsResponse, site: SiteData): HomeContent {
   const home = data?.home;
+  const featured = featuredSlugs.flatMap((slug) => data?.featured?.find((project) => project.slug === slug) ?? []);
+  const labsCta = { ...fallbackHomeContent.labs.cta, ...omitNullish(home?.labs?.cta) };
+  if (labsCta.href === "/space-labs") labsCta.href = "/blog";
   const stats = home?.stats?.flatMap((stat) => (
     typeof stat?.value === "string" && stat.value.trim() && typeof stat.label === "string" && stat.label.trim()
       ? [{ value: stat.value, label: stat.label }]
@@ -55,8 +60,8 @@ function resolveContent(data: CmsResponse, site: SiteData): HomeContent {
     stats: stats.length ? stats : fallbackHomeContent.stats,
     about: { ...fallbackHomeContent.about, ...omitNullish(home?.about), cta: { ...fallbackHomeContent.about.cta, ...omitNullish(home?.about?.cta) }, ideologies: home?.about?.ideologies?.length ? home.about.ideologies : fallbackHomeContent.about.ideologies },
     services: { ...fallbackHomeContent.services, ...omitNullish(home?.services), cta: { ...fallbackHomeContent.services.cta, ...omitNullish(home?.services?.cta) }, items: home?.services?.items?.length ? home.services.items : fallbackHomeContent.services.items },
-    projects: { ...fallbackHomeContent.projects, ...omitNullish(home?.projects), cta: { ...fallbackHomeContent.projects.cta, ...omitNullish(home?.projects?.cta) }, items: home?.projects?.items?.length ? home.projects.items : fallbackHomeContent.projects.items },
-    labs: { ...fallbackHomeContent.labs, ...omitNullish(home?.labs), cta: { ...fallbackHomeContent.labs.cta, ...omitNullish(home?.labs?.cta) }, articles: home?.labs?.articles?.length ? home.labs.articles : fallbackHomeContent.labs.articles },
+    projects: { ...fallbackHomeContent.projects, ...omitNullish(home?.projects), cta: { ...fallbackHomeContent.projects.cta, ...omitNullish(home?.projects?.cta) }, items: home?.projects?.items?.length ? home.projects.items : featured },
+    labs: { ...fallbackHomeContent.labs, ...omitNullish(home?.labs), cta: labsCta, articles: home?.labs?.articles?.length ? home.labs.articles : fallbackHomeContent.labs.articles },
     contact: site.contact,
     newsletter: site.newsletter,
     footer: siteFooter(site),
@@ -67,7 +72,7 @@ export default async function Home() {
   const sanityClient = await getSanityClient();
   const [data, site] = await Promise.all([
     isSanityConfigured
-      ? sanityClient.fetch(homePageQuery, {}, { next: { revalidate: 60 } }).catch((error) => {
+      ? sanityClient.fetch(homePageQuery, { featuredSlugs }, { next: { revalidate: 60 } }).catch((error) => {
         reportSanityError("Unable to load homepage content from Sanity", error);
         return null;
       })

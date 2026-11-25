@@ -1,0 +1,98 @@
+.viewport {
+  overflow-x: clip;
+}
+
+.rail {
+  margin-top: clamp(70px, 6.944cqw, 178px);
+  padding-top: clamp(55px, 5.556cqw, 142px);
+  border-top: 1px solid #dedede;
+}
+
+.slider:global(.swiper) {
+  container-type: inline-size;
+  overflow: visible;
+}
+
+.slider :global(.swiper-button-next),
+.slider :global(.swiper-button-prev) {
+  position: absolute;
+  z-index: 3;
+  top: 15cqw;
+  width: 44px;
+  height: 44px;
+  transform: translate(0, -50%);
+  transition: transform 280ms cubic-bezier(.22,1,.36,1), opacity 220ms;
+  border-radius: 50%;
+  background: var(--red);
+  cursor: pointer;
+}
+
+.slider :global(.swiper-button-next) { right: 12px; }
+.slider :global(.swiper-button-prev) { left: 12px; }
+.slider :global(.swiper-button-next)::before,
+.slider :global(.swiper-button-prev)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/Arrow.svg") center / 16px auto no-repeat;
+}
+.slider :global(.swiper-button-prev)::before { transform: rotate(180deg); }
+
+.slider :global(.swiper-button-disabled) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.slider :global(.swiper-button-prev.swiper-button-disabled) { transform: translate(calc(-100% - var(--home-inline, 20px) - 12px), -50%); }
+.slider :global(.swiper-button-next.swiper-button-disabled) { transform: translate(calc(100% + var(--home-inline, 20px) + 12px), -50%); }
+
+.slider :global(.swiper-button-lock) {
+  visibility: hidden;
+}
+
+.slider :global(.swiper-button-next):focus-visible,
+.slider :global(.swiper-button-prev):focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.slider:has(:global(.swiper-button-next:not(.swiper-button-disabled, .swiper-button-lock)))::after,
+.slider:has(:global(.swiper-button-prev:not(.swiper-button-disabled, .swiper-button-lock)))::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset-block: 0;
+  width: clamp(64px, 7cqw, 120px);
+  pointer-events: none;
+}
+
+.slider::after { right: calc(-1 * var(--home-inline, 20px)); background: linear-gradient(to right, transparent, #ffffffb0); }
+.slider::before { left: calc(-1 * var(--home-inline, 20px)); background: linear-gradient(to left, transparent, #ffffffb0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .slider :global(.swiper-button-next), .slider :global(.swiper-button-prev) { transition: none; }
+}
+
+@media (max-width: 900px) {
+  .rail {
+    margin-top: 70px;
+    padding-top: 55px;
+  }
+
+  .slider :global(.swiper-wrapper) {
+    display: block;
+    transform: none !important;
+  }
+
+  .slider :global(.swiper-slide) {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .slider :global(.swiper-button-next),
+  .slider :global(.swiper-button-prev),
+  .slider::after,
+  .slider::before {
+    display: none;
+  }
+}

@@ -41,7 +41,7 @@ export function NextProjects({
         </div>
       </div>
 
-      <div className={styles.swiperOffset} data-motion-item>
+      <div className={styles.swiperOffset} data-card-group data-motion-item>
         <Swiper
           className={styles.relatedSwiper}
           modules={[A11y, FreeMode, Mousewheel]}
@@ -70,7 +70,7 @@ export function NextProjects({
           ))}
         </Swiper>
       </div>
-      <div className={styles.mobileRelated} data-motion-item>
+      <div className={styles.mobileRelated} data-card-group data-motion-item>
         {projects.slice(0, 3).map((item) => <ProjectCard project={item} variant="related" key={item.id} />)}
       </div>
     </section>

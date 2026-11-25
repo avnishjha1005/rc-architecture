@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import localFont from "next/font/local";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import { SmoothScroll } from "@/components/site/SmoothScroll";
 import { SiteMotion } from "@/components/site/SiteMotion";
-import { FeedbackBridge } from "@rc/website-feedback/client";
+import { PageTransition } from "@/components/site/PageTransition";
+import { FeedbackPreview } from "@rc/website-feedback/preview";
+import { ChiselPreview } from "@/components/chisel/ReviewClient";
 
 const hankenGrotesk = localFont({
   variable: "--font-hanken-grotesk",
   display: "swap",
   preload: false,
   src: [
-    { path: "../public/fonts/HankenGrotesk-Light.ttf", weight: "300", style: "normal" },
-    { path: "../public/fonts/HankenGrotesk-Regular.ttf", weight: "400", style: "normal" },
-    { path: "../public/fonts/HankenGrotesk-Medium.ttf", weight: "500", style: "normal" },
-    { path: "../public/fonts/HankenGrotesk-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "../public/fonts/HankenGrotesk-Light.woff2", weight: "300", style: "normal" },
+    { path: "../public/fonts/HankenGrotesk-Regular.woff2", weight: "400", style: "normal" },
+    { path: "../public/fonts/HankenGrotesk-Medium.woff2", weight: "500", style: "normal" },
+    { path: "../public/fonts/HankenGrotesk-SemiBold.woff2", weight: "600", style: "normal" },
   ],
 });
 
@@ -23,9 +26,9 @@ const chivoMono = localFont({
   display: "swap",
   preload: false,
   src: [
-    { path: "../public/fonts/ChivoMono-Regular.ttf", weight: "400", style: "normal" },
-    { path: "../public/fonts/ChivoMono-Medium.ttf", weight: "500", style: "normal" },
-    { path: "../public/fonts/ChivoMono-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "../public/fonts/ChivoMono-Regular.woff2", weight: "400", style: "normal" },
+    { path: "../public/fonts/ChivoMono-Medium.woff2", weight: "500", style: "normal" },
+    { path: "../public/fonts/ChivoMono-SemiBold.woff2", weight: "600", style: "normal" },
   ],
 });
 
@@ -38,9 +41,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${hankenGrotesk.variable} ${chivoMono.variable} h-full antialiased motion-ready`}
+      className={`${hankenGrotesk.variable} ${chivoMono.variable} h-full antialiased`}
     >
-      <body><SmoothScroll /><a className="skip-link" href="#main-content">Skip to main content</a><div id="main-content" tabIndex={-1}>{children}</div><SiteMotion /><FeedbackBridge /><noscript><style>{`.motion-ready [data-motion-item]{opacity:1!important;transform:none!important}.motion-ready [data-motion-image],.motion-ready [data-motion-image] img{transform:none!important}`}</style></noscript></body>
+      <body><SiteMotion /><SmoothScroll /><a className="skip-link" href="#main-content">Skip to main content</a><PageTransition><Suspense fallback={<main className="loading-page" aria-label="Loading"><div /><div /><div /><span className="sr-only">Loading page</span></main>}>{children}<noscript data-route-content-ready="" /></Suspense></PageTransition><FeedbackPreview />{process.env.CHISEL_ENABLED === "1" && <ChiselPreview />}</body>
     </html>
   );
 }

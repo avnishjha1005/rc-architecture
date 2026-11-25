@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { ProjectDetail } from "@/content/projectDetails";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";

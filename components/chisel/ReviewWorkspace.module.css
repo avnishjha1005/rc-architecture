@@ -1,0 +1,5 @@
+.workspace :global(.chisel-avatar:has(> img[src^="/_next/image?"])) {
+  background-image:
+    radial-gradient(circle at 50% 36%, currentColor 0 16%, transparent 17%),
+    radial-gradient(ellipse 32% 25% at 50% 85%, currentColor 98%, transparent 100%);
+}

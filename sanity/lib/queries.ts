@@ -21,9 +21,9 @@ export const siteSettingsQuery = defineQuery(`
     cta{label, href},
     offices[]{city, address, phone},
     socialLinks[]{label, "href": url, shortLabel},
-    contact{eyebrow, title, description, cta{label, href}, "imageUrl": image.asset->url, "imageAlt": image.alt},
-    newsletter{eyebrow, title, description, placeholder, buttonLabel, "imageUrl": image.asset->url},
-    footer{eyebrow, title, blurb, addressLabel, hoursLabel, legal}
+    contact{eyebrow, title, description, cta{label, href}, image, "imageAlt": image.alt, mobileImage},
+    newsletter{eyebrow, title, description, placeholder, buttonLabel, "imageUrl": image.asset->url, "innerImageUrl": innerImage.asset->url},
+    footer{eyebrow, title, blurb, addressLabel, city, hoursLabel, legal}
   }
 `);
 
@@ -33,6 +33,7 @@ export const homePageQuery = defineQuery(`{
     *[_type == "homePage"] | order(_updatedAt desc)[0]
   ){
     heroImage,
+    "mobileHeroImage": select(defined(mobileHeroImage.asset->url) => mobileHeroImage),
     "heroImageAlt": heroImage.alt,
     "heroImageData": heroImage${responsiveImageProjection},
     headlineTop,
@@ -44,22 +45,32 @@ export const homePageQuery = defineQuery(`{
     services{eyebrow, title, intro, cta{label, href}, items[]{number, title, description, features, "imageUrl": image.asset->url, "imageAlt": image.alt}},
     projects{eyebrow, title, intro, cta{label, href}, items[]{title, category, year, href, "imageUrl": image.asset->url, "imageAlt": image.alt}},
     labs{eyebrow, intro, cta{label, href}, articles[]{title, category, href, "imageUrl": image.asset->url, "imageAlt": image.alt}}
+  },
+  "featured": *[_type == "project" && slug.current in $featuredSlugs && defined(coverImage.asset->url)]{
+    title, category, "year": coalesce(yearRange, string(year), ""), "slug": slug.current, "href": "/projects/" + slug.current,
+    "imageUrl": coverImage.asset->url, "imageAlt": coalesce(coverImage.alt, title), "image": coverImage${responsiveImageProjection}
   }
 }`)
 
-const projectCardProjection = `{
+function cardProjection(featured: boolean) {
+  const image = featured ? "select(defined(featuredImage.asset._ref) => featuredImage, coverImage)" : "coverImage";
+  return `{
   _id,
   title,
   featuredTitle,
   "slug": slug.current,
   "type": discipline,
-  category,
+  "category": ${featured ? "coalesce(featuredCategory, category)" : "category"},
+  "mobileArchiveImageUrl": mobileArchiveImage.asset->url,
   location,
   "yearDisplay": coalesce(yearRange, string(year)),
-  "imageUrl": coverImage.asset->url,
-  "imageAlt": coverImage.alt,
-  "image": coverImage${responsiveImageProjection}
+  "imageUrl": ${image}.asset->url,
+  "imageAlt": ${image}.alt,
+  "image": ${image}${responsiveImageProjection}
 }`;
+}
+const projectCardProjection = cardProjection(false);
+const featuredCardProjection = cardProjection(true);
 
 export const projectsPageQuery = defineQuery(`{
   "page": coalesce(
@@ -69,7 +80,7 @@ export const projectsPageQuery = defineQuery(`{
     featuredHeading,
     featuredIntro,
     featuredYearRange,
-    "featuredProjects": featuredProjects[]->${projectCardProjection},
+    "featuredProjects": featuredProjects[]->${featuredCardProjection},
     archiveEyebrow,
     archiveHeading,
     archiveIntro,
@@ -78,7 +89,7 @@ export const projectsPageQuery = defineQuery(`{
     seo
   },
   "featuredFlagged": *[_type == "project" && featured == true]
-    | order(year desc, title asc)[0...10]${projectCardProjection},
+    | order(year desc, title asc)[0...10]${featuredCardProjection},
   "allProjects": *[_type == "project"]
     | order(year desc, title asc)${projectCardProjection}
 }`);
@@ -98,29 +109,30 @@ export const projectBySlugQuery = defineQuery(`
     summary,
     introduction,
     facts[]{label, value},
-    storySections[]{title, body, layout, "imageUrl": image.asset->url, "imageAlt": image.alt, "imageData": image${responsiveImageProjection}},
-    "heroImageUrl": coverImage.asset->url,
-    "heroImageAlt": coverImage.alt,
-    "heroImageData": coverImage${responsiveImageProjection},
+    storySections[]{title, body, layout, "imageUrl": image.asset->url, "imageAlt": image.alt, "imageData": image${responsiveImageProjection}, "mobileImageUrl": mobileImage.asset->url},
+    "heroImageUrl": coalesce(detailHeroImage.asset->url, coverImage.asset->url),
+    "heroImageAlt": coalesce(detailHeroImage.alt, coverImage.alt),
+    "heroImageData": select(defined(detailHeroImage.asset._ref) => detailHeroImage, coverImage)${responsiveImageProjection},
+    mobileHeroImage{asset,crop,hotspot},
     "gallery": gallery[]{
       "imageUrl": asset->url,
       "imageAlt": alt,
       "imageData": @${responsiveImageProjection}
     },
     "seo": seo{title, description, "imageUrl": image.asset->url},
-    "relatedProjects": relatedProjects[]->${projectCardProjection}
+    "relatedProjects": select($slug == "ge-digital" => *[_type == "project"] | order(year desc, title asc)${projectCardProjection}, relatedProjects[]->${projectCardProjection})
   }
 `);
 
 export const aboutPageQuery = defineQuery(`
   coalesce(*[_id == "aboutPage"][0], *[_type == "aboutPage"] | order(_updatedAt desc)[0]){
-    heroTitle, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt, "heroImageData": heroImage${responsiveImageProjection},
+    heroTitle, heroEyebrow, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt, "heroImageData": heroImage${responsiveImageProjection},
     introEyebrow, introHeading, introParagraphs,
     "introImages": introImages[]{"imageUrl": asset->url, "imageAlt": alt},
     stats[]{label, value}, philosophyEyebrow, philosophyHeading, philosophyIntro,
     principles[]{title, description}, clientsEyebrow, clientsHeading, clientsIntro,
-    "clientLogos": clientLogos[]{"imageUrl": asset->url, "imageAlt": alt},
-    peopleEyebrow, peopleHeading, "people": people[]{name, role, "imageUrl": image.asset->url, "imageAlt": image.alt},
+    "clientLogos": clientLogos[]{"imageUrl": asset->url, "imageAlt": alt, website},
+    peopleEyebrow, peopleHeading, "people": people[]{_key, name, role, "imageUrl": image.asset->url, "imageAlt": image.alt, "directoryPortraitUrl": directoryPortrait.asset->url, "directoryPortraitAlt": directoryPortrait.alt},
     awardsEyebrow, awardsHeading, awardsIntro, awards[]{project, award, year},
     careersEyebrow, valuesHeading, valuesIntro, values[]{icon, title, description}, seo
   }
@@ -129,10 +141,11 @@ export const aboutPageQuery = defineQuery(`
 export const servicesPageQuery = defineQuery(`
   coalesce(*[_id == "servicesPage"][0], *[_type == "servicesPage"] | order(_updatedAt desc)[0]){
     heroTitle, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt, "heroImageData": heroImage${responsiveImageProjection},
-    processEyebrow, processHeading, processSteps[]{number, title, subtitle, deliverables},
+    "mobileHeroImageUrl": mobileHeroImage.asset->url, processEyebrow, processHeading, processSteps[]{number, title, subtitle, deliverables},
     servicesEyebrow, servicesHeading,
     "services": services[]{mark, title, description, "items": items[]{title, description, "imageUrl": image.asset->url, "imageAlt": image.alt}},
-    "featuredProjects": featuredProjects[]->${projectCardProjection}, seo
+    "featuredProjects": featuredProjects[]->${projectCardProjection},
+    "catalogue": select(count(featuredProjects) > 0 => [], *[_type == "project"] | order(title asc)${projectCardProjection}), seo
   }
 `);
 
@@ -141,19 +154,19 @@ export const clientsPageQuery = defineQuery(`{
     countLabel, heroTitle, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt, "heroImageData": heroImage${responsiveImageProjection},
     indexTitle, loadMoreLabel, seo
   },
-  "clients": *[_type == "client"] | order(coalesce(order, 999999) asc, name asc){name, category, year}
+  "clients": *[_type == "client"] | order(coalesce(order, 999999) asc, name asc){name, category, directoryCategory, year}
 }`);
 
 export const contactPageQuery = defineQuery(`
   coalesce(*[_id == "contactPage"][0], *[_type == "contactPage"] | order(_updatedAt desc)[0]){
     heroTitle, heroIntro, "heroImageUrl": heroImage.asset->url, "heroImageAlt": heroImage.alt, "heroImageData": heroImage${responsiveImageProjection},
-    infoEyebrow, infoHeading, infoIntro, phoneLabel, emailLabel, mainOfficeLabel,
-    satelliteOfficesHeading, socialLabel, careersEyebrow, seo
+    infoEyebrow, infoHeading, infoIntro, additionalPhones, phoneLabel, emailLabel, mainOfficeLabel,
+    satelliteOfficesHeading, satelliteOfficeOrder, socialLabel, careersEyebrow, seo
   }
 `);
 
 const blogPostProjection = `{
-  _id, title, "slug": slug.current, category, "blogCategory": coalesce(blogCategory, "spaceLabs"), publishedAt, excerpt,
+  _id, title, "slug": slug.current, category, topics, "blogCategory": coalesce(blogCategory, "spaceLabs"), publishedAt, excerpt,
   "imageUrl": coverImage.asset->url, "imageAlt": coverImage.alt, "image": coverImage${responsiveImageProjection},
   "sections": sections[]{title, "body": paragraphs, bullets, "imageUrl": image.asset->url, "imageAlt": image.alt, "imageData": image${responsiveImageProjection}, quote},
   "seo": seo{title, description, "imageUrl": image.asset->url}
@@ -165,7 +178,8 @@ export const blogPageQuery = defineQuery(`{
     "featuredPosts": featuredPosts[]->${blogPostProjection},
     "featuredProjects": featuredProjects[]->${projectCardProjection}, seo
   },
-  "allPosts": *[_type == "blogPost"] | order(publishedAt desc)${blogPostProjection}
+  "allPosts": *[_type == "blogPost"] | order(publishedAt desc)${blogPostProjection},
+  "defaultFeaturedProjects": *[_type == "project" && slug.current in ["ge-digital", "wells-fargo", "unilever", "indigo"]]${projectCardProjection}
 }`);
 
 export const blogPostBySlugQuery = defineQuery(`

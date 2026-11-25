@@ -1,0 +1,27 @@
+[
+  {
+    "id": "aboutPage",
+    "set": {
+      "people": [
+        {"_key":"designperson01","_type":"object","name":"George John","role":"Architect - COA","image":{"_type":"image","asset":{"_type":"reference","_ref":"image-ad34a9b8b3909998605e331e5bc1112e4efedfaa-456x478-webp"},"alt":"Placeholder portrait from the supplied design, not a verified staff likeness"}},
+        {"_key":"designperson02","_type":"object","name":"Clara Moreau","role":"Lead Architect","image":{"_type":"image","asset":{"_type":"reference","_ref":"image-534a2972e5d93504f764941719bec8a67667763c-456x478-webp"},"alt":"Placeholder portrait from the supplied design, not a verified staff likeness"}},
+        {"_key":"designperson03","_type":"object","name":"Tomás Ortega","role":"Founder & Creative Director","image":{"_type":"image","asset":{"_type":"reference","_ref":"image-ad34a9b8b3909998605e331e5bc1112e4efedfaa-456x478-webp"},"alt":"Placeholder portrait from the supplied design, not a verified staff likeness"}},
+        {"_key":"designperson04","_type":"object","name":"Clara Moreau","role":"Lead Architect","image":{"_type":"image","asset":{"_type":"reference","_ref":"image-534a2972e5d93504f764941719bec8a67667763c-456x478-webp"},"alt":"Placeholder portrait from the supplied design, not a verified staff likeness"}},
+        {"_key":"designperson05","_type":"object","name":"Tomás Ortega","role":"Founder & Creative Director","image":{"_type":"image","asset":{"_type":"reference","_ref":"image-ad34a9b8b3909998605e331e5bc1112e4efedfaa-456x478-webp"},"alt":"Placeholder portrait from the supplied design, not a verified staff likeness"}},
+        {"_key":"designperson06","_type":"object","name":"Clara Moreau","role":"Lead Architect","image":{"_type":"image","asset":{"_type":"reference","_ref":"image-534a2972e5d93504f764941719bec8a67667763c-456x478-webp"},"alt":"Placeholder portrait from the supplied design, not a verified staff likeness"}},
+        {"_key":"designperson07","_type":"object","name":"Aleksander Jezierski","role":"Digital Design Director","directoryPortrait":{"_type":"image","asset":{"_type":"reference","_ref":"image-5c8bef4f4eaee55077a3a92a9b2a75a6e7d6b722-456x478-webp"},"alt":"Placeholder portrait from the supplied design, not a verified staff likeness"}},
+        {"_key":"designperson08","_type":"object","name":"Alex Monger","role":"Managing Director"},
+        {"_key":"designperson09","_type":"object","name":"Alfie Millar","role":"Senior Strategy Director"},
+        {"_key":"designperson10","_type":"object","name":"Alice Walker","role":"Designer"},
+        {"_key":"designperson11","_type":"object","name":"Alina Mendoza Lopez","role":"Operations Manager"},
+        {"_key":"designperson12","_type":"object","name":"Amy Hayden","role":"Designer"},
+        {"_key":"designperson13","_type":"object","name":"Andreina De La Blanca","role":"Managing Director"},
+        {"_key":"designperson14","_type":"object","name":"Andrew Van Hyfte","role":"Strategy Designer"},
+        {"_key":"designperson15","_type":"object","name":"Anna Ferkingstad","role":"Designer"},
+        {"_key":"designperson16","_type":"object","name":"Anne Vent","role":"Architect"},
+        {"_key":"designperson17","_type":"object","name":"Anton Martinez","role":"Architect"},
+        {"_key":"designperson18","_type":"object","name":"Arun Thangavel","role":"Architect"}
+      ]
+    }
+  }
+]

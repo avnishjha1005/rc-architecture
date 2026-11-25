@@ -1,0 +1,389 @@
+.heroMedia {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  overflow: clip;
+}
+
+.heroTitle {
+  position: absolute;
+  left: clamp(20px, 2.8vw, 72px);
+  right: var(--gutter);
+  bottom: 7%;
+}
+
+.hero .heroTitle h1 {
+  position: static;
+  white-space: pre-line;
+  font-size: clamp(6rem, 13.4vw, 17rem);
+  letter-spacing: -.06em;
+  line-height: .86;
+}
+
+.heroCaption {
+  display: none;
+}
+
+.stats {
+  margin-inline: var(--gutter);
+}
+
+.stats > div {
+  padding-inline: clamp(16px, 1.67vw, 40px);
+}
+
+.stats strong {
+  font-size: clamp(5.5rem, 9.7vw, 12rem);
+}
+
+.clients,
+.team,
+.awards,
+.philosophy {
+  min-height: 0;
+}
+
+.clientGrid > div {
+  height: auto;
+  aspect-ratio: 2.04;
+}
+
+.clientGrid img {
+  padding: 15% 17%;
+}
+
+.localLogo { position: absolute; inset: 0; margin: auto; }
+.clientGrid .localLogo img { padding: 0; }
+
+.logoLink { position: absolute; inset: 0; }
+.logoLink:focus-visible { outline: 2px solid currentColor; outline-offset: -3px; }
+.logoLink:focus-visible img { filter: brightness(0); }
+@media (hover: hover) {
+  .logoLink:hover img { filter: brightness(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .logoLink img { transition: filter 150ms ease-out; }
+}
+
+.clientGrid > div:last-child {
+  aspect-ratio: auto;
+}
+
+.directory {
+  width: calc(100% + var(--section-label-column) + var(--section-gap));
+  margin: 70px 0 0 calc(-1 * (var(--section-label-column) + var(--section-gap)));
+  padding: 46px var(--gutter) 0;
+  border-top: 1px solid #ddd;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 24px;
+  font-size: 1rem;
+  list-style: none;
+}
+
+.directory li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 4px 16px;
+}
+
+.directory li span + span {
+  font-size: .875rem;
+  color: #626262;
+}
+
+.peopleHeading {
+  white-space: pre-line;
+}
+
+.team[data-people-preview] > :first-child {
+  font-size: .875rem;
+}
+
+.team[data-people-preview] .peopleGrid h3 {
+  font-size: .8125rem;
+  line-height: 1.3;
+}
+
+.team[data-people-preview] .peopleGrid p {
+  font-size: .75rem;
+  letter-spacing: .07em;
+}
+
+.awardsTable {
+  width: calc(100% + var(--section-label-column) + var(--section-gap));
+  margin: 100px 0 0 calc(-1 * (var(--section-label-column) + var(--section-gap)));
+  border-collapse: collapse;
+  font-size: .875rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.awardsTable :is(th, td) {
+  padding: 12px 12px 12px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.awardsTable th {
+  color: #666;
+  font-weight: 400;
+}
+
+.awardsTable :is(th, td):last-child {
+  padding-right: 0;
+  text-align: right;
+  white-space: nowrap;
+}
+
+@media (min-width: 901px) {
+  .intro {
+    min-height: 0;
+    height: max(103cqw, 900px);
+  }
+
+  .intro .introHeadline h2 {
+    margin-left: 28%;
+    font-size: clamp(2.5rem, 4.17vw, 6.25rem);
+    line-height: 1;
+  }
+
+  .intro .garden {
+    top: 39.3%;
+    width: 49.3%;
+    aspect-ratio: 1.93;
+  }
+
+  .intro .ocean {
+    top: 29.8%;
+    width: 19.2%;
+  }
+
+  .intro .kitchen {
+    top: 62.3%;
+    right: 12.5%;
+    width: 25.5%;
+    aspect-ratio: 1;
+  }
+
+  .intro .introCopy {
+    top: 72.3%;
+    width: 42%;
+    max-width: none;
+  }
+
+  .philosophy h2,
+  .clients h2,
+  .team h2,
+  .awards h2 {
+    font-size: clamp(5rem, 9.72vw, 13.5rem);
+    line-height: .99;
+  }
+
+  .team {
+    --section-gap: 55px;
+  }
+
+  .team[data-people-preview] {
+    --section-gap: 2.92vw;
+    padding-block: 7.5vw 10.8vw;
+  }
+
+  .team[data-people-preview] h2 {
+    letter-spacing: -.045em;
+  }
+
+  .team[data-people-preview] > :first-child {
+    padding-top: 1.7vw;
+  }
+
+  .team[data-people-preview] .peopleGrid {
+    grid-template-columns: repeat(3, minmax(0, 32.6%));
+    justify-content: space-between;
+    gap: 5.5vw 0;
+    margin-top: 7.05vw;
+  }
+
+  .team[data-people-preview] .peopleGrid article:is(:nth-child(1), :nth-child(5)) {
+    position: relative;
+    left: -.55vw;
+  }
+
+  .team[data-people-preview] .peopleGrid article:nth-child(4) {
+    position: relative;
+    left: .42vw;
+  }
+
+  .team[data-people-preview] .directory {
+    margin-top: 8.33vw;
+    padding: 5.4vw 17.65% 0;
+    column-gap: 0;
+    row-gap: .18em;
+    font-size: clamp(1.125rem, 1.67vw, 2rem);
+    font-weight: 300;
+    line-height: 1.2;
+    color: #737373;
+  }
+
+  .philosophy article {
+    min-height: clamp(160px, 13.5vw, 255px);
+  }
+}
+
+@media (max-width: 900px) {
+  .heroTitle {
+    left: var(--gutter);
+    bottom: 10%;
+  }
+
+  .hero .heroTitle h1 {
+    max-width: 11ch;
+    font-size: clamp(3.25rem, 16.2vw, 5rem);
+    white-space: normal;
+    line-height: .82;
+  }
+
+  .heroCaption {
+    display: block;
+    font: .875rem/1.3 var(--font-chivo-mono), monospace;
+    margin: 0 0 22px;
+  }
+
+  .intro .introHeadline h2 {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .introHeadline h2 span br {
+    display: none;
+  }
+
+  .introHeadline h2 span + span::before {
+    content: " ";
+  }
+
+  .stats > div {
+    min-height: 210px;
+    padding: 24px 20px;
+  }
+
+  .stats strong {
+    font-size: 6.25rem;
+    margin-top: 36px;
+  }
+
+  .philosophy article {
+    display: block;
+    min-height: 0;
+    padding-block: 38px;
+  }
+
+  .philosophy article h3 {
+    margin-top: 24px;
+  }
+
+  .philosophy article :is(h3, button, p, small) {
+    color: #333;
+  }
+
+  .philosophy article p {
+    max-width: none;
+    font-size: .875rem;
+  }
+
+  .clientGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .clientGrid > div {
+    aspect-ratio: 1.45;
+  }
+
+  .clientGrid > div:last-child {
+    grid-column: 1 / -1;
+    min-height: 76px;
+  }
+
+  .peopleGrid {
+    row-gap: 40px;
+  }
+
+  .peopleGrid article {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+
+  .peopleGrid article:nth-child(even) {
+    align-items: flex-end;
+  }
+
+  .peopleGrid article > div {
+    width: 64%;
+  }
+
+  .peopleGrid article :is(h3, p) {
+    margin-inline: 0;
+  }
+
+  .directory {
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 54px 0 0;
+    padding: 32px 0 0;
+  }
+
+  .directory li {
+    justify-content: space-between;
+  }
+
+  .team[data-people-preview] {
+    row-gap: 12px;
+  }
+
+  .team[data-people-preview] h2 {
+    max-width: 10ch;
+    letter-spacing: -.05em;
+    white-space: normal;
+  }
+
+  .team[data-people-preview] .peopleGrid {
+    margin-top: 80px;
+  }
+
+  .team[data-people-preview] .directory {
+    margin-top: 80px;
+    padding: 0;
+    border: 0;
+    gap: 14px;
+    font-size: .875rem;
+    line-height: 19px;
+  }
+
+  .team[data-people-preview] .directory li span + span {
+    color: inherit;
+  }
+
+  .awardsTable {
+    width: 100%;
+    margin: 80px 0 0;
+  }
+
+  .awardsTable :is(th, td) {
+    padding-block: 12px;
+  }
+
+  .awards h2,
+  .philosophy h2,
+  .clients h2,
+  .team h2 {
+    font-size: clamp(3rem, 14.18vw, 3.5rem);
+    line-height: .94;
+  }
+
+  .careersAction a {
+    width: 100%;
+  }
+}

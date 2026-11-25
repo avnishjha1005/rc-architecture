@@ -1,4 +1,6 @@
-import Image from "next/image";
+import { getImageProps } from "next/image";
+import Image from "@/components/ui/SiteImage";
+import { SitePicture } from "@/components/ui/SitePicture";
 import type { ContactSectionData } from "@/content/site";
 import { CtaLink } from "@/components/ui/CtaLink";
 import { Eyebrow } from "@/components/ui/Eyebrow";
@@ -10,7 +12,12 @@ export function ContactSection({ content }: { content: ContactSectionData }) {
 
   return (
     <section className="contact-section" id="contact">
-      <Image src={content.imageUrl} alt={content.imageAlt} fill sizes="100vw" data-motion-image />
+      <SitePicture className="contact-section__picture" breakpoint={900} mobileSizes="100vw"
+        mobileSrcSet={content.mobileImageUrl && getImageProps({ src: content.mobileImageUrl, alt: "", width: 790, height: 1330, sizes: "100vw" }).props.srcSet}
+        mobileImage={content.mobileImageUrl && <Image src={content.mobileImageUrl} alt={content.imageAlt} data-motion-image fill sizes="100vw" />}
+      >
+        <Image src={content.imageUrl} alt={content.imageAlt} data-motion-image fill sizes="100vw" />
+      </SitePicture>
       <div className="contact-section__shade" />
       <Reveal className="contact-section__content section-shell">
         <Eyebrow>{content.eyebrow}</Eyebrow>

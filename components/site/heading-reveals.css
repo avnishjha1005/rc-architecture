@@ -1,0 +1,25 @@
+[data-heading-host], [data-heading-overlay] {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+}
+
+[data-heading-mask] { position: absolute; overflow: clip; }
+[data-text-lines-hidden] { opacity: 0; }
+[data-heading-mask] > div, [data-heading-unit="word"] { position: absolute; inset: 0; }
+[data-live-mask], [data-live-mask] > span { display: block; }
+[data-live-mask] { overflow: clip; overflow-clip-margin: .07em; }
+
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-heading-host]:not([data-heading-managed]) ~ #main-content main :is(h1, h2):not(a *, nav *, button *, form *, [aria-hidden=true] *, .swiper *, :has(a, button, input)),
+  [data-heading-host]:not([data-heading-managed]) ~ #main-content main :is(.about-lead, .section-heading) h2 > span {
+    animation: rc-heading-bootstrap 0s 3s both;
+  }
+
+}
+
+@keyframes rc-heading-bootstrap { from { opacity: 0; } to { opacity: 1; } }

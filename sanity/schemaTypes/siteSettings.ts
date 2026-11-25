@@ -60,6 +60,7 @@ export const siteSettings = defineType({
       defineField({ name: "image", type: "image", options: { hotspot: true }, fields: [
         defineField({ name: "alt", type: "string", validation: (rule) => rule.required() }),
       ] }),
+      defineField({ name: "mobileImage", title: "Mobile banner photograph", type: "image", options: { hotspot: true } }),
     ] }),
     defineField({ name: "newsletter", title: "Global newsletter", type: "object", group: "sharedSections", fields: [
       defineField({ name: "eyebrow", type: "string", initialValue: "Newsletter" }),
@@ -68,12 +69,14 @@ export const siteSettings = defineType({
       defineField({ name: "placeholder", type: "string" }),
       defineField({ name: "buttonLabel", type: "string" }),
       defineField({ name: "image", title: "Background drawing", type: "image" }),
+      defineField({ name: "innerImage", title: "Drawing on interior pages", type: "image" }),
     ] }),
     defineField({ name: "footer", type: "object", group: "footer", fields: [
       defineField({ name: "eyebrow", type: "string" }),
       defineField({ name: "title", type: "text", rows: 2 }),
       defineField({ name: "blurb", type: "text", rows: 3 }),
       defineField({ name: "addressLabel", type: "string" }),
+      defineField({ name: "city", title: "Address city heading", type: "string" }),
       defineField({ name: "hoursLabel", type: "string" }),
       defineField({ name: "legal", type: "text", rows: 4 }),
     ] }),

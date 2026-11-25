@@ -1,0 +1,85 @@
+.directory {
+  position: relative;
+}
+
+.names {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: inherit;
+  gap: inherit;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trigger, .preview {
+  display: none;
+}
+
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) and (scripting: enabled) {
+  .names .staticName, .names .staticRole {
+    display: none;
+  }
+
+  .trigger {
+    display: block;
+    appearance: none;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+    cursor: pointer;
+  }
+
+  .trigger[aria-expanded="true"] {
+    color: #202020;
+  }
+
+  .trigger:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .preview:not([hidden]) {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: clamp(20px, 2.22vw, 40px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(145px, 15.83vw, 288px);
+    margin: 0;
+    pointer-events: none;
+    color: #202020;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.25;
+  }
+
+  .portrait {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 456 / 478;
+    object-fit: cover;
+  }
+
+  .preview figcaption {
+    padding-top: 8px;
+  }
+
+  .centerName {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 100%;
+    padding-bottom: 4px;
+    background: white;
+  }
+
+  .directory:has(.trigger:focus-visible[aria-expanded="true"]) .centerName {
+    outline: 2px solid currentColor;
+  }
+}

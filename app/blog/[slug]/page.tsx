@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import { notFound } from "next/navigation";
 import { LatestPostsCarousel } from "@/components/blog/LatestPostsCarousel";
 import { ContactSection } from "@/components/home/ContactSection";
@@ -24,7 +24,7 @@ function normalizePost(post: CmsPost): BlogPost | undefined {
   if (!post.title || !post.slug || !post.imageUrl) return undefined;
   return {
     slug: post.slug, title: post.title, category: post.category || "Architecture", blogCategory: post.blogCategory || "spaceLabs",
-    date: post.publishedAt ? new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" }).format(new Date(post.publishedAt)) : "",
+    date: post.publishedAt ? new Intl.DateTimeFormat("en-US", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(post.publishedAt)) : "",
     imageUrl: post.imageUrl, imageAlt: post.imageAlt || post.title,
     excerpt: post.excerpt || "Ideas, observations, and practical lessons from our architecture and design studio.",
     sections: (post.sections || []).flatMap((section) => section.title ? [{ title: section.title, body: section.body || [], bullets: section.bullets, imageUrl: section.imageUrl, imageAlt: section.imageAlt, quote: section.quote }] : []),

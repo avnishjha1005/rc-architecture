@@ -1,0 +1,361 @@
+[
+  {
+    "id": "projectsPage",
+    "set": {
+      "featuredYearRange": "1999–2023"
+    }
+  },
+  {
+    "id": "rc-project-ge-digital",
+    "set": {
+      "category": "Corporate · Interior Design · Workplace · Experiential Design",
+      "summary": "Inspired by the dynamism of urban environments",
+      "facts": [
+        {
+          "_key": "name",
+          "_type": "object",
+          "label": "Project Name",
+          "value": "GE Digital"
+        },
+        {
+          "_key": "location",
+          "_type": "object",
+          "label": "Project Location",
+          "value": "Bangalore, India"
+        },
+        {
+          "_key": "area",
+          "_type": "object",
+          "label": "Square Footage",
+          "value": "240,000 sq.ft."
+        },
+        {
+          "_key": "year",
+          "_type": "object",
+          "label": "Year Build",
+          "value": "2017"
+        }
+      ],
+      "storySections[_key==\"experience\"].title": "Focus on elevated user experience",
+      "storySections[_key==\"experience\"].body": "When GE Digital, a newly formed division in GE, decided to consolidate their offices at Bangalore, they wanted the office to symbolize their vision and their journey forward.\n\nWe created a living office which is a high-performing workplace, that delivers an elevated experience of work for people and helps them achieve their strategic goals. One is free to decide the way they work and the place they work from. The office floor has different work environments from collaborative settings to individual spaces. The 20,000 SQM office space spread over 7 floors, with a capacity of 1500 plus employees has been designed to create a workplace that inculcates creativity and also promotes a fun & learning environment.",
+      "storySections[_key==\"contrast\"].title": "Blend of contrasting aesthetics and systems",
+      "storySections[_key==\"goals\"].title": "Designs that support strategic organizational goals",
+      "detailHeroImage": {
+        "_type": "image",
+        "asset": {
+          "_ref": "image-313fd3c419efa20979f9f7c7eb8c6da274d7f375-1920x1080-jpg",
+          "_type": "reference"
+        },
+        "alt": "GE Digital collaboration area with yellow meeting pods and stools"
+      },
+      "coverImage.asset._ref": "image-55a97cc69ce825fb0e310819d055c2801c82376f-1920x1080-jpg",
+      "coverImage.alt": "Blue meeting chairs and a presentation screen in the GE Digital workplace",
+      "storySections[_key==\"experience\"].mobileImage": {
+        "_type": "image",
+        "asset": {
+          "_ref": "image-0a45ea73d95f5f011e9fd5255884ed62729ce7c1-1920x1080-jpg",
+          "_type": "reference"
+        }
+      },
+      "storySections[_key==\"experience\"].image.alt": "A shared workspace at GE Digital in Bangalore",
+      "storySections[_key==\"contrast\"].image": {
+        "_type": "image",
+        "asset": {
+          "_ref": "image-c7abc351a2c52e4a61b38bd674ea125f73b40c5e-7056x4672-jpg",
+          "_type": "reference"
+        },
+        "alt": "GE Digital reception lounge with blue acoustic panels and yellow seating"
+      },
+      "storySections[_key==\"goals\"].image": {
+        "_type": "image",
+        "asset": {
+          "_ref": "image-52b14cde132ec0f4bfee4077a5a0c2505e570d31-1920x1080-jpg",
+          "_type": "reference"
+        },
+        "alt": "GE Digital corridor lounge featuring a Thomas Edison mural"
+      },
+      "gallery": [
+        {
+          "_key": "gallery-6",
+          "_type": "image",
+          "alt": "Flexible GE Digital team area with mobile whiteboards and blue seating",
+          "asset": {
+            "_ref": "image-55a97cc69ce825fb0e310819d055c2801c82376f-1920x1080-jpg",
+            "_type": "reference"
+          }
+        },
+        {
+          "_key": "gallery-7",
+          "_type": "image",
+          "alt": "GE Digital collaboration space with timber ceiling slats and yellow panels",
+          "asset": {
+            "_ref": "image-629d92c0ada2c57eeb897c0a9c1cf7495e9dd39a-1920x1080-jpg",
+            "_type": "reference"
+          }
+        },
+        {
+          "_key": "gallery-1",
+          "_type": "image",
+          "alt": "GE Digital reception lounge with blue acoustic panels and yellow seating",
+          "asset": {
+            "_ref": "image-c7abc351a2c52e4a61b38bd674ea125f73b40c5e-7056x4672-jpg",
+            "_type": "reference"
+          }
+        },
+        {
+          "_key": "gallery-2",
+          "_type": "image",
+          "alt": "Open-plan GE Digital workspace with blue and yellow accents",
+          "asset": {
+            "_ref": "image-67f780289070412a6dbb5fa9851f6a9277065f2a-1920x1080-jpg",
+            "_type": "reference"
+          }
+        },
+        {
+          "_key": "gallery-3",
+          "_type": "image",
+          "alt": "GE Digital collaboration area with yellow meeting pods and stools",
+          "asset": {
+            "_ref": "image-313fd3c419efa20979f9f7c7eb8c6da274d7f375-1920x1080-jpg",
+            "_type": "reference"
+          }
+        },
+        {
+          "_key": "gallery-4",
+          "_type": "image",
+          "alt": "GE Digital café with hanging greenery and warm pendant lighting",
+          "asset": {
+            "_ref": "image-0a45ea73d95f5f011e9fd5255884ed62729ce7c1-1920x1080-jpg",
+            "_type": "reference"
+          }
+        },
+        {
+          "_key": "gallery-5",
+          "_type": "image",
+          "alt": "GE Digital lounge with a perforated ceiling and living green walls",
+          "asset": {
+            "_ref": "image-fc5e5559999d39da3974bf861161c6f997822c5f-1920x1080-jpg",
+            "_type": "reference"
+          }
+        },
+        {
+          "_key": "gallery-8",
+          "_type": "image",
+          "alt": "GE Digital corridor lounge featuring a Thomas Edison mural",
+          "asset": {
+            "_ref": "image-52b14cde132ec0f4bfee4077a5a0c2505e570d31-1920x1080-jpg",
+            "_type": "reference"
+          }
+        }
+      ],
+      "mobileHeroImage": {
+        "_type": "image",
+        "asset": {
+          "_ref": "image-313fd3c419efa20979f9f7c7eb8c6da274d7f375-1920x1080-jpg",
+          "_type": "reference"
+        },
+        "crop": {
+          "_type": "sanity.imageCrop",
+          "top": 0.1398148148148148,
+          "bottom": 0.1388888888888889,
+          "left": 0.2755208333333333,
+          "right": 0.39114583333333336
+        }
+      }
+    }
+  },
+  {
+    "id": "rc-project-wells-fargo",
+    "set": {
+      "category": "Corporate · Interior Design · Workplace · Brand Experience"
+    }
+  },
+  {
+    "id": "rc-project-unilever",
+    "set": {
+      "category": "Corporate · Interior Design · Workplace · Future of Work",
+      "featuredCategory": "Corporate · Interior Design",
+      "detailHeroImage": {
+        "_type": "image",
+        "alt": "Unilever project interior",
+        "asset": {
+          "_ref": "image-9f1689e5af34e432695cf19b1c3e7719e8e95723-9504x6337-jpg",
+          "_type": "reference"
+        }
+      },
+      "coverImage.asset._ref": "image-aeb6e7b1d979e5c2ea01b950e2d2d8b0fd6387dc-9433x6289-jpg",
+      "coverImage.alt": "Unilever workplace lounge with timber seating and hanging planters",
+      "featuredImage": {
+        "_type": "image",
+        "asset": {
+          "_type": "reference",
+          "_ref": "image-b6feaf142717490dc492d467106ed1e037671ad9-9440x6295-jpg"
+        },
+        "alt": "Unilever corridor with a timber-clad orange volume"
+      }
+    }
+  },
+  {
+    "id": "rc-project-indigo",
+    "set": {
+      "category": "Corporate · Interior Design · Workplace · Brand Experience",
+      "detailHeroImage": {
+        "_type": "image",
+        "alt": "IndiGo project interior",
+        "asset": {
+          "_ref": "image-980ca7b8d846722c1c92f035bd63e3d92e8a296f-9509x6336-jpg",
+          "_type": "reference"
+        }
+      },
+      "coverImage.asset._ref": "image-1a53918d75bc0cf77ccbcc42c4ae311d23be4d0d-9372x6247-jpg",
+      "coverImage.alt": "IndiGo workplace dining room beside a blue window wall"
+    }
+  },
+  {
+    "id": "rc-project-ge-vernova",
+    "set": {
+      "category": "Engineering · Energy · Technology",
+      "detailHeroImage": {
+        "_type": "image",
+        "alt": "GE Vernova project interior",
+        "asset": {
+          "_ref": "image-43e3b2ffc84ecc1d6b84b1b23d2de37bb1b571db-6000x4000-jpg",
+          "_type": "reference"
+        }
+      },
+      "coverImage.asset._ref": "image-ede62c946a4b096c3cb6456607746a2a6a00a9e9-6000x4000-jpg",
+      "coverImage.alt": "Interior of the GE Vernova workplace",
+      "mobileArchiveImage": {
+        "_type": "image",
+        "alt": "GE Vernova project interior",
+        "asset": {
+          "_ref": "image-43e3b2ffc84ecc1d6b84b1b23d2de37bb1b571db-6000x4000-jpg",
+          "_type": "reference"
+        }
+      }
+    }
+  },
+  {
+    "id": "rc-project-the-coca-cola-company",
+    "set": {
+      "category": "FMCG · Beverages",
+      "detailHeroImage": {
+        "_type": "image",
+        "alt": "The Coca-Cola Company project interior",
+        "asset": {
+          "_ref": "image-82ef767d2a1e44bb423358bf66dd3f85b3cae546-9506x6338-jpg",
+          "_type": "reference"
+        }
+      },
+      "coverImage.asset._ref": "image-36c430fad13718211ec424b440f167ae5a989abb-9372x5926-jpg",
+      "coverImage.alt": "Interior of The Coca Cola Company workplace",
+      "mobileArchiveImage": {
+        "_type": "image",
+        "alt": "The Coca-Cola Company project interior",
+        "asset": {
+          "_ref": "image-82ef767d2a1e44bb423358bf66dd3f85b3cae546-9506x6338-jpg",
+          "_type": "reference"
+        }
+      }
+    }
+  },
+  {
+    "id": "rc-project-kushals",
+    "set": {
+      "category": "Jewellery · Retail",
+      "title": "Kushal's",
+      "detailHeroImage": {
+        "_type": "image",
+        "alt": "Kushal's project interior",
+        "asset": {
+          "_ref": "image-3424592a50e6a6dac380a00391466b2258502ce6-1600x1066-jpg",
+          "_type": "reference"
+        }
+      },
+      "coverImage.asset._ref": "image-2a894933acc39980512837c5125984051c795d5a-1600x1066-jpg",
+      "coverImage.alt": "Long wooden meeting table beneath a timber ceiling at Kushal’s"
+    }
+  },
+  {
+    "id": "rc-project-experian",
+    "set": {
+      "category": "Data · Financial Services · Technology",
+      "detailHeroImage": {
+        "_type": "image",
+        "alt": "Experian project interior",
+        "asset": {
+          "_ref": "image-b41e12fcffd17a69c310470efb1322435804a598-1280x960-jpg",
+          "_type": "reference"
+        }
+      },
+      "coverImage.asset._ref": "image-3b5914c130aa4f08df34db6ff8a006870321f471-960x1280-jpg",
+      "coverImage.alt": "Lounge seating and wood screens at Experian"
+    }
+  },
+  {
+    "id": "rc-project-vcl",
+    "set": {
+      "category": "Construction",
+      "detailHeroImage": {
+        "_type": "image",
+        "alt": "VCL project interior",
+        "asset": {
+          "_ref": "image-95870a2fd0791ec8a09eccf6a0789b1b827bcbe6-9507x6336-jpg",
+          "_type": "reference"
+        }
+      },
+      "coverImage.asset._ref": "image-a9448479644dbb88b83a8facda1a89a9869767f9-9447x6264-jpg",
+      "coverImage.alt": "Glass meeting enclosure at VCL"
+    }
+  },
+  {
+    "id": "rc-project-trualt",
+    "set": {
+      "category": "Renewable Energy · Biofuels",
+      "title": "TruAlt",
+      "featuredTitle": "TruAlt",
+      "detailHeroImage": {
+        "_type": "image",
+        "alt": "TruAlt project interior",
+        "asset": {
+          "_ref": "image-e3c4a3c10816bb0380bdf81f9ceda671e7c8802b-7008x4672-jpg",
+          "_type": "reference"
+        }
+      },
+      "coverImage.asset._ref": "image-402036fe101c3a365943caca4ec7bb66a8daf0b0-7007x4671-jpg",
+      "coverImage.alt": "Window lounge overlooking the city at TruAlt"
+    }
+  },
+  {
+    "id": "rc-project-google-sigd",
+    "set": {
+      "category": "Technology · Digital",
+      "detailHeroImage": {
+        "_type": "image",
+        "alt": "Google SIGD project interior",
+        "asset": {
+          "_ref": "image-db195fcf92bcfd0c015b9f9fc4859bf34c1feccb-2218x1478-jpg",
+          "_type": "reference"
+        }
+      },
+      "coverImage.asset._ref": "image-4a8145b29263421b2b8599d22080a930f4c120cd-2188x1459-jpg",
+      "coverImage.alt": "Sunlight and reflections around a window table at Google SIGD"
+    }
+  },
+  {
+    "id": "rc-project-google-kyoto-west",
+    "set": {
+      "category": "Technology · Digital",
+      "detailHeroImage": {
+        "_type": "image",
+        "alt": "Google Kyoto West project interior",
+        "asset": {
+          "_ref": "image-5b9c06572abb758765fa72c64edeae61498a9c93-9506x6337-jpg",
+          "_type": "reference"
+        }
+      },
+      "coverImage.asset._ref": "image-1beebb7011268469d480011d86db2a8f9805fce6-9367x6245-jpg",
+      "coverImage.alt": "Google Kyoto West lounge under a timber-grid ceiling"
+    }
+  }
+]

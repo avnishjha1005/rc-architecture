@@ -1,0 +1,87 @@
+[
+  {
+    "id": "contactPage",
+    "set": {
+      "heroTitle": "Let’s Discuss",
+      "heroImage": {
+        "_type": "image",
+        "asset": {
+          "_type": "reference",
+          "_ref": "image-bffbc30e51ec86106bab783ac5636a44f24d97cc-2200x1463-jpg"
+        },
+        "alt": "Curved blue reception seating under a circular ceiling detail"
+      },
+      "infoHeading": "Get In Touch\nWith Us",
+      "satelliteOfficesHeading": "Satellite offices",
+      "satelliteOfficeOrder": [
+        "Chennai",
+        "Mumbai",
+        "New Delhi",
+        "Coimbatore",
+        "Mangalore"
+      ]
+    }
+  },
+  {
+    "id": "clientsPage",
+    "set": {
+      "heroTitle": "Clients. 25+\nYears Of Design."
+    }
+  },
+  {
+    "id": "servicesPage",
+    "set": {
+      "heroTitle": "Experience\nfocused design",
+      "mobileHeroImage": {
+        "_type": "image",
+        "asset": {
+          "_type": "reference",
+          "_ref": "image-439adacae5ed387e869421bb0fe67064aace495f-790x1476-png"
+        }
+      },
+      "processHeading": "We bring together architecture, interiors, research and expertise to create thoughtful spaces shaped around people and purpose.",
+      "servicesEyebrow": "How we do it",
+      "services[_key==\"architecture\"].items[_key==\"civic\"].title": "Civic & Cultural",
+      "services[_key==\"architecture\"].items[_key==\"civic\"].description": "Public spaces that bring communities together, designed with respect for heritage and context.",
+      "services[_key==\"architecture\"].items[_key==\"commercial\"].description": "Retail and mixed-use buildings with striking presence, built to attract people and perform long term.",
+      "services[_key==\"interiors\"].items[_key==\"corporate\"].description": "Workplaces that reflect your brand and encourage collaboration, focus, and well-being across every team.",
+      "services[_key==\"interiors\"].items[_key==\"hospitality\"].description": "Hotels, restaurants, and lounges that welcome guests from the first step and stay memorable."
+    }
+  },
+  {
+    "id": "rc-client-carl-zeiss",
+    "set": {
+      "directoryCategory": "Healthcare"
+    }
+  },
+  {
+    "id": "rc-client-chemizo",
+    "set": {
+      "directoryCategory": "Pharmaceuticals"
+    }
+  },
+  {
+    "id": "rc-client-cognizant",
+    "set": {
+      "directoryCategory": "Technology"
+    }
+  },
+  {
+    "id": "rc-client-dupont",
+    "set": {
+      "directoryCategory": "Manufacturing"
+    }
+  },
+  {
+    "id": "rc-client-dxc",
+    "set": {
+      "directoryCategory": "Technology"
+    }
+  },
+  {
+    "id": "rc-client-experian",
+    "set": {
+      "directoryCategory": "Financial Services"
+    }
+  }
+]

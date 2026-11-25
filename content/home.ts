@@ -1,5 +1,6 @@
 import { defaultSiteData, siteFooter, type ContactSectionData, type NewsletterSectionData, type SiteFooterContent } from "@/content/site";
 import type { ResponsiveImage } from "@/lib/responsive-image";
+import type { SanityImageSource } from "@sanity/image-url";
 
 export type LinkItem = { label: string; href: string };
 export type NavigationItem = LinkItem;
@@ -11,6 +12,7 @@ export type ProjectItem = ImageItem & { title: string; category: string; year: s
 export type ArticleItem = ImageItem & { title: string; category: string; href: string };
 
 export type HomeContent = {
+  mobileHeroImage?: SanityImageSource;
   brandName: string; navigation: LinkItem[]; cta: LinkItem;
   heroImageUrl: string; heroImageAlt: string; heroImage: ResponsiveImage; headlineTop: string; headlineAccent: string; headlineEnd: string; intro: string; stats: Stat[];
   about: { eyebrow: string; title: string; description: string; cta: LinkItem; ideologiesLabel: string; ideologies: Ideology[] };
@@ -32,9 +34,9 @@ export const fallbackHomeContent: HomeContent = {
   intro: "We’re a Bangalore-based design studio crafting high-impact spaces with purpose. We balance bold creativity with a conscious use of time, money, and materials.",
   stats: [{ value: "100+", label: "clients\nglobally" }, { value: "500+", label: "projects\ncompleted" }, { value: "50+", label: "million sqft\ndesigned" }, { value: "30+", label: "awards\nreceived" }],
   about: {
-    eyebrow: "About us", title: "We are Idea\nFarmers.",
+    eyebrow: "About us", title: "We Are Idea\nFarmers",
     description: "A collective of architects, designers, and specialists growing bold ideas through collaboration, equality, and future-thinking.",
-    cta: { label: "Know more", href: "#about" }, ideologiesLabel: "Our ideologies",
+    cta: { label: "Know more", href: "/about" }, ideologiesLabel: "Our ideologies",
     ideologies: [
       { title: "Environment", description: "We do not look at sustainability as something applied on a building. We believe that sustainability should be in the DNA." },
       { title: "Emotion", description: "We value culture, tradition, history and the emotion underlying every project. This has created environments which are sensitive to human behaviour, culture and technology." },
@@ -43,28 +45,23 @@ export const fallbackHomeContent: HomeContent = {
     ],
   },
   services: {
-    eyebrow: "Our services", title: "Explore Our\nServices.", intro: "Explore our services and see how we bring creativity and expertise to every project.", cta: { label: "Know more", href: "#services" },
+    eyebrow: "Our services", title: "Explore Our\nServices", intro: "Explore our services and see how we bring creativity and expertise to every project.", cta: { label: "Know more", href: "/services" },
     items: [
-      { number: "01", title: "Architectural Design", description: "Every iconic building starts with a brilliant idea, and that’s where architectural design takes center stage.", features: ["Site Planning", "Layout Design", "3D Visualization", "Rendering"], imageUrl: "/images/home/service-architecture.jpg", imageAlt: "Contemporary concrete residence" },
-      { number: "02", title: "Interior Design", description: "Every iconic building starts with a brilliant idea, and that’s where architectural design takes center stage.", features: ["Site Planning", "Layout Design", "3D Visualization", "Rendering"], imageUrl: "/images/home/service-interiors.jpg", imageAlt: "Contemporary office interior" },
+      { number: "01", title: "Architectural Design", description: "Creating purposeful, contextual spaces that balance design, functionality, sustainability, and the people who experience them.", features: ["Civic & Cultural", "Commercial", "Educational", "Residential", "Competitions & Unbuilt"], imageUrl: "/images/home/service-architecture.jpg", imageAlt: "Contemporary concrete residence" },
+      { number: "02", title: "Interior Design", description: "Crafting human-centric interiors that bring together identity, experience, functionality, and thoughtful details to shape meaningful workplaces.", features: ["Corporate", "Hospitality", "Retail", "Design & Build"], imageUrl: "/images/home/service-interiors.jpg", imageAlt: "Contemporary office interior" },
     ],
   },
   projects: {
-    eyebrow: "Featured projects", title: "Our Latest\nProjects.", intro: "Explore our services and see how we bring creativity and expertise to every project.", cta: { label: "View all projects", href: "#projects" },
-    items: [
-      { title: "GE Digital", category: "Interior", year: "2016", href: "/projects/ge-digital", imageUrl: "/images/home/project-ge-digital.jpg", imageAlt: "GE Digital collaboration area" },
-      { title: "Avalahalli", category: "Architecture", year: "2020", href: "/projects", imageUrl: "/images/home/project-avalahalli.jpg", imageAlt: "Avalahalli warm timber interior" },
-      { title: "Hilton Conrad", category: "Interior", year: "2013", href: "/projects", imageUrl: "/images/home/project-hilton.jpg", imageAlt: "Hilton Conrad guest room" },
-      { title: "Bale County", category: "Architecture", year: "2023", href: "/projects", imageUrl: "/images/home/project-bale-county.jpg", imageAlt: "Bale County pool house" },
-    ],
+    eyebrow: "Featured projects", title: "Spaces We’ve\nShaped", intro: "Explore our services and see how we bring creativity and expertise to every project.", cta: { label: "View all projects", href: "/projects" },
+    items: [],
   },
   labs: {
-    eyebrow: "Space labs", intro: "Explore our services and see how we bring creativity and expertise to every project.", cta: { label: "View all", href: "#space-labs" },
+    eyebrow: "Space labs", intro: "Explore our services and see how we bring creativity and expertise to every project.", cta: { label: "View all", href: "/blog" },
     articles: [
-      { category: "Contemporary Architecture", title: "Designing For Tomorrow: How Sustainable Architecture Shapes The Future", href: "#", imageUrl: "/images/home/lab-sustainable.jpg", imageAlt: "Curved contemporary architecture" },
-      { category: "Interior Design", title: "Beyond Aesthetics: The Role Of Architecture In Social Impact And Community Building", href: "#", imageUrl: "/images/home/lab-social.jpg", imageAlt: "Designers collaborating in a studio" },
-      { category: "Corporate Architecture", title: "The Art Of Minimalism: Designing Spaces That Do More With Less", href: "#", imageUrl: "/images/home/lab-minimalism.jpg", imageAlt: "Minimalist editorial composition" },
-      { category: "Design & Build", title: "From Concept To Construction: What Goes Into Designing A Modern Building", href: "#", imageUrl: "/images/home/lab-design-build.jpg", imageAlt: "Blue presentation graphic" },
+      { category: "Contemporary Architecture", title: "Designing For Tomorrow: How Sustainable Architecture Shapes The Future", href: "/blogs/designing-for-tomorrow", imageUrl: "/images/home/lab-sustainable.jpg", imageAlt: "Curved contemporary architecture" },
+      { category: "Interior Design", title: "Beyond Aesthetics: The Role Of Architecture In Social Impact And Community Building", href: "/blogs/architecture-and-social-impact", imageUrl: "/images/home/lab-social.jpg", imageAlt: "Designers collaborating in a studio" },
+      { category: "Corporate Architecture", title: "The Art Of Minimalism: Designing Spaces That Do More With Less", href: "/blogs/the-art-of-minimalism", imageUrl: "/images/home/lab-minimalism.jpg", imageAlt: "Minimalist editorial composition" },
+      { category: "Design & Build", title: "From Concept To Construction: What Goes Into Designing A Modern Building", href: "/blogs/from-concept-to-construction", imageUrl: "/images/home/lab-design-build.jpg", imageAlt: "Blue presentation graphic" },
     ],
   },
   contact: defaultSiteData.contact,

@@ -1,12 +1,13 @@
 import { defaultSiteData, type SiteData } from "@/content/site";
 import { isSanityConfigured } from "@/sanity/env";
-import { getSanityClient } from "./client";
+import { getSanityClient } from "@/sanity/lib/client";
 import { reportSanityError } from "./errors";
 import { siteSettingsQuery } from "./queries";
+import { urlFor } from "./image";
 
 type CmsSiteData = Partial<Omit<SiteData, "footer" | "contact" | "newsletter">> & {
   footer?: Partial<SiteData["footer"]>;
-  contact?: Partial<SiteData["contact"]> & { cta?: Partial<SiteData["contact"]["cta"]> };
+  contact?: Partial<SiteData["contact"]> & { cta?: Partial<SiteData["contact"]["cta"]>; image?: { asset?: { _ref: string } }; mobileImage?: { asset?: { _ref: string } } };
   newsletter?: Partial<SiteData["newsletter"]>;
 };
 
@@ -51,8 +52,9 @@ export async function getSiteData(): Promise<SiteData> {
         ...(contact?.eyebrow ? { eyebrow: contact.eyebrow } : {}),
         ...(contact?.title ? { title: contact.title } : {}),
         ...(contact?.description ? { description: contact.description } : {}),
-        ...(contact?.imageUrl ? { imageUrl: contact.imageUrl } : {}),
+        ...(contact?.image?.asset?._ref ? { imageUrl: urlFor(contact.image).width(2560).height(1600).fit("crop").url() } : {}),
         ...(contact?.imageAlt ? { imageAlt: contact.imageAlt } : {}),
+        mobileImageUrl: contact?.mobileImage?.asset?._ref ? urlFor(contact.mobileImage).width(790).height(1330).fit("crop").url() : undefined,
         cta: validSiteLink(contact?.cta) ? contact.cta : defaultSiteData.contact.cta,
       },
       newsletter: {
@@ -63,8 +65,9 @@ export async function getSiteData(): Promise<SiteData> {
         ...(newsletter?.placeholder ? { placeholder: newsletter.placeholder } : {}),
         ...(newsletter?.buttonLabel ? { buttonLabel: newsletter.buttonLabel } : {}),
         ...(newsletter?.imageUrl ? { imageUrl: newsletter.imageUrl } : {}),
+        innerImageUrl: newsletter?.innerImageUrl || undefined,
       },
-      footer: { ...defaultSiteData.footer, ...definedFields<SiteData["footer"]>(data.footer) },
+      footer: { ...defaultSiteData.footer, ...definedFields<SiteData["footer"]>(data.footer), city: data.footer?.city || undefined },
     };
   } catch (error) {
     reportSanityError("Unable to load global site settings from Sanity", error);

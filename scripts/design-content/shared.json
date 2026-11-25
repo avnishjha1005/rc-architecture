@@ -1,0 +1,24 @@
+[
+  {
+    "id": "siteSettings",
+    "set": {
+      "contact.title": "Get in touch\nwith us for projects",
+      "contact.image.asset": { "_type": "reference", "_ref": "image-b6feaf142717490dc492d467106ed1e037671ad9-9440x6295-jpg" },
+      "contact.image.crop": { "_type": "sanity.imageCrop", "left": 0.465, "right": 0.079, "top": 0.318, "bottom": 0.257 },
+      "contact.mobileImage": {
+        "_type": "image",
+        "asset": { "_type": "reference", "_ref": "image-b6feaf142717490dc492d467106ed1e037671ad9-9440x6295-jpg" },
+        "crop": { "_type": "sanity.imageCrop", "top": 0.01, "right": 0.1499, "bottom": 0.055, "left": 0.48 }
+      },
+      "newsletter.title": "Subscribe to\nour newsletter",
+      "newsletter.image.asset": { "_type": "reference", "_ref": "image-ca847e0572d1a0da17e710743d519c4eb5cc2373-1984x656-png" },
+      "newsletter.placeholder": "Enter your email address...",
+      "newsletter.innerImage": {
+        "_type": "image",
+        "asset": { "_type": "reference", "_ref": "image-dd15bb6c1ae8ace966b94664ea338223ced63974-995x346-png" }
+      },
+      "footer.title": "Materialise\nyour vision",
+      "footer.city": "Bengaluru"
+    }
+  }
+]
