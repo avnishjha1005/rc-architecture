@@ -9,7 +9,7 @@ import { StatsBar } from "./StatsBar";
 import { urlFor } from "@/sanity/lib/image";
 
 export function Hero({ content }: { content: HomeContent }) {
-  const mobile = content.mobileHeroImage ? urlFor(content.mobileHeroImage).quality(80) : undefined;
+  const mobile = content.mobileHeroImage ? urlFor(content.mobileHeroImage).quality(85) : undefined;
   const mobileUrl = mobile?.url();
   const desktopKey = reviewImageKey(content.heroImage.src);
   const mobileKey = mobileUrl && reviewImageKey(mobileUrl);
@@ -23,11 +23,11 @@ export function Hero({ content }: { content: HomeContent }) {
           : undefined,
         backgroundPosition: hotspot ? `${hotspot.x * 100}% ${hotspot.y * 100}%` : "center",
       } as CSSProperties} />
-      <SitePicture breakpoint={900} mobileSizes="100vw"
+      <SitePicture breakpoint={900} mobileSizes="106vw"
         mobileSrcSet={mobile && [480, 800, 1200, 1600].map(width => `${mobile.width(width).url()} ${width}w`).join(", ")}
-        mobileImage={mobileUrl && <Image src={mobileUrl} alt={content.heroImage.alt} className="hero__image" data-motion-image data-motion-parallax fill loading="eager" sizes="100vw" />}
+        mobileImage={mobileUrl && <Image src={mobileUrl} alt={content.heroImage.alt} className="hero__image" data-motion-image data-motion-parallax fill loading="eager" fetchPriority="high" quality={100} sizes="106vw" />}
       >
-        <ResponsiveImage className="hero__image" data-motion-image data-motion-parallax image={content.heroImage} fill loading="eager" sizes="100vw" />
+        <ResponsiveImage className="hero__image" data-motion-image data-motion-parallax image={content.heroImage} fill loading="eager" fetchPriority="high" quality={85} sizes="106vw" />
       </SitePicture>
       <div className="hero__shade" aria-hidden="true" />
       <Header brandName={content.brandName} navigation={content.navigation} cta={content.cta} />

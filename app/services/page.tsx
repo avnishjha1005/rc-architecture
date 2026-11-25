@@ -81,7 +81,7 @@ export default async function ServicesPage() {
 
       <section className={styles.services} data-motion-group="section">
         <div className={styles.servicesHeading} data-motion-item><Eyebrow>{page?.servicesEyebrow || "How we do it"}</Eyebrow><h2>{(page?.servicesHeading || "Our\nServices").split("\n").map((line, i) => <span key={line}>{i > 0 && " "}{line}</span>)}</h2></div>
-        <div className={styles.serviceList}>{serviceItems.map((service) => <article className={styles.service} key={service.title} data-draw-rule="top"><span className={styles.serviceMark}>{service.mark}</span><div className={styles.serviceBody}><ServiceCarousel items={service.items} label={service.title} description={service.description} /></div></article>)}</div>
+        <div className={styles.serviceList}>{serviceItems.map((service) => <article className={styles.service} key={service.title}><span className={styles.serviceMark}>{service.mark}</span><div className={styles.serviceBody}><ServiceCarousel items={service.items} label={service.title} description={service.description} /></div></article>)}</div>
       </section>
 
       <FeaturedProjectGrid projects={page?.featuredProjects?.length ? cmsProjects.slice(0, 4) : getFeaturedProjectSelection(cmsProjects)} />

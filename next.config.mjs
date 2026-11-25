@@ -15,7 +15,7 @@ const nextConfig = {
   transpilePackages: ["@rc/website-feedback"],
   images: {
     deviceSizes: [640, 750, 828, 1080, 1200, 1440, 1600, 1920, 2048, 2560, 2880, 3840],
-    qualities: [70, 75],
+    qualities: [70, 75, 85],
     remotePatterns: [
       { protocol: "https", hostname: "cdn.sanity.io", pathname: "/images/**" },
       ...(process.env.CHISEL_ENABLED === "1" ? [
