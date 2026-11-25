@@ -62,7 +62,7 @@ jobs:
         run: |
           sha=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/$GITHUB_REF_NAME" --jq '.object.sha')
           if [[ "$sha" != "$GITHUB_SHA" ]]; then echo "Skipping superseded commit $GITHUB_SHA"; exit 0; fi
-          : "${CLOUDFLARE_API_TOKEN:?Set CLOUDFLARE_API_TOKEN in this branch's GitHub deployment environment}"
+          : "${CLOUDFLARE_API_TOKEN:?Set CLOUDFLARE_API_TOKEN in the GitHub deployment environment}"
           if [[ "$GITHUB_REF_NAME" == "main" ]]; then
             npx --no-install opennextjs-cloudflare deploy
           else
