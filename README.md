@@ -48,13 +48,15 @@ Push site changes to `staging`. GitHub Actions checks the commit and deploys [th
 
 Both Worker builds apply the same version-controlled design content in `scripts/design-content/` to a read-only snapshot of published CMS data. Neither build writes to Sanity. Staging remains excluded from search and its Studio is disabled; production retains its own bindings and Studio. Check each deployment's Worker version in the Actions log.
 
-Configure a `CLOUDFLARE_API_TOKEN` secret in each corresponding GitHub environment, **Staging** and **Production**, for publishing to the existing account. The production token must also be able to write to the configured production cache namespaces. To retry a deployment, rerun the workflow for the same branch.
+Both Workers serve their prerendered pages from the deployed assets, so neither needs a KV cache for a publish to succeed; the free plan's daily KV write limit no longer blocks a deployment. Because that cache is read-only at runtime, a published CMS edit appears after the next deployment of its branch rather than on the following request. To retry a deployment, rerun the workflow for the same branch.
+
+Configure a `CLOUDFLARE_API_TOKEN` secret in each corresponding GitHub environment, **Staging** and **Production**, for publishing to the existing account.
 
 ## Production checklist
 
 1. Set every variable required for Sanity and form delivery from `.env.example` in the hosting environment.
 2. Verify the `CONTACT_FROM_EMAIL` domain in Resend. Public forms fail safely with an explanatory message when delivery is not configured.
-3. Create a Sanity webhook that sends `POST /api/revalidate` with `Authorization: Bearer <SANITY_REVALIDATE_SECRET>`. Its JSON body may contain `{ "paths": ["/", "/projects"] }`.
+3. The `POST /api/revalidate` webhook is optional with the read-only asset cache: published edits reach visitors on the next deployment, not on the following request. If a KV-backed cache is restored, create the Sanity webhook with `Authorization: Bearer <SANITY_REVALIDATE_SECRET>` and an optional `{ "paths": ["/", "/projects"] }` body.
 4. Configure Sanity presentation links as `/api/draft?secret=<SANITY_PREVIEW_SECRET>&path=/projects/<slug>`. Draft reads require the server-only `SANITY_API_READ_TOKEN`. Visit `/api/draft/disable` to leave preview mode.
 5. Run `npm run check` and `npm run build`. CI runs the same quality gate on every pull request and push to `main`.
 6. Smoke-test contact and newsletter delivery, mobile navigation, project filters/loading, gallery controls, 404 handling, preview mode, and the Sanity Studio in the production environment.
