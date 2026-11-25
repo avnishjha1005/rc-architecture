@@ -3,7 +3,7 @@
 import Image from "@/components/ui/SiteImage";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { ProjectDetail } from "@/content/projectDetails";
-import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import { ProjectImage } from "@/components/projects/ProjectImage";
 import styles from "@/app/projects/[slug]/project-detail.module.css";
 
 export function ProjectGallery({ images, title }: { images: ProjectDetail["gallery"]; title: string }) {
@@ -48,7 +48,15 @@ export function ProjectGallery({ images, title }: { images: ProjectDetail["galle
     <div className={styles.gallery} role="region" aria-label={`${title} image gallery`}>
       <div className={styles.galleryViewport}>
         <div className={styles.galleryRail} ref={railRef} onScroll={updateIndex} tabIndex={0}>
-          {images.map((image, index) => <div key={image.src + index} data-motion-image><ResponsiveImage image={image} fill sizes={index === 0 ? "(max-width: 760px) 76vw, min(76vw, 1100px)" : "(max-width: 760px) 60vw, min(23vw, 340px)"} /></div>)}
+          {images.map((image, index) => <div key={image.src + index} data-motion-image><ProjectImage
+            image={image}
+            aspectRatio={index === 0 ? 11 / 6 : 23 / 42}
+            mobileAspectRatio={index === 0 ? 1.1 : 0.88}
+            showPlaceholder={false}
+            fill
+            loading="eager"
+            sizes={index === 0 ? "(max-width: 760px) 76vw, min(76vw, 1100px)" : "(max-width: 760px) 60vw, min(23vw, 340px)"}
+          /></div>)}
         </div>
         <button className={styles.galleryNext} type="button" disabled={!canNext} onClick={moveNext} aria-label={`Next ${title} image`}>
           <Image src="/Arrow.svg" alt="" width={16} height={14} />

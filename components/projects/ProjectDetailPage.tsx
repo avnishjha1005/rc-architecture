@@ -23,7 +23,7 @@ export function ProjectDetailPage({ project, related, site }: { project: Project
           <h1>{project.title}</h1>
         </div>
         <div className={styles.heroImage} data-motion-image data-motion-parallax>
-          <ProjectImage image={project.heroImage} mobileSrc={project.mobileHeroUrl} mobileSizes="100vw" fill loading="eager" sizes="(max-width:760px) 100vw, calc(100vw - 40px)" />
+          <ProjectImage image={project.heroImage} mobileSrc={project.mobileHeroUrl} aspectRatio={1400 / 531} mobileAspectRatio={395 / 481} mobileSizes="100vw" showPlaceholder={false} fill loading="eager" fetchPriority="high" sizes="(max-width:760px) 100vw, calc(100vw - 40px)" />
         </div>
       </section>
 
@@ -39,7 +39,7 @@ export function ProjectDetailPage({ project, related, site }: { project: Project
         {project.sections.map((section) => (
           <Reveal className={`${styles.section} ${styles[section.layout]}`} key={section.title}>
             <div className={styles.sectionImage} data-motion-image>
-              <ProjectImage image={section.image} mobileSrc={section.mobileImageUrl} fill quality={70} sizes="calc(100vw - 40px)" />
+              <ProjectImage image={section.image} mobileSrc={section.mobileImageUrl} aspectRatio={7 / 3} mobileAspectRatio={355 / 361} fill quality={70} sizes="calc(100vw - 40px)" />
             </div>
             <div className={styles.sectionCopy}>
               <h2>{section.title}</h2>
