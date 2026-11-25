@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import { A11y, Keyboard } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type SwiperCore from "swiper";
@@ -17,7 +17,7 @@ type ServiceCarouselProps = {
 
 export function ServiceCarousel({ items, label, description }: ServiceCarouselProps) {
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [swiper, setSwiper] = useState<SwiperCore | null>(null);
+  const swiper = useRef<SwiperCore | null>(null);
   const [trailingSpace, setTrailingSpace] = useState(0);
   const hasMultipleItems = items.length > 1;
 
@@ -40,17 +40,17 @@ export function ServiceCarousel({ items, label, description }: ServiceCarouselPr
   if (!items.length) return null;
 
   return (
-    <div ref={carouselRef} className={styles.serviceCarousel}>
-      <div className={styles.serviceIntro}>
+    <div ref={carouselRef} className={styles.serviceCarousel} data-card-group>
+      <div className={styles.serviceIntro} data-support-intro>
         <div>
           <h3>{label}</h3>
           <p>{description}</p>
         </div>
         <div className={styles.roundActions}>
-          <button type="button" disabled={!hasMultipleItems} onClick={() => swiper?.slidePrev()} aria-label={`Previous ${label} service`}>
+          <button type="button" disabled={!hasMultipleItems} onClick={() => swiper.current?.slidePrev()} aria-label={`Previous ${label} service`}>
             <Image src="/arrow-left.svg" alt="" width={18} height={16} aria-hidden="true" />
           </button>
-          <button type="button" disabled={!hasMultipleItems} onClick={() => swiper?.slideNext()} aria-label={`Next ${label} service`}>
+          <button type="button" disabled={!hasMultipleItems} onClick={() => swiper.current?.slideNext()} aria-label={`Next ${label} service`}>
             <Image className={styles.arrowRight} src="/arrow-left.svg" alt="" width={18} height={16} aria-hidden="true" />
           </button>
         </div>
@@ -66,13 +66,15 @@ export function ServiceCarousel({ items, label, description }: ServiceCarouselPr
         rewind={hasMultipleItems}
         watchOverflow
         a11y={{ containerMessage: `${label} services carousel` }}
-        onSwiper={setSwiper}
+        onSwiper={(instance) => { swiper.current = instance; }}
       >
         {items.map(([title, copy, image], index) => (
           <SwiperSlide className={styles.serviceSlide} key={`${title}-${index}`}>
-            <div className={styles.serviceImage}><Image src={image} alt={title} fill sizes="(max-width: 760px) 100vw, 630px" /></div>
-            <h4>{title}</h4>
-            <p>{copy}</p>
+            <article data-card>
+              <div className={styles.serviceImage}><Image src={image} alt={title} fill sizes="(max-width: 760px) 100vw, 630px" /></div>
+              <h4>{title}</h4>
+              <p>{copy}</p>
+            </article>
           </SwiperSlide>
         ))}
       </Swiper>

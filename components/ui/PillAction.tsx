@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
 import type { ButtonHTMLAttributes, MouseEventHandler, ReactNode } from "react";
 import styles from "./PillAction.module.css";
@@ -28,6 +28,7 @@ export function PillAction({
   const arrowIcon = arrow ? (
     <Image
       className="cta-arrow"
+      data-direction={arrow}
       src={arrow === "diagonal" ? "/ArrowDiagonal.svg" : "/Arrow.svg"}
       alt=""
       width={16}
@@ -36,7 +37,7 @@ export function PillAction({
   ) : null;
 
   if (href) {
-    return <Link className={classes} href={href} aria-label={ariaLabel} onClick={onClick as MouseEventHandler<HTMLAnchorElement> | undefined}>{children}{arrowIcon}</Link>;
+    return <Link className={classes} href={href} aria-label={ariaLabel} data-support-action onClick={onClick as MouseEventHandler<HTMLAnchorElement> | undefined}>{children}{arrowIcon}</Link>;
   }
 
   return <button className={classes} type={type} disabled={disabled} aria-label={ariaLabel} onClick={onClick as MouseEventHandler<HTMLButtonElement> | undefined}>{children}{arrowIcon}</button>;

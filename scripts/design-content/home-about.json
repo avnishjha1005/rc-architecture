@@ -1,0 +1,117 @@
+[
+  {
+    "id": "homePage",
+    "set": {
+      "headlineTop": "Let’s Go",
+      "headlineEnd": "making",
+      "mobileHeroImage": {
+        "_type": "image",
+        "asset": { "_type": "reference", "_ref": "image-885a2f6fd483fa586bbd02e8c0d26c4f48d5e22e-9364x6252-jpg" },
+        "crop": { "_type": "sanity.imageCrop", "left": 0.32465, "right": 0.32080, "top": 0.00512, "bottom": 0 }
+      },
+      "about.cta": {
+        "label": "Know more",
+        "href": "/about"
+      },
+      "projects.title": "Spaces We’ve\nShaped",
+      "labs.cta.href": "/blog",
+      "services.items[_key==\"e1a0dc357dc6\"].description": "Creating purposeful, contextual spaces that balance design, functionality, sustainability, and the people who experience them.",
+      "services.items[_key==\"e1a0dc357dc6\"].features": [
+        "Civic & Cultural",
+        "Commercial",
+        "Educational",
+        "Residential",
+        "Competitions & Unbuilt"
+      ],
+      "services.items[_key==\"5970f8998ffd\"].description": "Crafting human-centric interiors that bring together identity, experience, functionality, and thoughtful details to shape meaningful workplaces.",
+      "services.items[_key==\"5970f8998ffd\"].features": [
+        "Corporate",
+        "Hospitality",
+        "Retail",
+        "Design & Build"
+      ],
+      "services.items[_key==\"5970f8998ffd\"].image": {
+        "_type": "image",
+        "asset": {
+          "_type": "reference",
+          "_ref": "image-4a8145b29263421b2b8599d22080a930f4c120cd-2188x1459-jpg"
+        },
+        "alt": "Office seating beside full-height glazing"
+      }
+    }
+  },
+  {
+    "id": "aboutPage",
+    "set": {
+      "heroEyebrow": "[since 2001]",
+      "heroImage": {
+        "_type": "image",
+        "asset": { "_type": "reference", "_ref": "image-4f467980d0bc6f053b3b48ac80e1abc73ad30d8e-2880x1620-webp" },
+        "alt": "Illuminated glass office façade at night",
+        "hotspot": { "_type": "sanity.imageHotspot", "x": 0.42, "y": 0.5, "width": 0.3, "height": 1 }
+      },
+      "introHeading": "We’re a studio built on clarity,\ncare, and long-term thinking.\nDesigning and managing homes\nthat hold up over time.",
+      "philosophyEyebrow": "Our ideologies",
+      "philosophyHeading": "Our Philosophy\n& Ideologies",
+      "awardsHeading": "Awards &\nRecognitions",
+      "valuesHeading": "Our Team Values\nDiscipline & Principles",
+      "values[_key==\"open\"].title": "Open & Welcoming",
+      "values[_key==\"empathy\"].title": "Empathy & Kindness",
+      "principles": [
+        {
+          "_key": "environment",
+          "_type": "object",
+          "description": "We do not look at sustainability as something applied on a building. We believe that sustainability should be the DNA.",
+          "title": "Environment"
+        },
+        {
+          "_key": "emotion",
+          "_type": "object",
+          "description": "We value culture, tradition, history and the emotion underlying every project. This belief has created environments which are sensitive to culture, technology, energy and human behaviour.",
+          "title": "Emotion"
+        },
+        {
+          "_key": "evolution",
+          "_type": "object",
+          "description": "Design is ever evolving, and so is technology. That is why we intend to keep up with innovation to bring out the best state of the art facilities for our clients.",
+          "title": "Evolve"
+        },
+        {
+          "_key": "economy",
+          "_type": "object",
+          "description": "Value for money, for design, for the client, for the environment. We understand the importance of economy and how to stretch it.",
+          "title": "Economy"
+        }
+      ],
+      "introImages": [
+        {
+          "_key": "office",
+          "_type": "image",
+          "asset": {
+            "_type": "reference",
+            "_ref": "image-e3ca397957af946bbf166e3f4bd9387345c48a7e-9278x6186-jpg"
+          },
+          "alt": "Open workspace with red columns"
+        },
+        {
+          "_key": "lounge",
+          "_type": "image",
+          "asset": {
+            "_type": "reference",
+            "_ref": "image-448de8d41ff5268a31549007211f8d41d88124df-1600x1066-jpg"
+          },
+          "alt": "Curved counters and seating in a warm-toned interior"
+        },
+        {
+          "_key": "conference",
+          "_type": "image",
+          "asset": {
+            "_type": "reference",
+            "_ref": "image-cf093d5be5a6f58266f568d070a830290ff38609-2209x1473-jpg"
+          },
+          "alt": "Conference room with circular pendant lights"
+        }
+      ]
+    }
+  }
+]

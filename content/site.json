@@ -23,25 +23,26 @@
   "socialLinks": [],
   "contact": {
     "eyebrow": "Contact us",
-    "title": "Get in touch\nwith us for projects.",
-    "description": "We design spaces for people. No matter the scale of the projects, our down-to-earth approach stays the same.",
+    "title": "Get in touch\nwith us for projects",
+    "description": "We design spaces for people. Whatever the scale, we bring curiosity, empathy, and a grounded approach to every project.",
     "cta": { "label": "Contact us", "href": "/contact#contact-form" },
     "imageUrl": "/images/home/service-interiors.jpg",
     "imageAlt": "RC Architecture office corridor"
   },
   "newsletter": {
     "eyebrow": "Newsletter",
-    "title": "Subscribe to\nour newsletter.",
-    "description": "We design spaces for people. No matter the scale of the projects, our down-to-earth approach stays the same.",
+    "title": "Subscribe to\nour newsletter",
+    "description": "Stay curious. Discover ideas, stories, and perspectives shaping the way we think about spaces and people.",
     "placeholder": "Enter your email address...",
     "buttonLabel": "Subscribe",
     "imageUrl": "/images/home/newsletter-drawing.png"
   },
   "footer": {
     "eyebrow": "Contact us",
-    "title": "Materialise\nyour vision.",
+    "title": "Materialise\nyour vision",
     "blurb": "As a relationship-focused organisation, RC Architecture looks forward to a journey of creation and mutual success.",
     "addressLabel": "Address",
+    "city": "Bengaluru",
     "hoursLabel": "Opening Hours",
     "legal": "RC Architecture Pvt Ltd\n© 2026. RC Architecture. All rights reserved."
   }

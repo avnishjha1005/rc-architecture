@@ -1,6 +1,7 @@
 "use client";
 
-import Image, { type ImageLoaderProps, type ImageProps } from "next/image";
+import type { ImageLoaderProps, ImageProps } from "next/image";
+import Image from "./SiteImage";
 import type { ResponsiveImage as ResponsiveImageData } from "@/lib/responsive-image";
 
 const SANITY_IMAGE_HOST = "cdn.sanity.io";

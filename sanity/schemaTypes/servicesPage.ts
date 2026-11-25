@@ -6,6 +6,7 @@ export const servicesPage = defineType({
   fields: [
     defineField({ name: "heroTitle", type: "text", rows: 2, group: "hero", initialValue: "Experience\nfocused design.", validation: (r) => r.required() }),
     defineField({ name: "heroImage", type: "image", group: "hero", options: { hotspot: true }, fields: [defineField({ name: "alt", type: "string", validation: (r) => r.required() })], validation: (r) => r.required() }),
+    defineField({ name: "mobileHeroImage", title: "Portrait hero image", type: "image", group: "hero", description: "Optional mobile art direction. Uses the desktop hero when empty." }),
     defineField({ name: "processEyebrow", type: "string", group: "process", initialValue: "Process" }),
     defineField({ name: "processHeading", type: "text", rows: 3, group: "process", validation: (r) => r.required() }),
     defineField({ name: "processSteps", type: "array", group: "process", validation: (r) => r.max(4), of: [defineArrayMember({ type: "object", fields: [defineField({ name: "number", type: "string" }), defineField({ name: "title", type: "string", validation: (r) => r.required() }), defineField({ name: "subtitle", type: "string" }), defineField({ name: "deliverables", type: "array", of: [{ type: "string" }] })], preview: { select: { title: "title", subtitle: "number" } } })] }),
@@ -16,4 +17,3 @@ export const servicesPage = defineType({
     defineField({ name: "seo", type: "object", group: "seo", fields: [defineField({ name: "title", type: "string", validation: (r) => r.max(70) }), defineField({ name: "description", type: "text", rows: 3, validation: (r) => r.max(160) }), defineField({ name: "image", type: "image", options: { hotspot: true } })] }),
   ], preview: { prepare: () => ({ title: "Services page" }) },
 });
-

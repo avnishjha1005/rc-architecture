@@ -2,7 +2,8 @@ import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { FeaturedProjectsCarousel } from "@/components/projects/FeaturedProjectsCarousel";
 import { ProjectsGallery } from "@/components/projects/ProjectsGallery";
-import { portfolioProjects, type PortfolioProject } from "@/content/projects";
+import type { ArchiveProject } from "@/components/projects/ProjectCard";
+import { portfolioProjects } from "@/content/projects";
 import { siteFooter } from "@/content/site";
 import { isSanityConfigured } from "@/sanity/env";
 import { getSanityClient } from "@/sanity/lib/client";
@@ -31,6 +32,7 @@ type CmsProject = {
   yearDisplay?: string;
   imageUrl?: string;
   imageAlt?: string;
+  mobileArchiveImageUrl?: string;
   image?: CmsResponsiveImage;
 };
 
@@ -52,7 +54,7 @@ type CmsResponse = {
   allProjects?: CmsProject[];
 } | null;
 
-function normalizeProjects(projects: CmsProject[] | undefined): PortfolioProject[] {
+function normalizeProjects(projects: CmsProject[] | undefined): ArchiveProject[] {
   return (projects ?? []).flatMap((project, index) => {
     if (!project.title || !project.slug || !project.imageUrl) return [];
     const type = project.type === "Interior Design" ? "Interior Design" : "Architecture";
@@ -63,10 +65,11 @@ function normalizeProjects(projects: CmsProject[] | undefined): PortfolioProject
       featuredTitle: project.featuredTitle,
       type,
       category: project.category || type,
-      location: project.location || "Location forthcoming",
-      year: project.yearDisplay || "Year forthcoming",
+      location: project.location?.trim() || "-",
+      year: project.yearDisplay?.trim() || "-",
       imageUrl: project.imageUrl,
       imageAlt: project.imageAlt || project.title,
+      mobileArchiveImageUrl: project.mobileArchiveImageUrl,
       image: resolveImage(project.image, project.imageUrl, project.imageAlt || project.title),
       href: `/projects/${project.slug}`,
     }];

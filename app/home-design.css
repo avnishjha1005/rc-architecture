@@ -1,0 +1,130 @@
+.home-page .services-section,
+.home-page .labs-section {
+  background: #fff;
+}
+
+.home-page .service-card__content ul {
+  display: block;
+  columns: 2;
+  column-gap: 2em;
+}
+
+.home-page .service-card__content li {
+  break-inside: avoid;
+  padding-bottom: .75em;
+}
+
+@media (min-width: 901px) {
+  .home-page .about-lead h2,
+  .home-page .services-intro .section-heading h2 {
+    font-size: clamp(5rem, 9.72cqw, 15.55rem);
+    line-height: .89;
+  }
+
+  .home-page .about-lead__copy,
+  .home-page .services-intro .section-heading__intro,
+  .home-page .service-card__content p {
+    font-size: clamp(.875rem, .97cqw, 1.55rem);
+  }
+
+  .home-page .service-card {
+    grid-template-columns: 13.25% 43.5% 1fr;
+  }
+
+  .home-page .service-card--reverse {
+    grid-template-columns: 1fr 43.5% 13.25%;
+  }
+
+  .home-page .service-card__content {
+    width: min(24cqw, 100%);
+    padding: 0;
+    justify-self: center;
+  }
+
+  .home-page .service-card__content h3 {
+    max-width: 10ch;
+    margin-bottom: clamp(35px, 3.5cqw, 86px);
+    font-size: clamp(2.5rem, 4.17cqw, 6.67rem);
+  }
+
+  .home-page .service-card__content ul {
+    font-size: clamp(.75rem, .9cqw, 1.45rem);
+  }
+}
+
+@media (min-width: 1101px) {
+  .home-page .hero .hero__content {
+    top: min(37%, calc(100% - 20cqw - 155px));
+  }
+}
+
+@media (max-width: 900px) {
+  .home-page .hero:has(picture[data-mobile-asset]) .hero__image {
+    object-position: center !important;
+  }
+
+  html[data-chisel-mode] .home-page .hero:has(picture[data-mobile-asset]) .hero__review-photo {
+    background-image: var(--hero-mobile-photo,var(--hero-photo));
+    background-position: center !important;
+  }
+
+  .home-page .about-section {
+    padding-block: 80px;
+  }
+
+  .home-page .about-lead h2 {
+    margin-block: 20px 40px;
+  }
+
+  .home-page .about-lead__copy,
+  .home-page .ideology p,
+  .home-page .services-intro .section-heading__intro,
+  .home-page .service-card__content p,
+  .home-page .labs-intro__top > p {
+    font-size: .875rem;
+    line-height: 1.45;
+  }
+
+  .home-page .about-lead__copy {
+    margin-bottom: 60px;
+  }
+
+  .home-page .ideology {
+    grid-template-columns: 58px 1fr;
+    margin-bottom: 46px;
+  }
+
+  .home-page .ideology__mark {
+    width: 46px;
+    height: 46px;
+  }
+
+  .home-page .ideology h3,
+  .home-page .service-card__content li,
+  .home-page .article-card h3 {
+    font-size: .875rem;
+  }
+
+  .home-page .services-intro .section-heading h2 {
+    font-size: clamp(3rem, 14.18vw, 3.5rem);
+    line-height: .94;
+    margin: 20px 0 40px;
+  }
+
+  .home-page .services-intro > .pill-link {
+    margin: 60px 0 80px;
+  }
+
+  .home-page .service-card__content {
+    width: 100%;
+  }
+
+  .home-page .service-card__content h3 {
+    font-size: clamp(1.875rem, 9.12vw, 2.25rem);
+    margin-bottom: 48px;
+  }
+
+  .home-page .service-card {
+    padding-bottom: 52px;
+  }
+}

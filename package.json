@@ -8,12 +8,16 @@
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build --webpack",
+    "build:cloudflare": "RC_DESIGN_PREVIEW=1 CHISEL_ENABLED=1 NEXT_PUBLIC_SANITY_PROJECT_ID=dlbl0h64 NEXT_PUBLIC_SANITY_DATASET=production opennextjs-cloudflare build",
+    "deploy:cloudflare": "npm run build:production && opennextjs-cloudflare deploy",
+    "deploy:staging": "npm run build:staging && opennextjs-cloudflare deploy --env staging",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "node --test tests/*.test.mjs",
     "check": "eslint && npm run typecheck && npm test",
-    "build:cloudflare": "opennextjs-cloudflare build"
+    "build:staging": "node scripts/staging-content.mjs && RC_STAGING=1 npm run build:cloudflare -- --env staging --openNextConfigPath open-next.staging.config.ts && node scripts/check-staging-content.mjs",
+    "build:production": "node scripts/staging-content.mjs && npm run build:cloudflare && node scripts/check-staging-content.mjs"
   },
   "dependencies": {
     "@portabletext/react": "^8.0.0",
@@ -32,12 +36,14 @@
   },
   "devDependencies": {
     "@opennextjs/cloudflare": "1.20.18",
+    "@sanity/mutate": "0.18.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19.3.1",
     "@types/react-dom": "^19.3.0",
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
+    "groq-js": "2.0.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "wrangler": "4.167.0"

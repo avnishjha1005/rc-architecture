@@ -1,9 +1,10 @@
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import type { HomeContent } from "@/content/home";
 import { CtaLink } from "@/components/ui/CtaLink";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
-import { SpaceLabsGrid } from "./SpaceLabsGrid";
+import { SpaceLabCard } from "./SpaceLabsGrid";
+import { SpaceLabsSlider } from "./SpaceLabsSlider";
 
 export function SpaceLabsSection({ content }: { content: HomeContent["labs"] }) {
   return (
@@ -18,7 +19,9 @@ export function SpaceLabsSection({ content }: { content: HomeContent["labs"] }) 
           <CtaLink link={content.cta} red />
         </div>
       </Reveal>
-      <SpaceLabsGrid articles={content.articles} />
+      {content.articles.length > 0 && <SpaceLabsSlider>
+        {content.articles.map((article, index) => <SpaceLabCard key={article.title} article={article} index={index} />)}
+      </SpaceLabsSlider>}
     </section>
   );
 }

@@ -47,7 +47,7 @@ const sharedSections: BlogSection[] = [
 ];
 
 const seeds = [
-  ["how-to-design-a-home-that-reflects-you", "How to design a home that reflects you", "Interior Design", "/images/home/service-interiors.jpg", "A bright contemporary living room"],
+  ["how-to-design-a-home-that-reflects-you", "How to design a home that reflects you", "Interior Design", "/images/home/service-interiors.jpg", "Office corridor with glass meeting rooms and a blue floor stripe"],
   ["designing-for-tomorrow", "Designing For Tomorrow: How Sustainable Architecture Shapes The Future", "Contemporary Architecture", "/images/home/lab-sustainable.jpg", "Curved sustainable architecture"],
   ["architecture-and-social-impact", "Beyond Aesthetics: The Role Of Architecture In Social Impact And Community Building", "Interior Design", "/images/home/lab-social.jpg", "Designers collaborating in a studio"],
   ["the-art-of-minimalism", "The Art Of Minimalism: Designing Spaces That Do More With Less", "Corporate Architecture", "/images/home/lab-minimalism.jpg", "Minimal editorial design composition"],
@@ -65,9 +65,28 @@ export const blogPosts: BlogPost[] = seeds.map(([slug, title, category, imageUrl
   blogCategory: index < 5 ? "spaceLabs" : "spaceMaking",
   imageUrl,
   imageAlt,
-  date: index === 0 ? "April 14, 2025" : `${String((index * 3) % 27 + 1).padStart(2, "0")} June, 2025`,
+  date: index === 0 ? "April 3, 2025" : `June ${(index * 3) % 27 + 1}, 2025`,
   excerpt: "Ideas, observations, and practical lessons from our architecture and design studio.",
-  sections: sharedSections,
+  sections: slug === "how-to-design-a-home-that-reflects-you" ? [
+    {
+      ...sharedSections[0],
+      body: [
+        "A well-designed home isn’t built from trends — it’s built from truth. The truth of how you live, what brings you comfort, and what makes you feel at home. Designing a space that reflects you means paying attention to the quiet details of your life and letting those guide every decision.",
+        "It’s not about perfection — it’s about presence. Your home should feel like an extension of you: lived-in, layered, and full of meaning.",
+      ],
+    },
+    {
+      ...sharedSections[1],
+      body: ["Before selecting paint colors or fabrics, look inward. How do you move through your day? What spaces bring you peace? What corners of your home feel neglected — and why? These observations help shape a layout and design direction that’s grounded in your needs."],
+    },
+    {
+      ...sharedSections[2],
+      body: [
+        "You don’t need to follow a style rulebook to create a beautiful space. Your favorite colors, textures, and materials are already enough. Whether that’s earth tones and soft linen or bold prints and rich contrast, your design choices should echo your energy.",
+        "There’s power in knowing what feels right to you — and even more in bringing that into your environment. The result isn’t just a stylish home. It’s a space that feels lived in, loved, and unmistakably yours.",
+      ],
+    },
+  ] : sharedSections,
 }));
 
 export function getBlogPost(slug: string) {

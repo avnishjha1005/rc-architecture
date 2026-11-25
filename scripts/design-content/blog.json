@@ -1,0 +1,13 @@
+[
+  {
+    "id": "blogPage",
+    "set": {
+      "featuredProjects": [
+        { "_key": "ge-digital", "_ref": "rc-project-ge-digital", "_type": "reference" },
+        { "_key": "wells-fargo", "_ref": "rc-project-wells-fargo", "_type": "reference" },
+        { "_key": "unilever", "_ref": "rc-project-unilever", "_type": "reference" },
+        { "_key": "indigo", "_ref": "rc-project-indigo", "_type": "reference" }
+      ]
+    }
+  }
+]

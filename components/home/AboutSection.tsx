@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import type { HomeContent } from "@/content/home";
 import { CtaLink } from "@/components/ui/CtaLink";
 import { Eyebrow } from "@/components/ui/Eyebrow";
@@ -20,10 +20,11 @@ export function AboutSection({ content }: { content: HomeContent["about"] }) {
       </Reveal>
       <Reveal className="ideologies" delay={100}>
         <Eyebrow>{content.ideologiesLabel}</Eyebrow>
-        <div className="ideologies__grid">
+        <div className="ideologies__grid" data-card-group>
           {content.ideologies.map((item, index) => (
             <article className="ideology" key={item.title}>
               <Image
+                data-card
                 className="ideology__mark"
                 src={ideologyIcons[index % ideologyIcons.length]}
                 alt=""

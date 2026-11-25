@@ -10,6 +10,7 @@ export type ContactSectionData = {
   cta: SiteLink;
   imageUrl: string;
   imageAlt: string;
+  mobileImageUrl?: string;
 };
 export type NewsletterSectionData = {
   eyebrow: string;
@@ -18,6 +19,7 @@ export type NewsletterSectionData = {
   placeholder: string;
   buttonLabel: string;
   imageUrl: string;
+  innerImageUrl?: string;
 };
 
 export type SiteData = {
@@ -37,6 +39,7 @@ export type SiteData = {
     title: string;
     blurb: string;
     addressLabel: string;
+    city?: string;
     hoursLabel: string;
     legal: string;
   };
@@ -49,11 +52,20 @@ export function toTelephoneHref(phone: string) {
 }
 
 export function toDirectionsHref(address: string) {
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+  const url = new URL("https://www.google.com/maps");
+  if (address.trim() === defaultSiteData.address) {
+    url.search = "um=1&ie=UTF-8&fb=1&gl=in&sa=X&geocode=KTGT30bUFa47MUfUGxn_qz7C";
+  }
+  url.searchParams.set("daddr", address);
+  return url.toString();
 }
 
 export function toGoogleMapsEmbedHref(address: string) {
-  return `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`;
+  const url = new URL("https://www.google.com/maps");
+  url.searchParams.set("q", address.trim());
+  url.searchParams.set("z", "16");
+  url.searchParams.set("output", "embed");
+  return url.toString();
 }
 
 export function siteFooter(site: SiteData) {

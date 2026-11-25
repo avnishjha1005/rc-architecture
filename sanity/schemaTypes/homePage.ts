@@ -22,6 +22,7 @@ export const homePage = defineType({
       validation: (rule) => minimumImageWidth(rule, 3200, "Homepage hero"),
     }),
     defineField({ name: "headlineTop", title: "Headline — top line", type: "string", group: "hero", initialValue: "Let’s Go", validation: (rule) => rule.required().max(24) }),
+    defineField({ name: "mobileHeroImage", title: "Mobile hero image", description: "Optional portrait crop. Use the crop tool to frame the phone composition independently of the desktop image.", type: "image", group: "hero", options: { hotspot: true } }),
     defineField({ name: "headlineAccent", title: "Headline — red word", type: "string", group: "hero", initialValue: "space", validation: (rule) => rule.required().max(16) }),
     defineField({ name: "headlineEnd", title: "Headline — final word", type: "string", group: "hero", initialValue: "making", validation: (rule) => rule.required().max(16) }),
     defineField({ name: "intro", title: "Introduction", type: "text", rows: 4, group: "hero", validation: (rule) => rule.required().max(280) }),

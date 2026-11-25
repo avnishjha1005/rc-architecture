@@ -42,11 +42,13 @@ npx sanity deploy # optional standalone Studio deployment
 
 Only variables prefixed with `NEXT_PUBLIC_` are used in the browser. Never expose a Sanity write token that way; keep server-side tokens unprefixed.
 
-## Production deployment
+## Cloudflare Workers
 
-A push to `main` runs the quality checks, builds the pushed revision with OpenNext and deploys the `rc-architecture` Cloudflare Worker. Pull requests run quality checks and a build but cannot deploy. The production job is serialized and skips publishing if a newer push has already replaced its commit on `main`.
+Push site changes to `staging`. GitHub Actions checks the commit and deploys [the staging site](https://rc-architecture-staging.twa-cms.workers.dev). To promote it, open a pull request **from `staging` into `main`** and merge using a merge commit. The push to `main` deploys [the production site](https://rc-architecture.twa-cms.workers.dev). Keep the staging branch after merging. Pull requests run checks without deploying to Cloudflare.
 
-Set `CLOUDFLARE_API_TOKEN` in the GitHub **Production** environment. The dedicated token needs permission to deploy this Worker and write to its production cache KV namespaces. The build reads published Sanity content, not the staging design preview. The **Deploy production Worker** job logs the Worker version after publication.
+Both Worker builds apply the same version-controlled design content in `scripts/design-content/` to a read-only snapshot of published CMS data. Neither build writes to Sanity. Staging remains excluded from search and its Studio is disabled; production retains its own bindings and Studio. Check each deployment's Worker version in the Actions log.
+
+Configure a `CLOUDFLARE_API_TOKEN` secret in each corresponding GitHub environment, **Staging** and **Production**, for publishing to the existing account. The production token must also be able to write to the configured production cache namespaces. To retry a deployment, rerun the workflow for the same branch.
 
 ## Production checklist
 
@@ -61,6 +63,8 @@ The form rate limiter is intentionally dependency-free and process-local. On mul
 
 ## Client website feedback
 
+Hosted Chisel reviews are at [`/chisel`](https://rc-architecture.twa-cms.workers.dev/chisel). Sign in as a project owner and use **Share review link** to invite reviewers. Set `CHISEL_ENABLED=1` at build time and on the Worker to enable the review workspace, nested page links, and preview integration. To disable them, unset the flag in both places and rebuild and redeploy.
+
 The reusable `@rc/website-feedback` workspace package powers a private review shell at `/feedback`. Configure the shared passcode and choose either the Notion or GitHub Issues provider using the variables in `.env.example`, then follow [the feedback setup guide](docs/feedback-setup.md).
 
-The package is intentionally private and source-based for now. The application transpiles it through `next.config.ts`; `html2canvas` is loaded only when a reviewer submits a screenshot.
+The package is intentionally private and source-based for now. The application transpiles it through `next.config.mjs`; `html2canvas` is loaded only when a reviewer submits a screenshot.

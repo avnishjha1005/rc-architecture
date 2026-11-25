@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import { useRef, useState } from "react";
 import styles from "./about.module.css";
 
@@ -42,7 +42,7 @@ export function IntroImageCarousel({ images }: IntroImageCarouselProps) {
     <div className={styles.introCarousel} aria-label="Studio images">
       <div ref={trackRef} className={styles.introCarouselTrack} onScroll={updateIndex}>
         {images.map((image, index) => (
-          <div className={styles.introCarouselSlide} key={`${image.imageUrl}-${index}`}>
+          <div className={styles.introCarouselSlide} data-motion-image key={`${image.imageUrl}-${index}`}>
             <Image
               src={image.imageUrl || ""}
               alt={image.imageAlt || "RC Architecture studio project"}
